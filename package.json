@@ -13,10 +13,14 @@
     "precommit": "npm run lint"
   },
   "dependencies": {
-    "cross-env": "^5.2.0",
-    "nuxt": "^2.3.4",
     "@nuxtjs/axios": "^5.3.6",
-    "@nuxtjs/pwa": "^2.6.0"
+    "@nuxtjs/pwa": "^2.6.0",
+    "cross-env": "^5.2.0",
+    "dotenv": "^6.2.0",
+    "markdown-it": "^8.4.2",
+    "markdown-it-attrs": "^2.3.2",
+    "nuxt": "^2.3.4",
+    "storyblok-nuxt": "^1.0.1"
   },
   "devDependencies": {
     "@nuxtjs/eslint-config": "^0.0.1",

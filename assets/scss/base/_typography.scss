@@ -1,0 +1,45 @@
+@import url("https://use.typekit.net/okb5lju.css");
+
+html {
+  font-size: 62.5%;
+  color: $color-text-primary;
+  font-family: $font-family;
+}
+
+article {
+  width: 36em;
+  max-width: 100%;
+  font-size: 22px;
+
+  @include media-down($bp-sm) {
+    font-size: 16px;
+  }
+}
+
+.body {
+  font-weight: 400;
+}
+
+.heading-1 {
+  font-weight: 800;
+}
+
+.heading-2 {
+  font-weight: 700;
+}
+
+.color-inverse {
+  color: $color-text-inverse;
+}
+
+.color-red {
+  color: $color-text-red;
+}
+
+.color-green {
+  color: $color-text-green;
+}
+
+.color-yellow {
+  color: $color-text-yellow;
+}

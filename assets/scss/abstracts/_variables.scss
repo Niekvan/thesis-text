@@ -1,0 +1,38 @@
+$black-indigo: #071230;
+$jasper-red: #EB5324;
+$yellow-orange: #FF8C00;
+$benzol-green: #00978C;
+$white: #FFFFFF;
+$brand-color: $white;
+
+// BREAKPOINTS
+$bp-sm: 480px;
+$bp-md: 768px;
+$bp-lg: 960px;
+$bp-xl: 1220px;
+
+// GRID VARS
+$grid-columns: 12 !default;
+$grid-gap: 1rem !default;
+$grid-margin: 2rem !default;
+$grid-breakpoints:
+  sm #{$bp-sm},
+  md #{$bp-md},
+  lg #{$bp-lg},
+  xl #{$bp-xl};
+
+$grid-gap-half : $grid-gap * .5;
+$grid-gap-compensation: $grid-gap * .5 * -1;
+
+// TYPE
+$font-family: mr-eaves-xl-modern, sans-serif;
+
+$font-size-base: 18px;
+$font-size-body: $font-size-base;
+$font-size-heading: $font-size-base * 1.5;
+
+$color-text-primary: $black-indigo;
+$color-text-inverse: $white;
+$color-text-green: $benzol-green;
+$color-text-yellow: $yellow-orange;
+$color-text-red: $jasper-red;

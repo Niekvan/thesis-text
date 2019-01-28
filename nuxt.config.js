@@ -1,4 +1,6 @@
+import axios from 'axios'
 const pkg = require('./package')
+require('dotenv').config()
 
 module.exports = {
   mode: 'universal',
@@ -24,7 +26,12 @@ module.exports = {
   /*
   ** Global CSS
   */
-  css: [],
+  css: [
+    {
+      src: '~/assets/scss/main.scss',
+      lang: 'scss'
+    }
+  ],
 
   /*
   ** Plugins to load before mounting the App
@@ -37,7 +44,15 @@ module.exports = {
   modules: [
     // Doc: https://axios.nuxtjs.org/usage
     '@nuxtjs/axios',
-    '@nuxtjs/pwa'
+    '@nuxtjs/pwa',
+    '@/modules/markdown/module',
+    [
+      'storyblok-nuxt',
+      {
+        accessToken: process.env.STORYBLOK_TOKEN,
+        cacheProvider: 'memory'
+      }
+    ]
   ],
   /*
   ** Axios module configuration
@@ -63,6 +78,28 @@ module.exports = {
           exclude: /(node_modules)/
         })
       }
+    }
+  },
+
+  generate: {
+    routes: function() {
+      return axios
+        .get('https://api.storyblok.com/v1/cdn/links', {
+          params: {
+            version: 'published',
+            token: process.env.STORYBLOK_TOKEN,
+            cv: Math.floor(Date.now() / 1e3)
+          }
+        })
+        .then(res => {
+          const routes = Object.keys(res.data.links)
+            .map(e => res.data.links[e])
+            .filter(link => {
+              return !link.is_folder && link.name !== 'Home'
+            })
+            .map(link => link.slug)
+          return routes
+        })
     }
   }
 }

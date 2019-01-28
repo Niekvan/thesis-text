@@ -1,39 +1,48 @@
 <template>
   <section class="container">
-    <div>
-      <logo />
+    <div v-editable="story.content">
       <h1 class="title">
-        thesis
+        {{ story.content.title }}
       </h1>
-      <h2 class="subtitle">
-        Master thesis Niek van Sleeuwen for the depermant Information Design at the Design Academy Eindhoven
-      </h2>
-      <div class="links">
-        <a
-          href="https://nuxtjs.org/"
-          target="_blank"
-          class="button--green"
-        >
-          Documentation
-        </a>
-        <a
-          href="https://github.com/nuxt/nuxt.js"
-          target="_blank"
-          class="button--grey"
-        >
-          GitHub
-        </a>
+      <div 
+        v-for="article in selectedArticles"
+        :key="article.uuid"
+      >
+        <nuxt-link :to="`/${article.full_slug}`">
+          {{ article.name }}
+        </nuxt-link>
       </div>
     </div>
   </section>
 </template>
 
 <script>
-import Logo from '~/components/Logo.vue'
+import { mapState } from 'vuex'
+import storyblokPreview from '@/mixins/storyblokPreview'
 
 export default {
-  components: {
-    Logo
+  mixins: [storyblokPreview],
+  computed: {
+    selectedArticles() {
+      return this.articles.filter(article =>
+        this.story.content.articles.includes(article.uuid)
+      )
+    },
+    ...mapState(['articles'])
+  },
+  asyncData(context) {
+    const version =
+      context.query._storyblok || context.isDev ? 'draft' : 'published'
+    return context.app.$storyapi
+      .get('cdn/stories/home', {
+        version: version
+      })
+      .then(res => {
+        return res.data
+      })
+    // const links = await context.app.$storyapi.get('cdn/links', {
+    //   version: version
+    // })
   }
 }
 </script>

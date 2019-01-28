@@ -1,0 +1,20 @@
+@mixin flexboxgrid-sass-col-common {
+  box-sizing: border-box;
+
+  flex: 0 0 auto;
+
+  padding-right: $grid-gap-half;
+  padding-left: $grid-gap-half;
+}
+
+@mixin media-down($bp) {
+  @media only screen and (max-width: $bp) {
+    @content;
+  }
+}
+
+@mixin media-up($bp) {
+  @media only screen and (min-width: $bp) {
+    @content;
+  }
+}
