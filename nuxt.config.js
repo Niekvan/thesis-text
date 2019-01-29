@@ -36,7 +36,7 @@ module.exports = {
   /*
   ** Plugins to load before mounting the App
   */
-  plugins: [],
+  plugins: ['~/plugins/components'],
 
   /*
   ** Nuxt.js modules
@@ -46,10 +46,14 @@ module.exports = {
     '@nuxtjs/axios',
     '@nuxtjs/pwa',
     '@/modules/markdown/module',
+    '@nuxtjs/moment',
     [
       'storyblok-nuxt',
       {
-        accessToken: process.env.STORYBLOK_TOKEN,
+        accessToken:
+          process.env.NODE_ENV === 'production'
+            ? process.env.STORYBLOK_TOKEN_PROD
+            : process.env.STORYBLOK_TOKEN_PREVIEW,
         cacheProvider: 'memory'
       }
     ]
@@ -87,7 +91,7 @@ module.exports = {
         .get('https://api.storyblok.com/v1/cdn/links', {
           params: {
             version: 'published',
-            token: process.env.STORYBLOK_TOKEN,
+            token: process.env.STORYBLOK_TOKEN_PROD,
             cv: Math.floor(Date.now() / 1e3)
           }
         })

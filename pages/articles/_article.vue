@@ -1,8 +1,8 @@
 <template>
   <div v-editable="story.content" class="row">
-    <div class="col-lg-2">
+    <!-- <div class="col-lg-2">
       <h1>Navbar</h1>
-    </div>
+    </div> -->
     <div class="col-lg-8">
       <article>
         <div 
@@ -10,6 +10,11 @@
           v-html="body"
         />
       </article>
+    </div>
+    <div class="col-lg-4">
+      <h1 class="heading-1">
+        Welcome
+      </h1>
     </div>
   </div>
 </template>
@@ -39,4 +44,7 @@ export default {
 </script>
 
 <style scoped lang="scss">
+.body {
+  position: relative;
+}
 </style>
