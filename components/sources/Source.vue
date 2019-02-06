@@ -37,7 +37,7 @@ export default {
     year() {
       return this.source.location[0].component === 'website'
         ? this.$moment(this.source.year).format('YYYY, MMMM D')
-        : this.$moment(this.source.year).format('YYYY')
+        : this.source.year
     }
   }
 }

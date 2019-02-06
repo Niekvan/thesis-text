@@ -45,8 +45,8 @@ module.exports = {
     // Doc: https://axios.nuxtjs.org/usage
     '@nuxtjs/axios',
     '@nuxtjs/pwa',
-    '@/modules/markdown/module',
     '@nuxtjs/moment',
+    '@nuxtjs/markdownit',
     [
       'storyblok-nuxt',
       {
@@ -56,14 +56,28 @@ module.exports = {
             : process.env.STORYBLOK_TOKEN_PREVIEW,
         cacheProvider: 'memory'
       }
-    ]
+    ],
+    '@nuxtjs/style-resources'
   ],
+  markdownit: {
+    injected: true,
+    linkify: true,
+    use: ['markdown-it-attrs']
+  },
+  styleResources: {
+    scss: [
+      '@/assets/scss/abstracts/_variables.scss',
+      '@/assets/scss/abstracts/_mixins.scss'
+    ]
+  },
   /*
   ** Axios module configuration
   */
   axios: {
     // See https://github.com/nuxt-community/axios-module#options
   },
+
+  // serverMiddleware: ['~/middleware/detectIP'],
 
   /*
   ** Build configuration

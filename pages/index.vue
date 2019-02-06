@@ -1,5 +1,5 @@
 <template>
-  <section class="container">
+  <section v-if="story.content" class="container">
     <div v-editable="story.content">
       <h1 class="title heading-1">
         {{ story.content.title }}
@@ -21,33 +21,91 @@
         :source="source"
       />
     </ul>
+    <p v-if="ip">
+      {{ ip }}
+    </p>
+    <p v-if="middleware_ip">
+      {{ middleware_ip }}
+    </p>
+    <div v-if="geoData">
+      <p 
+        v-for="item in geoData"
+        :key="item[0]"
+      >
+        <span class="name">
+          {{ item[0] }}: 
+        </span>
+        <span class="value">
+          {{ item[1] }}
+        </span>
+      </p>
+    </div>
+    <graph :nodes="selectedArticles" :links="links" :settings="settings" />
   </section>
 </template>
 
 <script>
 import { mapState } from 'vuex'
 import storyblokPreview from '@/mixins/storyblokPreview'
+import helpers from '@/mixins/helpers'
 
 export default {
-  mixins: [storyblokPreview],
+  middleware: 'detectIP',
+  mixins: [storyblokPreview, helpers],
+  data() {
+    return {
+      settings: {
+        selector: 'index-graph'
+      }
+    }
+  },
   computed: {
     selectedArticles() {
       return this.articles.filter(article =>
         this.story.content.articles.includes(article.uuid)
       )
     },
-    ...mapState(['articles', 'sources'])
+    links() {
+      const connections = []
+      const links = this.selectedArticles
+        .filter(article => article.content.linked)
+        .map(article => {
+          const links = []
+          article.content.linked.forEach(link => {
+            if (!connections.includes(`${link}-to-${article.uuid}`)) {
+              connections.push(`${article.uuid}-to-${link}`)
+              links.push({
+                source: article.uuid,
+                target: link,
+                name: `${article.uuid}-to-${link}`
+              })
+            }
+          })
+          return links
+        })
+      return this.flatten(links)
+    },
+    geoData() {
+      if (this.geo) {
+        return Object.entries(this.geo)
+      }
+      return null
+    },
+    ...mapState(['articles', 'sources', 'ip', 'middleware_ip', 'geo'])
   },
-  asyncData(context) {
+  mounted() {
+    this.$store.dispatch('setGEO')
+  },
+  async asyncData(context) {
     const version =
       context.query._storyblok || context.isDev ? 'draft' : 'published'
-    return context.app.$storyapi
-      .get('cdn/stories/home', {
+    const { data: story } = await context.app.$storyapi.get(
+      'cdn/stories/home',
+      {
         version: version
-      })
-      .then(res => {
-        return res.data
-      })
+      }
+    )
+    return { story: story.story }
   }
 }
 </script>
