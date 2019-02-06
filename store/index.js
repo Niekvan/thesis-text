@@ -54,3 +54,9 @@ export const actions = {
     await dispatch('getSources', isDev)
   }
 }
+
+export const getters = {
+  getLinkedArticles: state => list => {
+    return state.articles.filter(article => list.includes(article.uuid))
+  }
+}

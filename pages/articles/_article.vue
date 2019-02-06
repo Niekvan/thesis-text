@@ -5,6 +5,9 @@
     </div> -->
     <div class="col-lg-8">
       <article>
+        <h1 v-if="story.content.title" class="heading-1">
+          {{ story.content.title }}
+        </h1>
         <div 
           class="body"
           v-html="body"
@@ -12,9 +15,25 @@
       </article>
     </div>
     <div class="col-lg-4">
-      <h1 class="heading-1">
-        Welcome
-      </h1>
+      <ul class="linked-articles linked-articles__list">
+        <li class="linked-articles__item">
+          <nuxt-link to="/" class="linked-articles__link">
+            Index
+          </nuxt-link>
+        </li>
+        <li 
+          v-for="link in linkedArticles"
+          :key="link.uuid"
+          class="linked-articles__item"
+        >
+          <nuxt-link 
+            :to="`/${link.full_slug}`"
+            class="linked-articles__link"
+          >
+            {{ link.content.title }}
+          </nuxt-link>
+        </li>
+      </ul>
     </div>
   </div>
 </template>
@@ -26,7 +45,15 @@ export default {
   mixins: [storyblokPreview],
   computed: {
     body() {
-      return this.$parser.render(this.story.content.body)
+      if (this.story.content.body)
+        return this.$md.render(this.story.content.body)
+      return ''
+    },
+    linkedArticles() {
+      if (this.story.content.linked) {
+        return this.$store.getters.getLinkedArticles(this.story.content.linked)
+      }
+      return null
     }
   },
   async asyncData(context) {
@@ -44,6 +71,23 @@ export default {
 </script>
 
 <style scoped lang="scss">
+.linked-articles {
+  font-family: $font-sans;
+
+  &__list {
+    list-style-type: none;
+    padding: 0;
+    // margin: 0;
+  }
+  &__item:not(:last-child) {
+    margin-bottom: 0.5em;
+  }
+
+  &__link {
+    color: $color-text-red;
+    text-decoration: none;
+  }
+}
 .body {
   position: relative;
 }

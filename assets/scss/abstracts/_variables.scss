@@ -25,13 +25,13 @@ $grid-gap-half : $grid-gap * .5;
 $grid-gap-compensation: $grid-gap * .5 * -1;
 
 // TYPE
-$mr-eaves: mr-eaves-xl-modern, sans-serif;
 $bennet: bennet-text-one, sans-serif;
+$p22: p22-underground, sans-serif;
 
-$font-sans: $mr-eaves;
+$font-sans: $p22;
 $font-serif: $bennet;
 
-$font-size-base: 18px;
+$font-size-base: 25px;
 $font-size-body: $font-size-base;
 $base-font-size: $font-size-base;
 

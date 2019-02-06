@@ -1,5 +1,5 @@
 <template>
-  <line class="link" />
+  <path class="link" />
 </template>
 
 <script>
@@ -17,8 +17,9 @@ export default {
 
 <style scoped lang="scss">
 .link {
-  stroke-width: 0.75px;
-  stroke-opacity: 0.5;
+  fill: none;
+  stroke-width: 2;
+  stroke-opacity: 0;
   stroke: $color-text-primary;
 }
 </style>

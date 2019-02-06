@@ -1,47 +1,31 @@
 <template>
-  <section v-if="story.content" class="container">
-    <div v-editable="story.content">
-      <h1 class="title heading-1">
+  <main class="wrapper row"> 
+    <section v-editable="story.content" class="section section__legend col-lg-12">
+      <h1 class="heading-1 title">
         {{ story.content.title }}
       </h1>
-      <div 
-        v-for="article in selectedArticles"
-        :key="article.uuid"
-        class="body"
-      >
-        <nuxt-link :to="`/${article.full_slug}`">
-          {{ article.name }}
-        </nuxt-link>
+      <graph :nodes="selectedArticles" :links="links" :settings="settings" />
+    </section>
+    <!-- <section 
+      v-if="story.content" 
+      class="section section__content col-lg-4"
+    >
+      <div v-editable="story.content">
+        <h1 class="title heading-1">
+          {{ story.content.title }}
+        </h1>
+        <div 
+          v-for="article in selectedArticles"
+          :key="article.uuid"
+          class="body"
+        >
+          <nuxt-link :to="`/${article.full_slug}`">
+            {{ article.name }}
+          </nuxt-link>
+        </div>
       </div>
-    </div>
-    <ul class="sources body">
-      <reference
-        v-for="source in sources"
-        :key="source.uuid"
-        :source="source"
-      />
-    </ul>
-    <p v-if="ip">
-      {{ ip }}
-    </p>
-    <p v-if="middleware_ip">
-      {{ middleware_ip }}
-    </p>
-    <div v-if="geoData">
-      <p 
-        v-for="item in geoData"
-        :key="item[0]"
-      >
-        <span class="name">
-          {{ item[0] }}: 
-        </span>
-        <span class="value">
-          {{ item[1] }}
-        </span>
-      </p>
-    </div>
-    <graph :nodes="selectedArticles" :links="links" :settings="settings" />
-  </section>
+    </section> -->
+  </main>
 </template>
 
 <script>
@@ -50,12 +34,16 @@ import storyblokPreview from '@/mixins/storyblokPreview'
 import helpers from '@/mixins/helpers'
 
 export default {
-  middleware: 'detectIP',
+  // middleware: 'detectIP',
   mixins: [storyblokPreview, helpers],
   data() {
     return {
       settings: {
-        selector: 'index-graph'
+        selector: 'index-graph',
+        nodes: {
+          width: 200,
+          height: 200
+        }
       }
     }
   },
@@ -85,16 +73,7 @@ export default {
         })
       return this.flatten(links)
     },
-    geoData() {
-      if (this.geo) {
-        return Object.entries(this.geo)
-      }
-      return null
-    },
-    ...mapState(['articles', 'sources', 'ip', 'middleware_ip', 'geo'])
-  },
-  mounted() {
-    this.$store.dispatch('setGEO')
+    ...mapState(['articles', 'sources'])
   },
   async asyncData(context) {
     const version =
@@ -110,11 +89,18 @@ export default {
 }
 </script>
 
-<style>
-.links {
+<style scoped lang="scss">
+.title {
+  position: fixed;
+  font-weight: 400;
+  font-size: 4rem;
+  margin: 0;
+  font-family: ff-more-web-pro, serif;
+}
+/* .links {
   padding-top: 15px;
 }
 .sources {
   padding: 0;
-}
+} */
 </style>
