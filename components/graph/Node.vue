@@ -1,5 +1,5 @@
 <template>
-  <nuxt-link :to="node.full_slug">
+  <nuxt-link :to="`/${node.full_slug}`">
     <g class="node">
       <!-- <svg :width="settings.width" :height="settings.height" viewBox="0 0 170 170" class="node__item">
         <path class="node__drag" d="M85,85m-85,0a85,85 0 1,0 170,0a85,85 0 1,0 -170,0" />

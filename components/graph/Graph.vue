@@ -68,13 +68,15 @@ export default {
       return svg
     },
     node() {
-      return this.svg
-        .select('g.nodes')
-        .selectAll('.node')
-        .data(this.nodes)
-        .call(this.drag(this.simulation))
-        .on('mouseover', this.fade(0.2, true))
-        .on('mouseout', this.fade(1, false))
+      return (
+        this.svg
+          .select('g.nodes')
+          .selectAll('.node')
+          .data(this.nodes)
+          // .call(this.drag(this.simulation))
+          .on('mouseover', this.fade(0.2, true))
+          .on('mouseout', this.fade(1, false))
+      )
     },
     link() {
       return this.svg
@@ -185,18 +187,6 @@ export default {
     ticked() {
       this.link.attr('d', this.positionLink)
       this.node.attr('transform', this.positionNode)
-    },
-    selectIcon(d) {
-      let path = ''
-      switch (d.index) {
-        case 0:
-          path = 'M85,85m-75,0a75,75 0 1,0 150,0a75,75 0 1,0 -150,0'
-          break
-        case 1:
-          path = 'M10,85l75,-75l75,75'
-          break
-      }
-      return path
     },
     isConnected(a, b) {
       return (

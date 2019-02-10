@@ -6,11 +6,11 @@
       </h1>
       <graph :nodes="selectedArticles" :links="links" :settings="settings" />
     </section>
-    <!-- <section 
+    <section 
       v-if="story.content" 
       class="section section__content col-lg-4"
     >
-      <div v-editable="story.content">
+      <!-- <div v-editable="story.content">
         <h1 class="title heading-1">
           {{ story.content.title }}
         </h1>
@@ -23,8 +23,13 @@
             {{ article.name }}
           </nuxt-link>
         </div>
+      </div> -->
+      <div v-if="geo">
+        <p v-for="data in geo" :key="data">
+          {{ data }}
+        </p>
       </div>
-    </section> -->
+    </section>
   </main>
 </template>
 
@@ -34,7 +39,7 @@ import storyblokPreview from '@/mixins/storyblokPreview'
 import helpers from '@/mixins/helpers'
 
 export default {
-  // middleware: 'detectIP',
+  middleware: 'detectIP',
   mixins: [storyblokPreview, helpers],
   data() {
     return {
@@ -73,7 +78,10 @@ export default {
         })
       return this.flatten(links)
     },
-    ...mapState(['articles', 'sources'])
+    ...mapState(['articles', 'sources', 'geo'])
+  },
+  mounted() {
+    this.$store.dispatch('setGEO')
   },
   async asyncData(context) {
     const version =

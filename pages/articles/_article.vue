@@ -15,6 +15,7 @@
       </article>
     </div>
     <div class="col-lg-4">
+      <graph :nodes="[...linkedArticles, story]" :links="links" :settings="settings" />
       <ul class="linked-articles linked-articles__list">
         <li class="linked-articles__item">
           <nuxt-link to="/" class="linked-articles__link">
@@ -43,6 +44,17 @@ import storyblokPreview from '@/mixins/storyblokPreview'
 
 export default {
   mixins: [storyblokPreview],
+  data() {
+    return {
+      settings: {
+        selector: 'index-small',
+        nodes: {
+          width: 200,
+          height: 200
+        }
+      }
+    }
+  },
   computed: {
     body() {
       if (this.story.content.body)
@@ -54,6 +66,14 @@ export default {
         return this.$store.getters.getLinkedArticles(this.story.content.linked)
       }
       return null
+    },
+    links() {
+      return this.linkedArticles.map(article => {
+        return {
+          source: this.story,
+          target: article
+        }
+      })
     }
   },
   async asyncData(context) {
