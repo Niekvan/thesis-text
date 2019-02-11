@@ -1,6 +1,7 @@
 import Vue from 'vue'
 
 import ArticleFrame from '@/components/ArticleFrame.vue'
+import IConsent from '@/components/IConsent.vue'
 import Source from '@/components/sources/Source.vue'
 import Graph from '@/components/graph/Graph.vue'
 import nodeLink from '@/components/graph/Link.vue'
@@ -12,4 +13,5 @@ export default () => {
   Vue.component('node-link', nodeLink)
   Vue.component('node', Node)
   Vue.component('article-frame', ArticleFrame)
+  Vue.component('i-consent', IConsent)
 }

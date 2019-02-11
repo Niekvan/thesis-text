@@ -11,7 +11,7 @@ html {
   -webkit-font-smoothing: antialiased;
 }
 
-article {
+.line-width {
   width: 36em;
   max-width: 100%;
   font-size: $font-size-body;
@@ -33,12 +33,12 @@ article {
 
 %heading {
   font-family: $font-serif;
-  margin: 0.5em 0;
+  margin: 0.25em 0 1em;
 }
 
 .heading-1 {
   @extend %heading;
-  font-weight: 600;
+  font-weight: 500;
   font-size: 3em;
 }
 
@@ -62,4 +62,20 @@ article {
 
 .color-yellow {
   color: $color-text-yellow;
+}
+
+.quote {
+  color: $color-text-green;
+  font-size: 0.9em;
+  font-style: italic;
+  // text-align: center;
+}
+
+.caption {
+  font-size: 0.7em;
+  margin: 0;
+}
+
+.image {
+  margin-bottom: -25px;
 }

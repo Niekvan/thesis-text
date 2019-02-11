@@ -4,32 +4,16 @@
       <h1 class="heading-1 title">
         {{ story.content.title }}
       </h1>
-      <graph :nodes="selectedArticles" :links="links" :settings="settings" />
+      <graph :nodes="selectedArticles.reverse()" :links="links" :settings="settings" />
     </section>
-    <section 
-      v-if="story.content" 
-      class="section section__content col-lg-4"
-    >
-      <!-- <div v-editable="story.content">
-        <h1 class="title heading-1">
-          {{ story.content.title }}
-        </h1>
-        <div 
-          v-for="article in selectedArticles"
-          :key="article.uuid"
-          class="body"
-        >
-          <nuxt-link :to="`/${article.full_slug}`">
-            {{ article.name }}
-          </nuxt-link>
-        </div>
-      </div> -->
-      <div v-if="geo">
-        <p v-for="data in geo" :key="data">
-          {{ data }}
-        </p>
-      </div>
-    </section>
+    <article-frame 
+      v-for="(article,index) in activeArticles" 
+      :key="`${article.uuid}-${index}-active`"
+      :article-uuid="article"
+      :index="index"
+      :total="activeArticles.length"
+    />
+    <!-- <i-consent /> -->
   </main>
 </template>
 
@@ -39,7 +23,6 @@ import storyblokPreview from '@/mixins/storyblokPreview'
 import helpers from '@/mixins/helpers'
 
 export default {
-  middleware: 'detectIP',
   mixins: [storyblokPreview, helpers],
   data() {
     return {
@@ -78,10 +61,13 @@ export default {
         })
       return this.flatten(links)
     },
-    ...mapState(['articles', 'sources', 'geo'])
+    ...mapState(['articles', 'sources', 'geo', 'activeArticles'])
   },
   mounted() {
-    this.$store.dispatch('setGEO')
+    // this.$store.dispatch('setGEO')
+    // this.$ipCheck.get('/').then(res => {
+    //   console.log(res.data) //eslint-disable-line
+    // })
   },
   async asyncData(context) {
     const version =
@@ -100,15 +86,9 @@ export default {
 <style scoped lang="scss">
 .title {
   position: fixed;
-  font-weight: 400;
-  font-size: 4rem;
-  margin: 0;
-  font-family: ff-more-web-pro, serif;
+  font-weight: 500;
+  font-size: 2.5rem;
+  margin: 0.3em 0.2em;
+  font-family: $font-sans;
 }
-/* .links {
-  padding-top: 15px;
-}
-.sources {
-  padding: 0;
-} */
 </style>

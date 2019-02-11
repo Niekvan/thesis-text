@@ -1,5 +1,6 @@
 export const state = () => ({
   articles: [],
+  activeArticles: [],
   sources: [],
   ip: null,
   geo: null,
@@ -10,6 +11,19 @@ export const state = () => ({
 export const mutations = {
   SET_ARTICLES(state, articles) {
     state.articles = articles
+  },
+  SET_ACTIVE_ARTICLES(state, article) {
+    state.activeArticles.push(article)
+  },
+  REMOVE_ACTIVE_ARTICLE(state, index) {
+    state.activeArticles = state.activeArticles
+      .slice(0, index)
+      .concat(
+        state.activeArticles.slice(index + 1, state.activeArticles.length)
+      )
+  },
+  REMOVE_NEXT_ARTILCES(state, index) {
+    state.activeArticles.splice(index + 1, state.activeArticles.length - index)
   },
   SET_SOURCES(state, sources) {
     state.sources = sources
@@ -44,7 +58,15 @@ export const actions = {
   },
   async setGEO({ commit, state }) {
     if (!state.loaded) {
-      const { data: geoData } = await this.$axios.get('https://ipinfo.io/json')
+      const { data: geoData } = await this.$axios.get(
+        'https://api.ipdata.co/',
+        {
+          params: {
+            'api-key':
+              '40ab9abe58d4444d4010e0db73473c8518b032b939dd62c0c6ec9815'
+          }
+        }
+      )
       commit('SET_IP', geoData.ip)
       commit('SET_GEO', geoData)
     }

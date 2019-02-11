@@ -4,7 +4,7 @@
       <h1>Navbar</h1>
     </div> -->
     <div class="col-lg-8">
-      <article>
+      <article class="line-width">
         <h1 v-if="story.content.title" class="heading-1">
           {{ story.content.title }}
         </h1>

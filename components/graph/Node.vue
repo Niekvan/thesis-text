@@ -1,28 +1,29 @@
 <template>
-  <nuxt-link :to="`/${node.full_slug}`">
-    <g class="node">
-      <!-- <svg :width="settings.width" :height="settings.height" viewBox="0 0 170 170" class="node__item">
-        <path class="node__drag" d="M85,85m-85,0a85,85 0 1,0 170,0a85,85 0 1,0 -170,0" />
-        <path class="node__icon" :d="path" />
-      </svg> -->
-      <no-ssr>
-        <rect
-          v-if="BBox"
-          :x="BBox.x - padding.left / 2"
-          :y="BBox.y - padding.top / 2"
-          :width="BBox.width + padding.left"
-          :height="BBox.height +padding.top"
-          class="node__background"
-        />
-      </no-ssr>
-      <text class="node__text body" alignment-baseline="middle">
-        {{ node.slug }}
-      </text>
-    </g>
-  </nuxt-link>
+  <!-- <nuxt-link :to="`/${node.full_slug}`"> -->
+  <g class="node" @click="showArticle(node.uuid)">
+    <!-- <svg :width="settings.width" :height="settings.height" viewBox="0 0 170 170" class="node__item">
+      <path class="node__drag" d="M85,85m-85,0a85,85 0 1,0 170,0a85,85 0 1,0 -170,0" />
+      <path class="node__icon" :d="path" />
+    </svg> -->
+    <no-ssr>
+      <rect
+        v-if="BBox"
+        :x="BBox.x - padding.left / 2"
+        :y="BBox.y - padding.top / 2"
+        :width="BBox.width + padding.left"
+        :height="BBox.height +padding.top"
+        class="node__background"
+      />
+    </no-ssr>
+    <text class="node__text body" :style="size" alignment-baseline="middle">
+      {{ node.slug }}
+    </text>
+  </g>
+  <!-- </nuxt-link> -->
 </template>
 
 <script>
+import { mapMutations } from 'vuex'
 import { select } from 'd3-selection'
 export default {
   props: {
@@ -44,6 +45,9 @@ export default {
       padding: {
         top: 10,
         left: 20
+      },
+      size: {
+        'font-size': `${this.settings.scale * 1.25}rem`
       }
     }
   },
@@ -81,13 +85,30 @@ export default {
           .getBBox()
       }
       return null
+    },
+    fontSize() {
+      if (this.settings.scale) {
+        return {
+          fontSize: `${1.25 * this.settings.scale}rem`
+        }
+      }
+      return null
     }
+  },
+  methods: {
+    showArticle(uuid) {
+      this.SET_ACTIVE_ARTICLES(uuid)
+    },
+    ...mapMutations(['SET_ACTIVE_ARTICLES'])
   }
 }
 </script>
 
 <style scoped lang="scss">
 .node {
+  &:hover {
+    cursor: pointer;
+  }
   &__item {
     opacity: 1;
   }
@@ -110,6 +131,7 @@ export default {
   &__text {
     text-anchor: middle;
     font-size: 1.25rem;
+    text-transform: capitalize;
   }
 }
 </style>

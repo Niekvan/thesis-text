@@ -1,29 +1,20 @@
-blockquote {
-  display: block;
-  padding: 1rem 5rem;
-  margin: 0;
+.quote {
+  color: $color-text-green;
+  font-size: 0.9em;
+  font-style: italic;
 
-  > * {
-    margin: 0;
+  .text {
+    display: block;
   }
-
-  &.quote {
-    &:hover {
-      color: $color-text-red;
-      & + .writer {
-        color: $color-text-red;
-      }
+  .source {
+    display: block;
+    max-height: 0;
+    overflow: hidden;
+    transition: all 0.3s;
+  }
+  &:hover {
+    .source {
+      max-height: 100px;
     }
-  }
-
-  &.writer {
-    position: absolute;
-    left: 36em;
-    transform: translateY(-1em);
-    padding: 0;
-    margin: 0;
-    margin-top: -1rem;
-    display: grid;
-    grid-template-columns: max-content;
   }
 }

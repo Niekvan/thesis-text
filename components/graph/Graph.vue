@@ -181,7 +181,10 @@ export default {
       this.simulation.alpha(1).restart()
     },
     start() {
-      this.simulation = this.forceSimulation('uuid', 0).on('tick', this.ticked)
+      this.simulation = this.forceSimulation('uuid', 150).on(
+        'tick',
+        this.ticked
+      )
       this.restart(this.nodes, this.links)
     },
     ticked() {
@@ -196,15 +199,16 @@ export default {
       )
     },
     fade(opacity, over) {
-      const strokeOpacity = over ? 1 : 0
+      const strokeOpacity = over ? 1 : 0.05
       return d => {
+        // this.node.style('cursor', 'pointer')
         this.node.style('opacity', o => {
           return this.isConnected(d, o) ? 1 : opacity
         })
         this.link.style('stroke-opacity', o => {
           return o.source.uuid === d.uuid || o.target.uuid === d.uuid
             ? strokeOpacity
-            : 0
+            : 0.05
         })
       }
     }

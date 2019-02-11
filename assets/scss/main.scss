@@ -6,10 +6,10 @@
   './base/base',
   './base/typography';
 
-@import 
-  './layout/grid';
+@import
+  './components/blockquote';
 
 @import 
-  './components/blockquote';
+  './layout/grid';
 
 @import 'node_modules/normalize-scss/sass/normalize/import-now';

@@ -36,17 +36,17 @@ module.exports = {
   /*
   ** Plugins to load before mounting the App
   */
-  plugins: ['~/plugins/components'],
+  plugins: ['~/plugins/components', '~/api/ipApi.js'],
 
   /*
   ** Nuxt.js modules
   */
   modules: [
-    // Doc: https://axios.nuxtjs.org/usage
     '@nuxtjs/axios',
     '@nuxtjs/pwa',
     '@nuxtjs/moment',
-    '@nuxtjs/markdownit',
+    // '@nuxtjs/markdownit',
+    '@/modules/markdown/module',
     [
       'storyblok-nuxt',
       {
@@ -59,11 +59,11 @@ module.exports = {
     ],
     '@nuxtjs/style-resources'
   ],
-  markdownit: {
-    injected: true,
-    linkify: true,
-    use: ['markdown-it-attrs']
-  },
+  // markdownit: {
+  //   injected: true,
+  //   linkify: true,
+  //   use: ['markdown-it-attrs', ['markdown-it-container', 'quote', { validate: function(params) }]]
+  // },
   styleResources: {
     scss: [
       '@/assets/scss/abstracts/_variables.scss',

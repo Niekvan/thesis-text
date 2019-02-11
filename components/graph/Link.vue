@@ -19,7 +19,7 @@ export default {
 .link {
   fill: none;
   stroke-width: 2;
-  stroke-opacity: 0;
+  stroke-opacity: 0.05;
   stroke: $color-text-primary;
 }
 </style>
