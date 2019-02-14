@@ -2,7 +2,7 @@
   <div>
     <svg :id="settings.selector" class="svg">
       <g class="links">
-        <node-link 
+        <node-link
           v-for="linkData in links"
           :key="linkData.name"
           :link="linkData"
@@ -87,7 +87,7 @@ export default {
     linkedIndex() {
       const linkIndex = {}
       this.links.forEach(link => {
-        linkIndex[`${link.source.index},${link.target.index}`] = 1
+        linkIndex[`${link.source.uuid},${link.target.uuid}`] = 1
       })
       return linkIndex
     },
@@ -98,7 +98,7 @@ export default {
       return window.innerWidth - 1
     },
     offset() {
-      return 30
+      return 50
     }
   },
   mounted() {
@@ -130,6 +130,7 @@ export default {
         .on('end', dragended)
     },
     forceSimulation(selector, strength) {
+      /* eslint-disable */
       return forceSimulation()
         .force(
           'charge',
@@ -141,6 +142,7 @@ export default {
         .force('collision', forceCollide(this.settings.nodes.width))
         .force('link', forceLink().id(d => d[selector]))
         .force('y', forceY())
+        // .force('x', forceX().x(d => d.primary ? 100 : this.width / 3 * 2))
     },
     positionLink(d) {
       d.source.x = Math.max(
@@ -193,15 +195,14 @@ export default {
     },
     isConnected(a, b) {
       return (
-        this.linkedIndex[`${a.index},${b.index}`] ||
-        this.linkedIndex[`${b.index},${a.index}`] ||
+        this.linkedIndex[`${a.uuid},${b.uuid}`] ||
+        this.linkedIndex[`${b.uuid},${a.uuid}`] ||
         a.index === b.index
       )
     },
     fade(opacity, over) {
       const strokeOpacity = over ? 1 : 0.05
       return d => {
-        // this.node.style('cursor', 'pointer')
         this.node.style('opacity', o => {
           return this.isConnected(d, o) ? 1 : opacity
         })

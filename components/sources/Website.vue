@@ -3,11 +3,13 @@
     v-editable="data"
     class="website"
   >
-    Retrieved {{ date }}, from 
-    <a 
+    Retrieved {{ date }}, from
+    <a
       v-editable="data.link"
       :href="link"
       class="link"
+      target="_blank"
+      rel="noreferrer"
     >
       {{ link }}
     </a>
@@ -38,6 +40,14 @@ export default {
   margin: 0;
   .link {
     display: inline;
+    color: $color-text-red;
+    text-decoration: none;
+    word-wrap: break-word;
+    transition: all 0.2s;
+
+    &:hover {
+      color: $color-text-green;
+    }
   }
 }
 </style>

@@ -1,32 +1,28 @@
 <template>
-  <section 
-    v-editable="article"  
-    class="article"
-    :style="styles"
-  >
-    <div 
-      class="header"
-      @click="removeNext"  
-    >
+  <section v-editable="article.content" class="article" :style="styles">
+    <div class="header" @click="removeNext">
       <span class="bar">
         /{{ article.content.title }}
       </span>
-      <span 
-        class="close"
-        @click="removeArticle"
-      >
+      <span class="close" @click="removeArticle">
         X
       </span>
     </div>
-    <div class="content row">
-      <article class="scroll col-lg-8">
+    <div class="content row scroll">
+      <article class="col-lg-8">
         <div class="line-width">
-          <h1 
-            class="heading-1"
-          >
+          <h1 class="heading-1">
             {{ article.content.title }}
           </h1>
-          <div class="body" v-html="body" />
+          <div :ref="`md-${article.uuid}-${index}`" class="body" v-html="body" />
+          <transition name="fade">
+            <div v-if="source" class="source-container">
+              <span class="close" @click="source=null">
+                X
+              </span>
+              <reference :source="source" />
+            </div>
+          </transition>
         </div>
       </article>
       <aside class="side-bar col-lg-4">
@@ -60,9 +56,12 @@ export default {
         nodes: {
           width: 300,
           height: 300,
-          scale: 2.5
+          scale: 2.5,
+          active: this.articleUuid
         }
-      }
+      },
+      localSources: [],
+      source: null
     }
   },
   computed: {
@@ -96,7 +95,18 @@ export default {
     article() {
       return this.articles.find(article => article.uuid === this.articleUuid)
     },
-    ...mapState(['articles'])
+    ...mapState(['articles', 'sources'])
+  },
+  mounted() {
+    this.localSources = this.$refs[`md-${this.article.uuid}-${this.index}`].querySelectorAll('.source') //eslint-disable-line
+    this.localSources.forEach(source => {
+      source.addEventListener('click', this.handleQuote)
+    })
+  },
+  beforeDestroy() {
+    this.localSources.forEach(source => {
+      source.removeEventListener('click', this.handleQuote)
+    })
   },
   methods: {
     removeArticle() {
@@ -104,6 +114,29 @@ export default {
     },
     removeNext() {
       this.REMOVE_NEXT_ARTILCES(this.index)
+    },
+    handleQuote(event) {
+      event.preventDefault()
+      const keys = [
+        event.target.parentNode.querySelector('.author').innerHTML,
+        event.target.parentNode.querySelector('.year').innerHTML
+      ]
+      console.log(keys) //eslint-disable-line
+      const filteredSources = this.sources.filter(source => {
+        const author = source.author ? source.author : source.title
+        const year = source.year ? source.year : 'n.d.'
+        return (
+          keys[0].split(', ').some(name => author.includes(name)) &&
+          year.includes(keys[1].replace(/[^\d]/g, ''))
+        )
+      })
+
+      if (filteredSources.length === 1) {
+        this.source = filteredSources[0]
+      } else {
+        const index = keys[1].replace(/[\d]/g, '').charCodeAt(0) - 97
+        this.source = filteredSources[index]
+      }
     },
     ...mapMutations(['REMOVE_ACTIVE_ARTICLE', 'REMOVE_NEXT_ARTILCES'])
   }
@@ -118,6 +151,8 @@ export default {
   transform: translate(-50%, -50%);
   border: 2px solid $color-text-primary;
   background: $white;
+  font-family: $font-serif;
+  overflow: hidden;
 
   &:not(:last-child):hover {
     transform: translate(-50%, calc(-50% - 0.75rem));
@@ -133,11 +168,6 @@ export default {
     display: flex;
     border-bottom: 2px solid $color-text-primary;
 
-    // &:hover {
-    //   transform: translateY(-0.75rem);
-    //   border: 2px solid $color-text-primary;
-    // }
-
     .bar {
       background: $color-text-green;
       flex-grow: 1;
@@ -146,7 +176,6 @@ export default {
 
     .close {
       background: $color-text-red;
-      // position: relative;
       padding: 0.25rem 0.5rem;
 
       &:hover {
@@ -154,18 +183,22 @@ export default {
       }
     }
   }
-  .content {
-    margin: calc(25px + 1rem) 0;
-    height: 100%;
 
-    .scroll {
-      height: calc(100% - 25px - 1rem);
-      overflow-y: auto;
-      &::-webkit-scrollbar {
-        display: none;
-      }
-    }
+  .scroll {
+    // height: calc(100% - 25px - 1rem);
+    overflow-y: auto;
+    width: 100%;
+  }
+
+  .content {
+    margin: calc(25px + 0.75rem) 0;
+    height: calc(100% - 25px - 0.75rem);
+
     .side-bar {
+      position: fixed;
+      width: 100%;
+
+      right: 0;
       padding-top: 2rem;
     }
 
@@ -173,6 +206,40 @@ export default {
       font-size: 4em;
       font-weight: 600;
       line-height: 1;
+    }
+
+    .source-container {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 80%;
+      box-sizing: border-box;
+      background: $white;
+      padding: 1.5rem 1rem;
+      border: 1px solid $color-text-primary;
+      z-index: 5;
+
+      .close {
+        position: fixed;
+        top: 0;
+        right: 0;
+        width: 1.5rem;
+        height: 1.5rem;
+        box-sizing: border-box;
+        text-align: center;
+        padding-top: 0.25rem;
+        display: block;
+        border-left: 1px solid $color-text-primary;
+        border-bottom: 1px solid $color-text-primary;
+        &:hover {
+          cursor: pointer;
+        }
+      }
+      .source {
+        padding: 0;
+        margin: 0;
+      }
     }
   }
 }

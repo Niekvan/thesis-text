@@ -5,7 +5,8 @@ export const state = () => ({
   ip: null,
   geo: null,
   loaded: false,
-  middleware_ip: null
+  middleware_ip: null,
+  referenceOpen: false
 })
 
 export const mutations = {
@@ -26,7 +27,12 @@ export const mutations = {
     state.activeArticles.splice(index + 1, state.activeArticles.length - index)
   },
   SET_SOURCES(state, sources) {
-    state.sources = sources
+    function compare(a, b) {
+      const aFirst = a.author ? a.author : a.title
+      const bFirst = b.author ? b.author : b.title
+      return aFirst.localeCompare(bFirst) || 0
+    }
+    state.sources = sources.sort(compare)
   },
   SET_GEO(state, data) {
     state.geo = data
@@ -37,6 +43,9 @@ export const mutations = {
   },
   SET_MIDDLEWARE_IP(state, ip) {
     state.middleware_ip = ip
+  },
+  SET_REFERENCE(state, open) {
+    state.referenceOpen = open
   }
 }
 

@@ -1,4 +1,4 @@
-@import 
+@import
   './abstracts/variables',
   './abstracts/mixins';
 
@@ -9,7 +9,8 @@
 @import
   './components/blockquote';
 
-@import 
+@import
   './layout/grid';
 
 @import 'node_modules/normalize-scss/sass/normalize/import-now';
+@import 'node_modules/simplebar/dist/simplebar.min.css';

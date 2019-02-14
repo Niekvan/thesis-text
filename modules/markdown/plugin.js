@@ -42,9 +42,24 @@ const md = require('markdown-it')({
     render: function(tokens, idx) {
       const m = tokens[idx].info.trim().match(/^source\s+(.*)$/)
       if (tokens[idx].nesting === 1) {
-        return `<span class="source">(${m[1]})`
+        const author = m[1].split(' | ')
+        const data =
+          author.length > 1
+            ? [author[0]].concat(author[1].split(', '))
+            : m[1].split(', ')
+        if (data[2]) {
+          return `<span class="source">(<span class="author">${
+            data[0]
+          }</span>, <span class="year">${
+            data[1]
+          }</span>, <span class="page-ref">${data[2]}</span>`
+        } else {
+          return `<span class="source">(<span class="author">${
+            data[0]
+          }</span>, <span class="year">${data[1]}</span>`
+        }
       } else {
-        return `</span>`
+        return `)</span>`
       }
     },
     marker: '-'

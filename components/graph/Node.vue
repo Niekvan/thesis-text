@@ -15,7 +15,7 @@
         class="node__background"
       />
     </no-ssr>
-    <text class="node__text body" :style="size" alignment-baseline="middle">
+    <text class="node__text body" :class="{ active: settings.active === node.uuid }" :style="size" alignment-baseline="middle">
       {{ node.slug }}
     </text>
   </g>
@@ -85,14 +85,6 @@ export default {
           .getBBox()
       }
       return null
-    },
-    fontSize() {
-      if (this.settings.scale) {
-        return {
-          fontSize: `${1.25 * this.settings.scale}rem`
-        }
-      }
-      return null
     }
   },
   methods: {
@@ -113,17 +105,6 @@ export default {
     opacity: 1;
   }
 
-  // &__drag {
-  //   fill: $color-text-inverse;
-  //   opacity: 0;
-  // }
-
-  // &__icon {
-  //   fill: none;
-  //   stroke-width: 5;
-  //   stroke: $color-text-primary;
-  // }
-
   &__background {
     fill: $color-text-inverse;
   }
@@ -132,6 +113,10 @@ export default {
     text-anchor: middle;
     font-size: 1.25rem;
     text-transform: capitalize;
+
+    &.active {
+      fill: $color-text-green;
+    }
   }
 }
 </style>
