@@ -99,7 +99,7 @@ module.exports = {
       return axios
         .get('https://api.storyblok.com/v1/cdn/links', {
           params: {
-            version: 'published',
+            version: 'draft',
             token: process.env.STORYBLOK_TOKEN_PREVIEW,
             cv: Math.floor(Date.now() / 1e3)
           }
