@@ -59,11 +59,6 @@ module.exports = {
     ],
     '@nuxtjs/style-resources'
   ],
-  // markdownit: {
-  //   injected: true,
-  //   linkify: true,
-  //   use: ['markdown-it-attrs', ['markdown-it-container', 'quote', { validate: function(params) }]]
-  // },
   styleResources: {
     scss: [
       '@/assets/scss/abstracts/_variables.scss',
@@ -105,7 +100,7 @@ module.exports = {
         .get('https://api.storyblok.com/v1/cdn/links', {
           params: {
             version: 'published',
-            token: process.env.STORYBLOK_TOKEN_PROD,
+            token: process.env.STORYBLOK_TOKEN_PREVIEW,
             cv: Math.floor(Date.now() / 1e3)
           }
         })
