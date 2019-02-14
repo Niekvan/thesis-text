@@ -52,7 +52,7 @@ module.exports = {
       {
         accessToken:
           process.env.NODE_ENV === 'production'
-            ? process.env.STORYBLOK_TOKEN_PROD
+            ? process.env.STORYBLOK_TOKEN_PREVIEW
             : process.env.STORYBLOK_TOKEN_PREVIEW,
         cacheProvider: 'memory'
       }
