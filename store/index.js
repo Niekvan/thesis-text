@@ -51,17 +51,17 @@ export const mutations = {
 
 export const actions = {
   async getArticles({ commit }, isDev) {
-    const version = isDev ? 'draft' : 'published'
+    // const version = isDev ? 'draft' : 'published'
     const data = await this.$storyapi.get('cdn/stories', {
       starts_with: 'articles',
-      version: version
+      version: 'draft'
     })
     commit('SET_ARTICLES', data.data.stories)
   },
   async getSources({ commit }, isDev) {
-    const version = isDev ? 'draft' : 'published'
+    // const version = isDev ? 'draft' : 'published'
     const data = await this.$storyapi.get('cdn/stories/sources', {
-      version: version
+      version: 'draft'
     })
     commit('SET_SOURCES', data.data.story.content.sources)
   },

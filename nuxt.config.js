@@ -51,7 +51,7 @@ module.exports = {
       'storyblok-nuxt',
       {
         accessToken:
-          process.env.NODE_ENV === 'production'
+          process.env.NODE_ENV === 'dev'
             ? process.env.STORYBLOK_TOKEN_PREVIEW
             : process.env.STORYBLOK_TOKEN_PREVIEW,
         cacheProvider: 'memory'
@@ -108,9 +108,14 @@ module.exports = {
           const routes = Object.keys(res.data.links)
             .map(e => res.data.links[e])
             .filter(link => {
-              return !link.is_folder && link.name !== 'Home'
+              return (
+                !link.is_folder &&
+                link.name !== 'Home' &&
+                link.name !== 'sources' &&
+                link.name !== 'abstract'
+              )
             })
-            .map(link => link.slug)
+            .map(link => `/${link.slug}`)
           return routes
         })
     }

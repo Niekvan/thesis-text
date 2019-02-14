@@ -8,7 +8,7 @@
         <h1 v-if="story.content.title" class="heading-1">
           {{ story.content.title }}
         </h1>
-        <div 
+        <div
           class="body"
           v-html="body"
         />
@@ -22,12 +22,12 @@
             Index
           </nuxt-link>
         </li>
-        <li 
+        <li
           v-for="link in linkedArticles"
           :key="link.uuid"
           class="linked-articles__item"
         >
-          <nuxt-link 
+          <nuxt-link
             :to="`/${link.full_slug}`"
             class="linked-articles__link"
           >
@@ -77,12 +77,12 @@ export default {
     }
   },
   async asyncData(context) {
-    const version =
-      context.query._storyblok || context.isDev ? 'draft' : 'published'
+    // const version =
+    //   context.query._storyblok || context.isDev ? 'draft' : 'published'
     const { data: story } = await context.app.$storyapi.get(
       `cdn/stories/articles/${context.params.article}`,
       {
-        version: version
+        version: 'draft'
       }
     )
     return story

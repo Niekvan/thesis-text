@@ -159,15 +159,15 @@ export default {
     ...mapMutations(['SET_REFERENCE'])
   },
   async asyncData(context) {
-    const version =
-      context.query._storyblok || context.isDev ? 'draft' : 'published'
+    // const version =
+    //   context.query._storyblok || context.isDev ? 'draft' : 'published'
     const { data: story } = await context.app.$storyapi.get(
-      'cdn/stories/home',
+      `cdn/stories/home`,
       {
-        version: version
+        version: 'draft'
       }
     )
-    return { story: story.story }
+    return story
   }
 }
 </script>
