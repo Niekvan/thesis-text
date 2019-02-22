@@ -8,11 +8,13 @@
         X
       </span>
     </div>
-    <simplebar class="references__scroll">
-      <ul class="references__list line-width">
-        <reference v-for="source in sources" :key="source.uuid" class="references__item" :source="source" />
-      </ul>
-    </simplebar>
+    <div class="references__scroll">
+      <vue-scroll>
+        <ul class="references__list line-width">
+          <reference v-for="source in sources" :key="source.uuid" class="references__item" :source="source" />
+        </ul>
+      </vue-scroll>
+    </div>
   </section>
 </template>
 

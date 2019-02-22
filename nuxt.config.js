@@ -36,7 +36,15 @@ module.exports = {
   /*
   ** Plugins to load before mounting the App
   */
-  plugins: ['~/plugins/components', '~/api/ipApi.js'],
+  plugins: [
+    '~/plugins/components',
+    '~/api/ipApi.js',
+    '~/plugins/vuescroll',
+    {
+      src: '~/node_modules/lazysizes/lazysizes.js',
+      mode: 'client'
+    }
+  ],
 
   /*
   ** Nuxt.js modules
@@ -45,8 +53,7 @@ module.exports = {
     '@nuxtjs/axios',
     '@nuxtjs/pwa',
     '@nuxtjs/moment',
-    // '@nuxtjs/markdownit',
-    '@/modules/markdown/module',
+    '@/modules/markdown',
     [
       'storyblok-nuxt',
       {
@@ -59,6 +66,21 @@ module.exports = {
     ],
     '@nuxtjs/style-resources'
   ],
+
+  /*
+  ** PWA manifest
+  */
+  manifest: {
+    name: 'I Consent',
+    short_name: 'I Consent',
+    start_url: '/',
+    display: 'standalone',
+    lang: 'en-UK'
+  },
+
+  /*
+  ** Global scss vars and mixins
+  */
   styleResources: {
     scss: [
       '@/assets/scss/abstracts/_variables.scss',

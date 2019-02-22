@@ -1,16 +1,25 @@
+// 1. Config and helpers
 @import
-  './abstracts/variables',
-  './abstracts/mixins';
+'./abstracts/variables',
+'./abstracts/mixins';
 
+// 2. Vendors
 @import
-  './base/base',
-  './base/typography';
+'node_modules/normalize-scss/sass/normalize/import-now';
 
+// 3. Base styles
 @import
-  './components/blockquote';
+'./base/base',
+'./base/typography';
 
+// 4. Global layout
 @import
-  './layout/grid';
+'./layout/grid';
 
-@import 'node_modules/normalize-scss/sass/normalize/import-now';
-@import 'node_modules/simplebar/dist/simplebar.min.css';
+// 5. Global components
+@import
+'./components/blockquote',
+'./components/resizedimages',
+'./components/scrollbar';
+
+

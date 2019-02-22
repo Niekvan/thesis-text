@@ -8,26 +8,30 @@
         X
       </span>
     </div>
-    <div class="content row scroll">
-      <article class="col-lg-8">
-        <div class="line-width">
-          <h1 class="heading-1">
-            {{ article.content.title }}
-          </h1>
-          <div :ref="`md-${article.uuid}-${index}`" class="body" v-html="body" />
-          <transition name="fade">
-            <div v-if="source" class="source-container">
-              <span class="close" @click="source=null">
-                X
-              </span>
-              <reference :source="source" />
+    <div class="content scroll">
+      <vue-scroll>
+        <div class="row">
+          <article class="col-lg-8">
+            <div class="line-width">
+              <h1 class="heading-1">
+                {{ article.content.title }}
+              </h1>
+              <div :ref="`md-${article.uuid}-${index}`" class="body" v-html="body" />
+              <transition name="fade">
+                <div v-if="source" class="source-container">
+                  <span class="close" @click="source=null">
+                    X
+                  </span>
+                  <reference :source="source" />
+                </div>
+              </transition>
             </div>
-          </transition>
+          </article>
+          <aside class="side-bar col-lg-4">
+            <graph :nodes="[...linkedArticles, article]" :links="links" :settings="settings" />
+          </aside>
         </div>
-      </article>
-      <aside class="side-bar col-lg-4">
-        <graph :nodes="[...linkedArticles, article]" :links="links" :settings="settings" />
-      </aside>
+      </vue-scroll>
     </div>
   </section>
 </template>
@@ -61,13 +65,48 @@ export default {
         }
       },
       localSources: [],
-      source: null
+      source: null,
+      sizes: [
+        {
+          width: '300w',
+          size: '300'
+        },
+        {
+          width: '600w',
+          size: '600'
+        },
+        {
+          width: '900w',
+          size: '900'
+        }
+      ]
     }
   },
   computed: {
     body() {
-      if (this.article.content.body)
-        return this.$md.render(this.article.content.body)
+      if (this.article.content.body) {
+        let body = this.$md.render(this.article.content.body)
+        const regex = /<img src="([\w\W]+?)" alt="([\w\W]+?)"(\/?)>/g
+        const links = body.match(regex)
+        if (links) {
+          links.forEach(link => {
+            const src = link.replace(
+              /<img src="([\w\W]+?)" alt="([\w\W]+?)"(\/?)>/,
+              '$1'
+            )
+            const srcSet = this.createSrcSet(src)
+            const newImg = `<div class="loading image"><img src=${this.resizeUrl(
+              src,
+              '900'
+            )} data-src=${this.resizeUrl(
+              src,
+              '900'
+            )} data-srcset="${srcSet}" data-sizes="auto" class="lazyload" /></div>`
+            body = body.replace(link, newImg)
+          })
+        }
+        return body
+      }
       return ''
     },
     linkedArticles() {
@@ -102,10 +141,22 @@ export default {
     this.localSources.forEach(source => {
       source.addEventListener('click', this.handleQuote)
     })
+    document.addEventListener(
+      'lazyloaded',
+      function(e) {
+        e.target.parentNode.classList.add('image-loaded')
+        e.target.parentNode.classList.remove('loading')
+      },
+      { passive: true }
+    )
   },
   beforeDestroy() {
     this.localSources.forEach(source => {
       source.removeEventListener('click', this.handleQuote)
+    })
+    document.removeEventListener('lazyloaded', function(e) {
+      e.target.parentNode.classList.add('image-loaded')
+      e.target.parentNode.classList.remove('loading')
     })
   },
   methods: {
@@ -121,12 +172,14 @@ export default {
         event.target.parentNode.querySelector('.author').innerHTML,
         event.target.parentNode.querySelector('.year').innerHTML
       ]
-      console.log(keys) //eslint-disable-line
       const filteredSources = this.sources.filter(source => {
         const author = source.author ? source.author : source.title
         const year = source.year ? source.year : 'n.d.'
         return (
-          keys[0].split(', ').some(name => author.includes(name)) &&
+          keys[0]
+            .replace(/ et al./, '')
+            .split(', ')
+            .some(name => author.includes(name)) &&
           year.includes(keys[1].replace(/[^\d]/g, ''))
         )
       })
@@ -137,6 +190,18 @@ export default {
         const index = keys[1].replace(/[\d]/g, '').charCodeAt(0) - 97
         this.source = filteredSources[index]
       }
+    },
+    createSrcSet(link) {
+      const list = this.sizes.map(size => {
+        return `${this.resizeUrl(link, size.size)} ${size.width}`
+      })
+      return list.join(', ')
+    },
+    resizeUrl(link, size) {
+      return `//img2.storyblok.com/${size}x0/${link.replace(
+        '//a.storyblok.com',
+        ''
+      )}`
     },
     ...mapMutations(['REMOVE_ACTIVE_ARTICLE', 'REMOVE_NEXT_ARTILCES'])
   }
@@ -185,7 +250,6 @@ export default {
   }
 
   .scroll {
-    // height: calc(100% - 25px - 1rem);
     overflow-y: auto;
     width: 100%;
   }
@@ -208,8 +272,12 @@ export default {
       line-height: 1;
     }
 
+    .body {
+      position: relative;
+    }
+
     .source-container {
-      position: absolute;
+      position: fixed;
       top: 50%;
       left: 50%;
       transform: translate(-50%, -50%);

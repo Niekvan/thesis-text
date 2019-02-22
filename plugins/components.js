@@ -1,7 +1,5 @@
 import Vue from 'vue'
 
-import simplebar from 'simplebar-vue'
-
 import ArticleFrame from '@/components/ArticleFrame.vue'
 import IConsent from '@/components/IConsent.vue'
 import Source from '@/components/sources/Source.vue'
@@ -18,5 +16,4 @@ export default () => {
   Vue.component('article-frame', ArticleFrame)
   Vue.component('i-consent', IConsent)
   Vue.component('source-list', SourceList)
-  Vue.component('simplebar', simplebar)
 }

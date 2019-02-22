@@ -14,13 +14,13 @@
   },
   "dependencies": {
     "@nuxtjs/axios": "^5.3.6",
-    "@nuxtjs/markdownit": "^1.2.3",
     "@nuxtjs/moment": "^1.1.0",
     "@nuxtjs/pwa": "^2.6.0",
     "@nuxtjs/style-resources": "^0.1.1",
     "cross-env": "^5.2.0",
     "d3": "^5.8.2",
     "dotenv": "^6.2.0",
+    "lazysizes": "^4.1.5",
     "markdown-it": "^8.4.2",
     "markdown-it-attrs": "^2.3.2",
     "markdown-it-container": "^2.0.0",
@@ -28,8 +28,8 @@
     "normalize-scss": "^7.0.1",
     "nuxt": "^2.4.2",
     "request-ip": "^2.1.3",
-    "simplebar-vue": "^0.1.4",
-    "storyblok-nuxt": "^1.0.1"
+    "storyblok-nuxt": "^1.0.1",
+    "vuescroll": "^4.10.5"
   },
   "devDependencies": {
     "@nuxtjs/eslint-config": "^0.0.1",

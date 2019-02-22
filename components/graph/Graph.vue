@@ -103,10 +103,10 @@ export default {
   },
   mounted() {
     this.start()
-    const that = this
-    this.svg.selectAll('.node text').each(function(d, i) {
-      that.nodes[i].bb = this.getBBox()
-    })
+    document.addEventListener('resize', this.handleResize)
+  },
+  beforeDestroy() {
+    document.removeEventListener('resize', this.handleResize)
   },
   methods: {
     drag(simulation) {
@@ -181,6 +181,10 @@ export default {
       this.simulation.nodes(nodes)
       this.simulation.force('link').links(links)
       this.simulation.alpha(1).restart()
+      const that = this
+      this.svg.selectAll('.node text').each(function(d, i) {
+        that.nodes[i].bb = this.getBBox()
+      })
     },
     start() {
       this.simulation = this.forceSimulation('uuid', 150).on(
@@ -212,6 +216,9 @@ export default {
             : 0.05
         })
       }
+    },
+    handleResize() {
+      this.restart(this.nodes, this.links)
     }
   }
 }

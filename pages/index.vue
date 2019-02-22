@@ -1,13 +1,18 @@
 <template>
   <main v-if="story" class="wrapper row">
     <section v-editable="story.content" class="section section__legend col-lg-12">
-      <h1 class="heading-1 title">
-        {{ story.content.title }}
-      </h1>
+      <div class="titles">
+        <h1 class="heading-1 title">
+          {{ story.content.title }}
+        </h1>
+        <h2 class="heading-2 sub_title">
+          {{ story.content.sub_title }}
+        </h2>
+      </div>
       <graph :nodes="selectedArticles.reverse()" :links="links" :settings="settings" />
-      <h2 class="heading-2 reference-trigger" @click="SET_REFERENCE(true)">
+      <h3 class="heading-2 reference-trigger" @click="SET_REFERENCE(true)">
         References
-      </h2>
+      </h3>
     </section>
     <article-frame
       v-for="(article,index) in activeArticles"
@@ -173,13 +178,25 @@ export default {
 </script>
 
 <style scoped lang="scss">
-.title {
+.titles {
   position: fixed;
-  font-weight: 400;
-  font-size: 2.5rem;
-  margin: 0.3em 0.2em;
+  margin: 1rem 0.5rem;
   font-family: $font-sans;
   letter-spacing: -1px;
+}
+
+.title {
+  font-family: $font-sans;
+  font-weight: 400;
+  font-size: 2.5rem;
+  margin: 0;
+}
+
+.sub_title {
+  // font-family: $font-sans;
+  font-weight: 400;
+  font-size: 1.5rem;
+  margin-top: 0.5em;
 }
 
 .reference-trigger {
