@@ -10,6 +10,16 @@ html {
   -webkit-font-smoothing: antialiased;
 }
 
+p {
+  &.inline {
+    display: inline;
+  }
+
+  &.block {
+    display: block;
+  }
+}
+
 .line-width {
   width: 36em;
   max-width: 100%;
@@ -67,7 +77,25 @@ html {
   color: $color-text-green;
   font-size: 0.9em;
   font-style: italic;
-  // text-align: center;
+
+  .source {
+    font-size: 1em;
+
+    &:hover {
+      color: inherit;
+    }
+  }
+}
+
+.source {
+  font-family: $font-serif;
+  font-size: 0.8em;
+  font-style: italic;
+  transition: all 0.2s;
+
+  &:hover {
+    color: $color-text-red;
+  }
 }
 
 .caption {

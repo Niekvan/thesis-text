@@ -18,7 +18,7 @@ export default {
 <style scoped lang="scss">
 .link {
   fill: none;
-  stroke-width: 2;
+  stroke-width: 1;
   stroke-opacity: 0.05;
   stroke: $color-text-primary;
 }

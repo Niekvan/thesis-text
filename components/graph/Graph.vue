@@ -1,6 +1,6 @@
 <template>
   <div>
-    <svg :id="settings.selector" class="svg">
+    <svg :id="settings.selector" class="svg" :viewBox="`0 0 ${width} ${height}`" preserveAspectRatio="xMidYMid meet">
       <g class="links">
         <node-link
           v-for="linkData in links"
@@ -56,16 +56,14 @@ export default {
   },
   data() {
     return {
-      simulation: null
+      simulation: null,
+      width: 0,
+      height: 0
     }
   },
   computed: {
     svg() {
-      const svg = d3.select(`svg#${this.settings.selector}`)
-      svg
-        .attr('viewBox', [0, 0, this.width, this.height])
-        .attr('preserveAspectRatio', 'xMidYMid meet')
-      return svg
+      return d3.select(`svg#${this.settings.selector}`)
     },
     node() {
       return (
@@ -91,22 +89,18 @@ export default {
       })
       return linkIndex
     },
-    height() {
-      return window.innerHeight - 5
-    },
-    width() {
-      return window.innerWidth - 1
-    },
     offset() {
       return 50
     }
   },
   mounted() {
+    this.width = window.innerWidth - 1
+    this.height = window.innerHeight - 5
     this.start()
-    document.addEventListener('resize', this.handleResize)
+    window.addEventListener('resize', this.handleResize)
   },
   beforeDestroy() {
-    document.removeEventListener('resize', this.handleResize)
+    window.removeEventListener('resize', this.handleResize)
   },
   methods: {
     drag(simulation) {
@@ -207,7 +201,7 @@ export default {
     fade(opacity, over) {
       const strokeOpacity = over ? 1 : 0.05
       return d => {
-        this.node.style('opacity', o => {
+        this.node.select('.node__text').style('opacity', o => {
           return this.isConnected(d, o) ? 1 : opacity
         })
         this.link.style('stroke-opacity', o => {
@@ -218,6 +212,8 @@ export default {
       }
     },
     handleResize() {
+      this.width = window.innerWidth - 1
+      this.height = window.innerHeight - 5
       this.restart(this.nodes, this.links)
     }
   }

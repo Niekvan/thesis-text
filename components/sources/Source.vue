@@ -51,9 +51,14 @@ export default {
 
 <style lang="scss" scoped>
 .source {
-  font-family: $font-serif;
   margin-bottom: 0.5em;
   list-style-type: none;
+  font-style: normal;
+  font-size: 1em;
+
+  &:hover {
+    color: inherit;
+  }
 
   .name {
     font-style: italic;

@@ -35,28 +35,32 @@ const md = require('markdown-it')({
     },
     marker: '-'
   })
-  .use(container, 'something', {
+  .use(container, 'source', {
     validate: function(params) {
       return params.trim().match(/^source/)
     },
     render: function(tokens, idx) {
-      const m = tokens[idx].info.trim().match(/^source\s+(.*)$/)
+      const m = tokens[idx].info
+        .trim()
+        .match(/^source\s+(?:(inline)?\s?)+(.*)$/)
       if (tokens[idx].nesting === 1) {
-        const author = m[1].split(' | ')
+        const author = m[2].split(' | ')
         const data =
           author.length > 1
             ? [author[0]].concat(author[1].split(', '))
-            : m[1].split(', ')
+            : m[2].split(', ')
         if (data[2]) {
-          return `<span class="source">(<span class="author">${
-            data[0]
-          }</span>, <span class="year">${
+          return `<span class="source ${
+            m[1] ? m[1] : ''
+          }">(<span class="author">${data[0]}</span>, <span class="year">${
             data[1]
           }</span>, <span class="page-ref">${data[2]}</span>`
         } else {
-          return `<span class="source">(<span class="author">${
-            data[0]
-          }</span>, <span class="year">${data[1]}</span>`
+          return `<span class="source ${
+            m[1] ? m[1] : ''
+          }">(<span class="author">${data[0]}</span>, <span class="year">${
+            data[1]
+          }</span>`
         }
       } else {
         return `)</span>`

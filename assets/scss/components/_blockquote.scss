@@ -3,12 +3,6 @@ blockquote {
 
   .sidenote {
     &__wrapper {
-      pointer-events: none;
-
-      &>span {
-        pointer-events: auto;
-      }
-
       &:hover {
         color: $color-text-red;
 
@@ -19,45 +13,15 @@ blockquote {
     }
 
     &__link {
-      display: inline-block;
-
       &::after {
-        content: '';
-        display: inline-block;
-        width: 0.75em;
-        height: 0.75em;
-        margin-left: 0.25em;
-        position: absolute;
-        right: -1.90em;
-
+        right: -0.25em;
         background: $black-indigo;
-        border-radius: 50%;
-      }
-    }
-
-    &__description {
-      position: absolute;
-      right: calc(-40% - 3em);
-      width: 40%;
-      z-index: 10;
-      background: $white;
-      font-size: 0.9em;
-      max-height: 0;
-      overflow: hidden;
-      transition: max-height 0.2s 0.1s;
-      color: $color-text-red;
-
-      p {
-        margin: 0;
       }
     }
   }
 }
 
 .quote {
-  color: $color-text-green;
-  font-size: 0.9em;
-  font-style: italic;
   position: relative;
 
   .text {
@@ -67,18 +31,20 @@ blockquote {
       display: inline;
     }
   }
-  .source {
-    display: block;
-    max-height: 0;
-    overflow: hidden;
-    transition: all 0.3s;
-    &:hover {
-      cursor: pointer;
-    }
-  }
+}
+
+.source {
+  display: block;
+
   &:hover {
-    .source {
-      max-height: 100px;
+    cursor: pointer;
+  }
+
+  &.inline {
+    display: inline;
+
+    + p {
+      display: inline;
     }
   }
 }
@@ -99,24 +65,29 @@ blockquote {
       color: $color-text-red;
 
       .sidenote__description {
-        max-height: 500px;
+        transition: max-height 0.3s 0s;
+        max-height: 1000px;
       }
     }
   }
 
   &__link {
     display: inline-block;
+    position: relative;
+    padding-right: 0.5em;
 
     &::after {
       content: '';
       display: inline-block;
-      width: 0.75em;
-      height: 0.75em;
       position: absolute;
-      right: -1.25em;
+      right: 0;
+      top: 0.25em;
+      width: 0.5em;
+      height: 0.5em;
+
       z-index: 2;
       transform: translateY(1px);
-      background: $black-indigo;
+      background: $color-text-green;
       border-radius: 50%;
     }
   }
@@ -128,17 +99,13 @@ blockquote {
     z-index: 10;
     background: $white;
     font-size: 0.9em;
-    max-height: 0;
+    max-height: 0px;
     overflow: hidden;
-    transition: max-height 0.2s 0.1s;
+    transition: max-height 0.2s 0.75s;
     color: $color-text-red;
 
     p {
       margin: 0;
     }
   }
-}
-
-p.inline {
-  display: inline;
 }
