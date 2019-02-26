@@ -1,5 +1,5 @@
 <template>
-  <main v-if="story" class="wrapper row">
+  <main v-if="story" class="wrapper row" :class="opacityClass">
     <section v-editable="story.content" class="section section__legend col-lg-12">
       <div class="titles">
         <h1 class="heading-1 title">
@@ -79,6 +79,9 @@ export default {
           return links
         })
       return this.flatten(links)
+    },
+    opacityClass() {
+      return this.activeArticles.length ? 'opaque' : ''
     },
     ...mapState([
       'articles',
@@ -212,9 +215,25 @@ export default {
 </script>
 
 <style scoped lang="scss">
-// .wrapper {
-//   // background: $color-text-yellow;
-// }
+.wrapper {
+  position: relative;
+  min-height: 100vh;
+  &:before {
+    content: '';
+    position: absolute;
+    display: block;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+    background: $cobalt-green;
+    opacity: 1;
+  }
+  &.opaque {
+    &:before {
+      opacity: 0.75;
+    }
+  }
+}
 .titles {
   position: fixed;
   margin: 1rem 0.5rem 0;
