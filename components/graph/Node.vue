@@ -1,6 +1,6 @@
 <template>
   <!-- <nuxt-link :to="`/${node.full_slug}`"> -->
-  <g class="node" @click="showArticle(node.uuid)">
+  <g class="node" :class="node.slug" @click="showArticle(node.uuid)">
     <!-- <svg :width="settings.width" :height="settings.height" viewBox="0 0 170 170" class="node__item">
       <path class="node__drag" d="M85,85m-85,0a85,85 0 1,0 170,0a85,85 0 1,0 -170,0" />
       <path class="node__icon" :d="path" />
@@ -80,7 +80,7 @@ export default {
     },
     BBox() {
       if (process.browser && select('.node').node()) {
-        return select('.node')
+        return select(`.node.${this.node.slug}`)
           .node()
           .getBBox()
       }
@@ -110,6 +110,7 @@ export default {
   }
 
   &__text {
+    font-family: $font-serif;
     text-anchor: middle;
     font-size: 1.25rem;
     text-transform: capitalize;

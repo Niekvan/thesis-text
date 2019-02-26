@@ -14,12 +14,14 @@
 
 // 4. Global layout
 @import
-'./layout/grid';
+'./layout/grid',
+'./layout/scrollbar';
 
 // 5. Global components
 @import
 './components/blockquote',
 './components/resizedimages',
-'./components/scrollbar';
+'./components/scrollbar',
+'./components/sidenote';
 
 

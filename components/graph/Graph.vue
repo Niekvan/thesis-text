@@ -22,12 +22,12 @@
 
 <script>
 import {
+  forceCenter,
   forceLink,
   forceManyBody,
   forceSimulation,
-  forceCenter,
   forceCollide,
-  // forceX,
+  forceX,
   forceY
 } from 'd3-force'
 import { drag } from 'd3-drag'
@@ -62,19 +62,41 @@ export default {
     }
   },
   computed: {
+    centers() {
+      return {
+        '1': {
+          x: this.width / 6,
+          y: this.height / 3
+        },
+        '2': {
+          x: (this.width / 6) * 2,
+          y: this.height / 2
+        },
+        '3': {
+          x: (this.width / 6) * 3,
+          y: this.height / 2
+        },
+        '4': {
+          x: (this.width / 6) * 4,
+          y: this.height / 2
+        },
+        '5': {
+          x: (this.width / 6) * 5,
+          y: this.height / 2
+        }
+      }
+    },
     svg() {
       return d3.select(`svg#${this.settings.selector}`)
     },
     node() {
-      return (
-        this.svg
-          .select('g.nodes')
-          .selectAll('.node')
-          .data(this.nodes)
-          // .call(this.drag(this.simulation))
-          .on('mouseover', this.fade(0.2, true))
-          .on('mouseout', this.fade(1, false))
-      )
+      return this.svg
+        .select('g.nodes')
+        .selectAll('.node')
+        .data(this.nodes)
+        .call(this.drag(this.simulation))
+        .on('mouseover', this.fade(0.2, true))
+        .on('mouseout', this.fade(1, false))
     },
     link() {
       return this.svg
@@ -88,9 +110,6 @@ export default {
         linkIndex[`${link.source.uuid},${link.target.uuid}`] = 1
       })
       return linkIndex
-    },
-    offset() {
-      return 50
     }
   },
   mounted() {
@@ -123,52 +142,125 @@ export default {
         .on('drag', dragged)
         .on('end', dragended)
     },
-    forceSimulation(selector, strength) {
-      /* eslint-disable */
+    forceSimulation(selector, strength, charge) {
       return forceSimulation()
+        .force('center', forceCenter(this.width / 2, this.height / 2))
         .force(
           'charge',
           forceManyBody()
-            .strength(strength)
-            .distanceMin(10)
+            .strength(charge)
+            .distanceMin(150)
         )
-        .force('center', forceCenter(this.width / 2, this.height / 2))
-        .force('collision', forceCollide(this.settings.nodes.width))
+        .force('collision', forceCollide(this.settings.collide))
         .force('link', forceLink().id(d => d[selector]))
-        .force('y', forceY())
-        // .force('x', forceX().x(d => d.primary ? 100 : this.width / 3 * 2))
+        .force(
+          'y',
+          forceY()
+            .strength(strength)
+            .y(this.height / 2)
+        )
+        .force(
+          'x',
+          forceX()
+            .strength(strength)
+            .x(d => this.centers[d.content.level].x)
+        )
+        .stop()
     },
     positionLink(d) {
       d.source.x = Math.max(
-        this.offset,
-        Math.min(this.width - this.offset, d.source.x)
+        Math.max(
+          this.centers[d.source.content.level].x - this.settings.freedom,
+          d.source.bb.width
+        ),
+        Math.min(
+          Math.min(
+            this.centers[d.source.content.level].x + this.settings.freedom,
+            this.width - d.source.bb.width
+          ),
+          d.source.x
+        )
       )
-      d.source.y = Math.max(
-        this.offset,
-        Math.min(this.height - this.offset, d.source.y)
-      )
+      if (d.source.content.level === '1') {
+        d.source.y = this.centers[d.source.content.level].y
+      } else {
+        d.source.y = Math.max(
+          Math.max(
+            this.centers[d.source.content.level].y - this.settings.freedom,
+            d.source.bb.height
+          ),
+          Math.min(
+            Math.min(
+              this.centers[d.source.content.level].y + this.settings.freedom,
+              this.height - d.source.bb.height
+            ),
+            d.source.y
+          )
+        )
+      }
       d.target.x = Math.max(
-        this.offset,
-        Math.min(this.width - this.offset, d.target.x)
+        Math.max(
+          this.centers[d.target.content.level].x - this.settings.freedom,
+          d.target.bb.width
+        ),
+        Math.min(
+          Math.min(
+            this.centers[d.target.content.level].x + this.settings.freedom,
+            this.width - d.target.bb.width
+          ),
+          d.target.x
+        )
       )
-      d.target.y = Math.max(
-        this.offset,
-        Math.min(this.height - this.offset, d.target.y)
-      )
-      const offset = 30
-      const midPointX = (d.source.x + d.target.x) / 2
-      const midPointY = (d.source.y + d.target.y) / 2
-      const dx = d.target.x - d.source.x
-      const dy = d.target.y - d.source.y
-      const normalize = Math.sqrt(dx * dx + dy * dy)
-      const offsetX = midPointX + offset * (dy / normalize)
-      const offsetY = midPointY + offset * (dx / normalize)
-
-      return `M${d.source.x},${d.source.y}S${offsetX},${offsetY} ${d.target.x},${d.target.y}` //eslint-disable-line
+      if (d.target.content.level === '1') {
+        d.target.y = this.centers[d.target.content.level].y
+      } else {
+        d.target.y = Math.max(
+          Math.max(
+            this.centers[d.target.content.level].y - this.settings.freedom,
+            d.target.bb.height
+          ),
+          Math.min(
+            Math.min(
+              this.centers[d.target.content.level].y + this.settings.freedom,
+              this.height - d.target.bb.height
+            ),
+            d.target.y
+          )
+        )
+      }
+      return `M${d.source.x},${d.source.y} ${d.target.x},${d.target.y}` //eslint-disable-line
     },
     positionNode(d) {
-      d.x = Math.max(this.offset, Math.min(this.width - this.offset, d.x))
-      d.y = Math.max(this.offset, Math.min(this.height - this.offset, d.y))
+      d.x = Math.max(
+        Math.max(
+          this.centers[d.content.level].x - this.settings.freedom,
+          d.bb.width
+        ),
+        Math.min(
+          Math.min(
+            this.centers[d.content.level].x + this.settings.freedom,
+            this.width - d.bb.width
+          ),
+          d.x
+        )
+      )
+      if (d.content.level === '1') {
+        d.y = this.centers[d.content.level].y
+      } else {
+        d.y = Math.max(
+          Math.max(
+            this.centers[d.content.level].y - this.settings.freedom,
+            d.bb.height
+          ),
+          Math.min(
+            Math.min(
+              this.centers[d.content.level].y + this.settings.freedom,
+              this.height - d.bb.height
+            ),
+            d.y
+          )
+        )
+      }
       return `translate(${d.x}, ${d.y})`
     },
     restart(nodes, links) {
@@ -181,10 +273,11 @@ export default {
       })
     },
     start() {
-      this.simulation = this.forceSimulation('uuid', 150).on(
-        'tick',
-        this.ticked
-      )
+      this.simulation = this.forceSimulation(
+        'uuid',
+        this.settings.strength,
+        this.settings.charge
+      ).on('tick', this.ticked)
       this.restart(this.nodes, this.links)
     },
     ticked() {
@@ -223,5 +316,6 @@ export default {
 <style scoped>
 .svg {
   max-width: 100%;
+  user-select: none;
 }
 </style>

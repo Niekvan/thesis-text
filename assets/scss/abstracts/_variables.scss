@@ -5,6 +5,29 @@ $benzol-green: #00978C;
 $white: #FFFFFF;
 $brand-color: $white;
 
+$violet: #2619d1;
+$olive-ocher: #d1bd19;
+$cobalt-green: #94ff94;
+
+$orange-yellow: #ffab00;
+$violet: #2619d1;
+$red-orange: #e81900;
+
+$turqoise-green: #b5ffc2;
+$antwarp-blue: #008aa1;
+$apricot-yellow: #FFE600;
+
+$vandar-poels-blue: #003e83;
+$lemon-yellow: #F2FF00;
+$vernonia-purple: #7e3075;
+
+$olive-ocher: #d1bd19;
+$cerulian-blue: #2c91b7;
+$orange-yellow: #ffab00;
+
+$color1: rgba(4, 15, 15, 1);
+$color2: rgba(154, 3, 30, 1);
+$color3: rgba(0, 115, 184, 1);
 // BREAKPOINTS
 $bp-sm: 480px;
 $bp-md: 768px;
@@ -35,8 +58,8 @@ $font-size-base: 25px;
 $font-size-body: $font-size-base;
 $base-font-size: $font-size-base;
 
-$color-text-primary: $black-indigo;
+$color-text-primary: $color1;
 $color-text-inverse: $white;
-$color-text-green: $benzol-green;
+$color-text-green: $color3;
 $color-text-yellow: $yellow-orange;
-$color-text-red: $jasper-red;
+$color-text-red: $color2;

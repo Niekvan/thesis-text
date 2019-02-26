@@ -44,9 +44,11 @@ export default {
     text-decoration: none;
     word-wrap: break-word;
     transition: all 0.2s;
+    border-bottom: 0px;
 
     &:hover {
-      color: $color-text-green;
+      transition: all 0.2s;
+      border-bottom: 2px solid $color-text-red;
     }
   }
 }

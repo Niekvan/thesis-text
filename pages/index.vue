@@ -39,7 +39,12 @@ export default {
         selector: 'index-graph',
         nodes: {
           width: 200
-        }
+        },
+        strength: 1,
+        charge: -50,
+        collide: 150,
+        offset: 50,
+        freedom: 120
       },
       story: null
     }
@@ -83,9 +88,9 @@ export default {
       'referenceOpen'
     ])
   },
-  mounted() {
-    // await this.formatSources()
-  },
+  // async mounted() {
+  //   await this.formatSources()
+  // },
   methods: {
     // async formatSources() {
     //   const StoryblokClient = require('storyblok-js-client')
@@ -109,16 +114,48 @@ export default {
     //       : null
     //     const author = source.author
     //       ? source.type === 'motion_picture'
-    //         ? source.author.map(author => author.literal).join(', &')
-    //         : source.author
-    //             .map(author => {
-    //               return author.given
-    //                 ? `${author.family}, ${author.given
-    //                     .match(/\b(\w)/g)
-    //                     .join('. ')}.`
-    //                 : author.family
-    //             })
-    //             .join(', & ')
+    //         ? source.author.map(author => author.literal).length > 1
+    //           ? `${source.author
+    //               .map(author => author.literal)
+    //               .slice(0, -1)
+    //               .join(', ')}, and ${source.author
+    //               .map(author => author.literal)
+    //               .slice(-1)}`
+    //           : source.author.map(author => author.literal).join(', ')
+    //         : source.author.map(author => {
+    //             return author.given
+    //               ? `${author.family}, ${author.given
+    //                   .match(/\b(\w)/g)
+    //                   .join('. ')}.`
+    //               : author.family
+    //           }).length > 1
+    //           ? `${source.author
+    //               .map(author => {
+    //                 return author.given
+    //                   ? `${author.family}, ${author.given
+    //                       .match(/\b(\w)/g)
+    //                       .join('. ')}.`
+    //                   : author.family
+    //               })
+    //               .slice(0, -1)
+    //               .join(', ')}, and ${source.author
+    //               .map(author => {
+    //                 return author.given
+    //                   ? `${author.family}, ${author.given
+    //                       .match(/\b(\w)/g)
+    //                       .join('. ')}.`
+    //                   : author.family
+    //               })
+    //               .slice(-1)}`
+    //           : source.author
+    //               .map(author => {
+    //                 return author.given
+    //                   ? `${author.family}, ${author.given
+    //                       .match(/\b(\w)/g)
+    //                       .join('. ')}.`
+    //                   : author.family
+    //               })
+    //               .join(', ')
     //       : null
     //     const location = source.URL
     //       ? [
@@ -140,9 +177,9 @@ export default {
     //           }
     //         ]
     //     return {
+    //       author,
     //       year,
     //       title,
-    //       author,
     //       location,
     //       component: 'source'
     //     }
@@ -155,10 +192,7 @@ export default {
     //       }
     //     }
     //   }
-    //   const { story: check } = await Storyblok.put(
-    //     'spaces/52847/stories/551910',
-    //     story
-    //   )
+    //   const check = await Storyblok.put('spaces/52847/stories/551910', story)
     //   console.log(check) //eslint-disable-line
     // },
     ...mapMutations(['SET_REFERENCE'])
@@ -178,25 +212,25 @@ export default {
 </script>
 
 <style scoped lang="scss">
+// .wrapper {
+//   // background: $color-text-yellow;
+// }
 .titles {
   position: fixed;
-  margin: 1rem 0.5rem;
-  font-family: $font-sans;
+  margin: 1rem 0.5rem 0;
   letter-spacing: -1px;
 }
 
 .title {
-  font-family: $font-sans;
+  font-size: 4rem;
   font-weight: 400;
-  font-size: 2.5rem;
   margin: 0;
 }
 
 .sub_title {
-  // font-family: $font-sans;
   font-weight: 400;
   font-size: 1.5rem;
-  margin-top: 0.5em;
+  margin: 0;
 }
 
 .reference-trigger {

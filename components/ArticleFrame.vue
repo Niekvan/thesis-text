@@ -9,29 +9,29 @@
       </span>
     </div>
     <div class="content scroll">
-      <vue-scroll>
-        <div class="row">
-          <article class="col-lg-8">
-            <div class="line-width">
-              <h1 class="heading-1">
-                {{ article.content.title }}
-              </h1>
-              <div :ref="`md-${article.uuid}-${index}`" class="body" v-html="body" />
-              <transition name="fade">
-                <div v-if="source" class="source-container">
-                  <span class="close" @click="source=null">
-                    X
-                  </span>
-                  <reference :source="source" />
-                </div>
-              </transition>
-            </div>
-          </article>
-          <aside class="side-bar col-lg-4">
-            <graph :nodes="[...linkedArticles, article]" :links="links" :settings="settings" />
-          </aside>
-        </div>
-      </vue-scroll>
+      <!-- <custom-scroll> -->
+      <div class="row">
+        <article class="col-lg-8">
+          <div class="line-width">
+            <h1 class="heading-1">
+              {{ article.content.title }}
+            </h1>
+            <div :ref="`md-${article.uuid}-${index}`" class="body" v-html="body" />
+            <transition name="fade">
+              <div v-if="source" class="source-container">
+                <span class="close" @click="source=null">
+                  X
+                </span>
+                <reference :source="source" />
+              </div>
+            </transition>
+          </div>
+        </article>
+        <aside class="side-bar col-lg-4">
+          <graph :nodes="[...linkedArticles, article]" :links="links" :settings="settings" />
+        </aside>
+      </div>
+      <!-- </custom-scroll> -->
     </div>
   </section>
 </template>
@@ -62,7 +62,12 @@ export default {
           height: 300,
           scale: 2.5,
           active: this.articleUuid
-        }
+        },
+        strength: 0.03,
+        charge: -100,
+        collide: 300,
+        offset: 150,
+        freedom: 1000
       },
       localSources: [],
       source: null,
@@ -210,14 +215,15 @@ export default {
 
 <style lang="scss" scoped>
 .article {
+  counter-reset: sidenote;
   width: 90%;
   height: 80%;
   position: fixed;
   transform: translate(-50%, -50%);
-  border: 2px solid $color-text-primary;
   background: $white;
   font-family: $font-serif;
   overflow: hidden;
+  box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
 
   &:not(:last-child):hover {
     transform: translate(-50%, calc(-50% - 0.75rem));
@@ -231,16 +237,15 @@ export default {
     left: 0;
     box-sizing: border-box;
     display: flex;
-    border-bottom: 2px solid $color-text-primary;
+    z-index: 0;
+    background: $white;
 
     .bar {
-      background: $color-text-green;
       flex-grow: 1;
       padding: 0.25rem 1rem;
     }
 
     .close {
-      background: $color-text-red;
       padding: 0.25rem 0.5rem;
 
       &:hover {
@@ -260,16 +265,15 @@ export default {
 
     .side-bar {
       position: fixed;
-      width: 100%;
+      width: calc(100% - 12px);
 
-      right: 0;
+      right: 12px;
       padding-top: 2rem;
     }
 
     .heading-1 {
-      font-size: 4em;
-      font-weight: 600;
       line-height: 1;
+      margin-bottom: 0.5em;
     }
 
     .body {

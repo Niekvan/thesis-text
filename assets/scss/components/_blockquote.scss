@@ -1,24 +1,5 @@
 blockquote {
   margin: 1em 1.5em;
-
-  .sidenote {
-    &__wrapper {
-      &:hover {
-        color: $color-text-red;
-
-        .sidenote__description {
-          max-height: 500px;
-        }
-      }
-    }
-
-    &__link {
-      &::after {
-        right: -0.25em;
-        background: $black-indigo;
-      }
-    }
-  }
 }
 
 .quote {
@@ -43,69 +24,8 @@ blockquote {
   &.inline {
     display: inline;
 
-    + p {
+    + p:not(.block) {
       display: inline;
-    }
-  }
-}
-
-.sidenote {
-  &__wrapper {
-    pointer-events: none;
-
-    &>span {
-      pointer-events: auto;
-    }
-
-    &+p {
-      display: inline;
-    }
-
-    &:hover {
-      color: $color-text-red;
-
-      .sidenote__description {
-        transition: max-height 0.3s 0s;
-        max-height: 1000px;
-      }
-    }
-  }
-
-  &__link {
-    display: inline-block;
-    position: relative;
-    padding-right: 0.5em;
-
-    &::after {
-      content: '';
-      display: inline-block;
-      position: absolute;
-      right: 0;
-      top: 0.25em;
-      width: 0.5em;
-      height: 0.5em;
-
-      z-index: 2;
-      transform: translateY(1px);
-      background: $color-text-green;
-      border-radius: 50%;
-    }
-  }
-
-  &__description {
-    position: absolute;
-    right: calc(-40% - 2em);
-    width: 40%;
-    z-index: 10;
-    background: $white;
-    font-size: 0.9em;
-    max-height: 0px;
-    overflow: hidden;
-    transition: max-height 0.2s 0.75s;
-    color: $color-text-red;
-
-    p {
-      margin: 0;
     }
   }
 }

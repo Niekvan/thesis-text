@@ -1,0 +1,88 @@
+.sidenote {
+  &__wrapper {
+    pointer-events: none;
+
+    &>span {
+      pointer-events: auto;
+    }
+
+    &+p {
+      display: inline;
+    }
+
+    &:hover {
+      color: $color-text-red;
+      cursor: help;
+
+      .sidenote__description {
+        transition: max-height 0.3s 0s;
+        max-height: 1000px;
+      }
+    }
+  }
+
+  &__link {
+    display: inline-block;
+    position: relative;
+    margin-right: 0.75em;
+
+    &::after {
+      counter-increment: sidenote;
+      content: counter(sidenote);
+
+      display: inline-block;
+      position: absolute;
+      right: -0.25em;
+      top: -0.25em;
+
+      // font-size: 0.5em;
+      font-weight: 700;
+      color: $color-text-red;
+      z-index: 2;
+    }
+
+    // &::before {
+    //   content: '';
+    //   position: absolute;
+    //   right: -0.75em;
+    //   top: 0.25em;
+
+    //   width: 0.75em;
+    //   height: 0.75em;
+    //   background: $color-text-primary;
+    // }
+  }
+
+  &__description {
+    position: absolute;
+    right: calc(-40% - 2em);
+    width: 40%;
+    z-index: 10;
+    background: $white;
+    font-size: 0.9em;
+    max-height: 0px;
+    overflow: hidden;
+    transition: max-height 0.2s 0.75s;
+    color: $color-text-red;
+
+    p {
+      margin: 0;
+    }
+  }
+}
+
+.quote {
+  .sidenote {
+    &__wrapper {
+      &:hover {
+        color: $color-text-red;
+      }
+    }
+
+    &__link {
+      &::after {
+        right: -0.75em;
+      }
+    }
+  }
+}
