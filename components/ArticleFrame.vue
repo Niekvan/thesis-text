@@ -63,10 +63,9 @@ export default {
           scale: 2.5,
           active: this.articleUuid
         },
-        strength: 0.03,
-        charge: -100,
+        strength: 0.3,
+        charge: -1,
         collide: 300,
-        offset: 150,
         freedom: 1000
       },
       localSources: [],
@@ -93,7 +92,6 @@ export default {
         let body = this.$md.render(this.article.content.body)
         const regex = /<img src="([\w\W]+?)" alt="([\w\W]+?)" class="([\w\W]+?)"(\/?)>/g
         const links = body.match(regex)
-        console.log(links) //eslint-disable-line
         if (links) {
           links.forEach(link => {
             const src = link.replace(
@@ -104,7 +102,6 @@ export default {
               /<img src="([\w\W]+?)" alt="([\w\W]+?)" class="([\w\W]+?)"(\/?)>/,
               '$3'
             )
-            console.log(classes) //eslint-disable-line
             const srcSet = this.createSrcSet(src)
             const newImg = `<div class="loading image"><img src=${this.resizeUrl(
               src,
@@ -276,6 +273,7 @@ export default {
     .side-bar {
       position: fixed;
       width: calc(100% - 12px);
+      height: 50%;
 
       right: 12px;
       padding-top: 2rem;

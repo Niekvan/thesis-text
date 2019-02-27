@@ -1,23 +1,21 @@
 <template>
-  <div>
-    <svg :id="settings.selector" class="svg" :viewBox="`0 0 ${width} ${height}`" preserveAspectRatio="xMidYMid meet">
-      <g class="links">
-        <node-link
-          v-for="linkData in links"
-          :key="linkData.name"
-          :link="linkData"
-        />
-      </g>
-      <g class="nodes">
-        <node
-          v-for="nodeData in nodes"
-          :key="nodeData.uuid"
-          :node="nodeData"
-          :settings="settings.nodes"
-        />
-      </g>
-    </svg>
-  </div>
+  <svg :id="settings.selector" class="svg">
+    <g class="links">
+      <node-link
+        v-for="linkData in links"
+        :key="linkData.name"
+        :link="linkData"
+      />
+    </g>
+    <g class="nodes">
+      <node
+        v-for="nodeData in nodes"
+        :key="nodeData.uuid"
+        :node="nodeData"
+        :settings="settings.nodes"
+      />
+    </g>
+  </svg>
 </template>
 
 <script>
@@ -113,8 +111,8 @@ export default {
     }
   },
   mounted() {
-    this.width = window.innerWidth - 1
-    this.height = window.innerHeight - 5
+    this.width = this.svg.node().clientWidth
+    this.height = this.svg.node().clientHeight
     this.start()
     window.addEventListener('resize', this.handleResize)
   },
@@ -145,12 +143,7 @@ export default {
     forceSimulation(selector, strength, charge) {
       return forceSimulation()
         .force('center', forceCenter(this.width / 2, this.height / 2))
-        .force(
-          'charge',
-          forceManyBody()
-            .strength(charge)
-            .distanceMin(150)
-        )
+        .force('charge', forceManyBody().strength(charge))
         .force('collision', forceCollide(this.settings.collide))
         .force('link', forceLink().id(d => d[selector]))
         .force(
@@ -305,8 +298,8 @@ export default {
       }
     },
     handleResize() {
-      this.width = window.innerWidth - 1
-      this.height = window.innerHeight - 5
+      this.width = this.svg.node().clientWidth
+      this.height = this.svg.node().clientHeight
       this.restart(this.nodes, this.links)
     }
   }
@@ -315,7 +308,8 @@ export default {
 
 <style scoped>
 .svg {
-  max-width: 100%;
+  width: 100%;
+  height: 100%;
   user-select: none;
 }
 </style>

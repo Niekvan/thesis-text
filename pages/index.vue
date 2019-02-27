@@ -224,24 +224,9 @@ export default {
 <style scoped lang="scss">
 .wrapper {
   position: relative;
-  min-height: 100vh;
-  &:before {
-    content: '';
-    position: absolute;
-    display: block;
-    width: 100%;
-    height: 100%;
-    z-index: -1;
-    background: #f4f7f6;
-    // background: #eeeeee;
-    opacity: 1;
-  }
-  // &.opaque {
-  //   &:before {
-  //     opacity: 0.75;
-  //   }
-  // }
+  height: 99vh;
 }
+
 .titles {
   position: fixed;
   margin-left: 0.5rem;

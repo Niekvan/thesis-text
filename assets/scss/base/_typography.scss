@@ -5,6 +5,10 @@ html {
   font-weight: 400;
   color: $color-text-primary;
   line-height: 1.35;
+
+  @include media-down($bp-sm) {
+    font-size: 16px;
+  }
 }
 
 * {
@@ -41,20 +45,20 @@ h6 {
 .line-width {
   width: 32em;
   max-width: 100%;
-  font-size: $font-size-body;
+  font-size: 1rem;
 
-  @include media-down($bp-sm) {
-    font-size: 16px;
-  }
+  // @include media-down($bp-sm) {
+  //   font-size: 16px;
+  // }
 }
 
 .body {
-  font-size: $font-size-body;
+  font-size: 1rem;
   font-family: $font-serif;
 
-  @include media-down($bp-sm) {
-    font-size: 16px;
-  }
+  // @include media-down($bp-sm) {
+  //   font-size: 16px;
+  // }
 }
 
 %heading {

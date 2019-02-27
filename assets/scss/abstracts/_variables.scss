@@ -1,33 +1,16 @@
+$background-white: #f4f7f6;
 $black-indigo: #071230;
-$jasper-red: #EB5324;
-$yellow-orange: #FF8C00;
-$benzol-green: #00978C;
-$white: #fafafa;
-$brand-color: $white;
-
-$violet: #2619d1;
-$olive-ocher: #d1bd19;
 $cobalt-green: #94ff94;
-
-$orange-yellow: #ffab00;
+$olive-ocher: #d1bd19;
+$white: #fafafa;
 $violet: #2619d1;
-$red-orange: #e81900;
 
-$turqoise-green: #b5ffc2;
-$antwarp-blue: #008aa1;
-$apricot-yellow: #FFE600;
-
-$vandar-poels-blue: #003e83;
-$lemon-yellow: #F2FF00;
-$vernonia-purple: #7e3075;
+$brand-color: $olive-ocher;
 
 $olive-ocher: #d1bd19;
 $cerulian-blue: #2c91b7;
 $orange-yellow: #ffab00;
 
-$color1: rgba(4, 15, 15, 1);
-$color2: rgba(154, 3, 30, 1);
-$color3: rgba(0, 115, 184, 1);
 // BREAKPOINTS
 $bp-sm: 480px;
 $bp-md: 768px;
@@ -49,9 +32,6 @@ $grid-gap-compensation: $grid-gap * .5 * -1;
 
 // TYPE
 $bennet: bennet-text-one, serif;
-$p22: p22-underground, sans-serif;
-
-$font-sans: $p22;
 $font-serif: $bennet;
 
 $font-size-base: 25px;
@@ -63,6 +43,3 @@ $color-text-inverse: $white;
 $color-text-green: $violet;
 $color-text-yellow: $cobalt-green;
 $color-text-red: $olive-ocher;
-// $color-text-green: $benzol-green;
-// $color-text-yellow: $yellow-orange;
-// $color-text-red: $jasper-red;

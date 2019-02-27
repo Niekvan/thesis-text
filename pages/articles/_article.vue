@@ -92,8 +92,6 @@ export default {
 
 <style scoped lang="scss">
 .linked-articles {
-  font-family: $font-sans;
-
   &__list {
     list-style-type: none;
     padding: 0;

@@ -1,5 +1,4 @@
 <template>
-  <!-- <nuxt-link :to="`/${node.full_slug}`"> -->
   <g class="node" :class="node.slug" @click="showArticle(node.uuid)">
     <!-- <svg :width="settings.width" :height="settings.height" viewBox="0 0 170 170" class="node__item">
       <path class="node__drag" d="M85,85m-85,0a85,85 0 1,0 170,0a85,85 0 1,0 -170,0" />
@@ -15,11 +14,10 @@
         class="node__background"
       />
     </no-ssr>
-    <text class="node__text body" :class="{ active: settings.active === node.uuid }" :style="size" alignment-baseline="middle">
+    <text class="node__text body" :class="{ active: settings.active === node.uuid }" alignment-baseline="middle">
       {{ node.slug }}
     </text>
   </g>
-  <!-- </nuxt-link> -->
 </template>
 
 <script>
@@ -45,9 +43,6 @@ export default {
       padding: {
         top: 10,
         left: 20
-      },
-      size: {
-        'font-size': `${this.settings.scale * 1.25}rem`
       }
     }
   },
@@ -115,7 +110,7 @@ export default {
   &__text {
     font-family: $font-serif;
     text-anchor: middle;
-    font-size: 1.25rem;
+    font-size: 1rem;
     text-transform: capitalize;
 
     &.active {
