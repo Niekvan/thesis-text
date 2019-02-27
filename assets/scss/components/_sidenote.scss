@@ -24,19 +24,27 @@
   &__link {
     display: inline-block;
     position: relative;
-    margin-right: 0.75em;
+    // margin-right: 0.75em;
 
     &::after {
       counter-increment: sidenote;
-      content: counter(sidenote);
+      content: "["counter(sidenote)"]";
 
       display: inline-block;
-      position: absolute;
-      right: -0.25em;
-      top: -0.25em;
+      // position: absolute;
+      // right: -1em;
+      // bottom: 0.15em;
+
+      text-align: center;
+      line-height: 1em;
+
+      // width: 1em;
+      // height: 1em;
+      // border: 2px solid $color-text-red;
+      // border-radius: 50%;
 
       // font-size: 0.5em;
-      font-weight: 700;
+      font-weight: 400;
       color: $color-text-red;
       z-index: 2;
     }
@@ -81,7 +89,7 @@
 
     &__link {
       &::after {
-        right: -0.75em;
+        color: inherit;
       }
     }
   }

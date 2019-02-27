@@ -64,6 +64,12 @@ module.exports = {
         cacheProvider: 'memory'
       }
     ],
+    // [
+    //   '@/modules/assetsApi',
+    //   {
+    //     token: process.env.API_TOKEN
+    //   }
+    // ],
     '@nuxtjs/style-resources'
   ],
 

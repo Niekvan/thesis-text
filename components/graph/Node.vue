@@ -89,6 +89,9 @@ export default {
   },
   methods: {
     showArticle(uuid) {
+      if (this.settings.active === this.node.uuid) {
+        return
+      }
       this.SET_ACTIVE_ARTICLES(uuid)
     },
     ...mapMutations(['SET_ACTIVE_ARTICLES'])
@@ -106,7 +109,7 @@ export default {
   }
 
   &__background {
-    fill: $color-text-inverse;
+    fill: #ffffff;
   }
 
   &__text {
@@ -116,7 +119,8 @@ export default {
     text-transform: capitalize;
 
     &.active {
-      fill: $color-text-green;
+      // text-decoration: underline;
+      fill: $white;
     }
   }
 }

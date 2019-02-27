@@ -2,11 +2,13 @@ export const state = () => ({
   articles: [],
   activeArticles: [],
   sources: [],
+  images: [],
   ip: null,
   geo: null,
   loaded: false,
   middleware_ip: null,
-  referenceOpen: false
+  referenceOpen: false,
+  imagesOpen: false
 })
 
 export const mutations = {
@@ -46,6 +48,12 @@ export const mutations = {
   },
   SET_REFERENCE(state, open) {
     state.referenceOpen = open
+  },
+  SET_IMAGE_INDEX(state, open) {
+    state.imagesOpen = open
+  },
+  SET_IMAGES(state, images) {
+    state.images = images
   }
 }
 
@@ -80,9 +88,31 @@ export const actions = {
       commit('SET_GEO', geoData)
     }
   },
+  getImages({ commit, state }) {
+    const reg = /!\[[^\]]*\]\((?<filename>.*?)(?="|\))(?<optionalpart>".*")?\)(?:{.image ?(?<extraClass>.+)?}\n?\n?)(?<caption>.+)?\{/g
+    const data = state.articles.flatMap(article => {
+      const images = []
+      let m = null
+      while ((m = reg.exec(article.content.body)) !== null) {
+        if (m.index === reg.lastIndex) {
+          reg.lastIndex++
+        }
+        images.push({
+          image: m.groups.filename,
+          uuid: article.uuid,
+          name: article.slug,
+          caption: m.groups.caption.trim(),
+          class: m.groups.extraClass
+        })
+      }
+      return images
+    })
+    commit('SET_IMAGES', data)
+  },
   async nuxtServerInit({ dispatch }, { isDev }) {
     await dispatch('getArticles', isDev)
     await dispatch('getSources', isDev)
+    dispatch('getImages')
   }
 }
 

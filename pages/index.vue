@@ -10,9 +10,14 @@
         </h2>
       </div>
       <graph :nodes="selectedArticles.reverse()" :links="links" :settings="settings" />
-      <h3 class="heading-2 reference-trigger" @click="SET_REFERENCE(true)">
-        References
-      </h3>
+      <div class="indexes">
+        <h3 class="indexes__images indexes__text" @click="SET_IMAGE_INDEX(true)">
+          Index
+        </h3>
+        <h3 class="indexes__sources indexes__text" @click="SET_REFERENCE(true)">
+          References
+        </h3>
+      </div>
     </section>
     <article-frame
       v-for="(article,index) in activeArticles"
@@ -22,6 +27,7 @@
       :total="activeArticles.length"
     />
     <source-list v-if="referenceOpen" />
+    <image-index v-if="imagesOpen" />
     <!-- <i-consent /> -->
   </main>
 </template>
@@ -88,7 +94,8 @@ export default {
       'sources',
       'geo',
       'activeArticles',
-      'referenceOpen'
+      'referenceOpen',
+      'imagesOpen'
     ])
   },
   // async mounted() {
@@ -198,7 +205,7 @@ export default {
     //   const check = await Storyblok.put('spaces/52847/stories/551910', story)
     //   console.log(check) //eslint-disable-line
     // },
-    ...mapMutations(['SET_REFERENCE'])
+    ...mapMutations(['SET_REFERENCE', 'SET_IMAGE_INDEX'])
   },
   async asyncData(context) {
     // const version =
@@ -225,18 +232,20 @@ export default {
     width: 100%;
     height: 100%;
     z-index: -1;
-    background: $cobalt-green;
+    background: #f4f7f6;
+    // background: #eeeeee;
     opacity: 1;
   }
-  &.opaque {
-    &:before {
-      opacity: 0.75;
-    }
-  }
+  // &.opaque {
+  //   &:before {
+  //     opacity: 0.75;
+  //   }
+  // }
 }
 .titles {
   position: fixed;
-  margin: 1rem 0.5rem 0;
+  margin-left: 0.5rem;
+  margin-top: 0.5rem;
   letter-spacing: -1px;
 }
 
@@ -244,6 +253,7 @@ export default {
   font-size: 4rem;
   font-weight: 400;
   margin: 0;
+  line-height: 1;
 }
 
 .sub_title {
@@ -252,15 +262,20 @@ export default {
   margin: 0;
 }
 
-.reference-trigger {
+.indexes {
   position: fixed;
   bottom: 0;
   right: 0;
   font-weight: 400;
   font-size: 1.5rem;
-  margin: 0.3em 0.5em;
-  font-family: $font-sans;
   letter-spacing: -1px;
+  z-index: 10;
+
+  &__text {
+    display: inline-block;
+    margin: 0.3em 0.5em;
+    margin-left: 0;
+  }
 
   &:hover {
     cursor: pointer;

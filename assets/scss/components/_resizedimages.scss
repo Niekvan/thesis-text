@@ -3,8 +3,13 @@
   display: block;
   max-width: 100%;
 
-  img {
-    max-width: 100%;
+  > *:not(.floridi) {
+    margin-bottom: -25px;
+  }
+
+  .floridi {
+    max-width: 67%;
+    margin: auto;
   }
   // padding-bottom: 56.25%;
 

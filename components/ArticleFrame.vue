@@ -91,14 +91,20 @@ export default {
     body() {
       if (this.article.content.body) {
         let body = this.$md.render(this.article.content.body)
-        const regex = /<img src="([\w\W]+?)" alt="([\w\W]+?)"(\/?)>/g
+        const regex = /<img src="([\w\W]+?)" alt="([\w\W]+?)" class="([\w\W]+?)"(\/?)>/g
         const links = body.match(regex)
+        console.log(links) //eslint-disable-line
         if (links) {
           links.forEach(link => {
             const src = link.replace(
               /<img src="([\w\W]+?)" alt="([\w\W]+?)"(\/?)>/,
               '$1'
             )
+            const classes = link.replace(
+              /<img src="([\w\W]+?)" alt="([\w\W]+?)" class="([\w\W]+?)"(\/?)>/,
+              '$3'
+            )
+            console.log(classes) //eslint-disable-line
             const srcSet = this.createSrcSet(src)
             const newImg = `<div class="loading image"><img src=${this.resizeUrl(
               src,
@@ -106,7 +112,7 @@ export default {
             )} data-src=${this.resizeUrl(
               src,
               '900'
-            )} data-srcset="${srcSet}" data-sizes="auto" class="lazyload" /></div>`
+            )} data-srcset="${srcSet}" data-sizes="auto" class="lazyload ${classes}" /></div>`
             body = body.replace(link, newImg)
           })
         }
@@ -223,7 +229,8 @@ export default {
   background: $white;
   font-family: $font-serif;
   overflow: hidden;
-  box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+  box-shadow: 2px 0 7px 1px rgba($color-text-primary, 0.1);
+  // border: 2px solid $color-text-primary;
 
   &:not(:last-child):hover {
     transform: translate(-50%, calc(-50% - 0.75rem));
@@ -239,14 +246,17 @@ export default {
     display: flex;
     z-index: 0;
     background: $white;
+    // border-bottom: 2px solid $color-text-primary;
 
     .bar {
       flex-grow: 1;
       padding: 0.25rem 1rem;
+      // background: $color-text-green;
     }
 
     .close {
       padding: 0.25rem 0.5rem;
+      // background: $color-text-red;
 
       &:hover {
         cursor: pointer;
