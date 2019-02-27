@@ -120,7 +120,7 @@ export default {
 
     &.active {
       // text-decoration: underline;
-      fill: $white;
+      fill: $color-text-red;
     }
   }
 }
