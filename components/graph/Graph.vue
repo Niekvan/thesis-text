@@ -56,7 +56,8 @@ export default {
     return {
       simulation: null,
       width: 0,
-      height: 0
+      height: 0,
+      resizeTimeout: null
     }
   },
   computed: {
@@ -298,9 +299,14 @@ export default {
       }
     },
     handleResize() {
-      this.width = this.svg.node().clientWidth
-      this.height = this.svg.node().clientHeight
-      this.restart(this.nodes, this.links)
+      if (!this.resizeTimeout) {
+        this.resizeTimeout = setTimeout(() => {
+          this.resizeTimeout = null
+          this.width = this.svg.node().clientWidth
+          this.height = this.svg.node().clientHeight
+          this.restart(this.nodes, this.links)
+        }, 66)
+      }
     }
   }
 }
