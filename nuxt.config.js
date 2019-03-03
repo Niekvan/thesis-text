@@ -38,8 +38,8 @@ module.exports = {
   */
   plugins: [
     '~/plugins/components',
-    '~/api/ipApi.js',
-    '~/plugins/vuescroll',
+    // '~/api/ipApi.js',
+    // '~/plugins/vuescroll',
     {
       src: '~/node_modules/lazysizes/lazysizes.js',
       mode: 'client'

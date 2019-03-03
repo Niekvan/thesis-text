@@ -297,7 +297,8 @@ export default {
       box-sizing: border-box;
       background: $white;
       padding: 1.5rem 1rem;
-      border: 1px solid $color-text-primary;
+      box-shadow: 2px 0 7px 1px rgba($color-text-primary, 0.1);
+      // border: 1px solid $color-text-primary;
       z-index: 5;
 
       .close {
@@ -310,8 +311,8 @@ export default {
         text-align: center;
         padding-top: 0.25rem;
         display: block;
-        border-left: 1px solid $color-text-primary;
-        border-bottom: 1px solid $color-text-primary;
+        // border-left: 1px solid $color-text-primary;
+        // border-bottom: 1px solid $color-text-primary;
         &:hover {
           cursor: pointer;
         }
