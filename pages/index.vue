@@ -224,7 +224,8 @@ export default {
 <style scoped lang="scss">
 .wrapper {
   position: relative;
-  height: 99vh;
+  height: 100%;
+  // height: 99vh;
 }
 
 .titles {
