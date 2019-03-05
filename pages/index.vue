@@ -225,7 +225,10 @@ export default {
 .wrapper {
   position: relative;
   height: 100%;
-  // height: 99vh;
+
+  .section {
+    height: 100%;
+  }
 }
 
 .titles {
