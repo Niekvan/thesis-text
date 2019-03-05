@@ -14,14 +14,14 @@
         class="node__background"
       />
     </no-ssr>
-    <text class="node__text body" :class="{ active: settings.active === node.uuid }" alignment-baseline="middle">
+    <text class="node__text body" :class="{ active: settings.active === node.uuid }" :style="{ opacity: readArticles.includes(node.uuid) ? 1 : 0.2 }" alignment-baseline="middle">
       {{ node.slug }}
     </text>
   </g>
 </template>
 
 <script>
-import { mapMutations } from 'vuex'
+import { mapMutations, mapState } from 'vuex'
 import { select } from 'd3-selection'
 export default {
   props: {
@@ -80,7 +80,8 @@ export default {
           .getBBox()
       }
       return null
-    }
+    },
+    ...mapState(['readArticles'])
   },
   methods: {
     showArticle(uuid) {
@@ -88,8 +89,9 @@ export default {
         return
       }
       this.SET_ACTIVE_ARTICLES(uuid)
+      this.SET_READ_ARTICLES(uuid)
     },
-    ...mapMutations(['SET_ACTIVE_ARTICLES'])
+    ...mapMutations(['SET_ACTIVE_ARTICLES', 'SET_READ_ARTICLES'])
   }
 }
 </script>
@@ -98,9 +100,6 @@ export default {
 .node {
   &:hover {
     cursor: pointer;
-  }
-  &__item {
-    opacity: 1;
   }
 
   &__background {

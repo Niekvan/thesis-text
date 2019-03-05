@@ -39,7 +39,7 @@ h4,
 h5,
 h6 {
   font-weight: 400;
-  margin-top: 1.5em;
+  margin-top: 1.75em;
 }
 
 .line-width {
@@ -62,8 +62,9 @@ h6 {
 }
 
 %heading {
-  font-family: $font-serif;
+  font-family: $bennet-display;
   margin: 0.25em 0 1em;
+  font-weight: 600;
 }
 
 .heading-1 {

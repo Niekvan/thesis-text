@@ -30,6 +30,7 @@ import {
 } from 'd3-force'
 import { drag } from 'd3-drag'
 import * as d3 from 'd3-selection'
+import { mapState } from 'vuex'
 
 export default {
   props: {
@@ -57,7 +58,8 @@ export default {
       simulation: null,
       width: 0,
       height: 0,
-      resizeTimeout: null
+      resizeTimeout: null,
+      opacityNode: 0.2
     }
   },
   computed: {
@@ -94,8 +96,8 @@ export default {
         .selectAll('.node')
         .data(this.nodes)
         .call(this.drag(this.simulation))
-        .on('mouseover', this.fade(0.2, true))
-        .on('mouseout', this.fade(1, false))
+        .on('mouseover', this.handleMouseOver(this.opacityNode))
+        .on('mouseout', this.handleMouseOut(this.opacityNode))
     },
     link() {
       return this.svg
@@ -109,7 +111,8 @@ export default {
         linkIndex[`${link.source.uuid},${link.target.uuid}`] = 1
       })
       return linkIndex
-    }
+    },
+    ...mapState(['readArticles'])
   },
   mounted() {
     this.width = this.svg.node().clientWidth
@@ -285,15 +288,25 @@ export default {
         a.index === b.index
       )
     },
-    fade(opacity, over) {
-      const strokeOpacity = over ? 1 : 0.05
+    handleMouseOver(opacity) {
       return d => {
         this.node.select('.node__text').style('opacity', o => {
           return this.isConnected(d, o) ? 1 : opacity
         })
         this.link.style('stroke-opacity', o => {
-          return o.source.uuid === d.uuid || o.target.uuid === d.uuid
-            ? strokeOpacity
+          return o.source.uuid === d.uuid || o.target.uuid === d.uuid ? 1 : 0.05
+        })
+      }
+    },
+    handleMouseOut(opacity) {
+      return d => {
+        this.node.select('.node__text').style('opacity', o => {
+          return this.readArticles.includes(o.uuid) ? 1 : opacity
+        })
+        this.link.style('stroke-opacity', o => {
+          return this.readArticles.includes(o.source.uuid) &&
+            this.readArticles.includes(o.target.uuid)
+            ? 1
             : 0.05
         })
       }

@@ -1,5 +1,6 @@
 export const state = () => ({
   articles: [],
+  readArticles: [],
   activeArticles: [],
   sources: [],
   images: [],
@@ -24,6 +25,9 @@ export const mutations = {
       .concat(
         state.activeArticles.slice(index + 1, state.activeArticles.length)
       )
+  },
+  SET_READ_ARTICLES(state, article) {
+    state.readArticles.push(article)
   },
   REMOVE_NEXT_ARTILCES(state, index) {
     state.activeArticles.splice(index + 1, state.activeArticles.length - index)
@@ -109,10 +113,14 @@ export const actions = {
     })
     commit('SET_IMAGES', data)
   },
-  async nuxtServerInit({ dispatch }, { isDev }) {
+  async nuxtServerInit({ dispatch, commit, state }, { isDev }) {
     await dispatch('getArticles', isDev)
     await dispatch('getSources', isDev)
     dispatch('getImages')
+    const intro = state.articles.find(
+      article => article.name === 'introduction'
+    )
+    commit('SET_READ_ARTICLES', intro.uuid)
   }
 }
 

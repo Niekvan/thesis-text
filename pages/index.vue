@@ -50,7 +50,7 @@ export default {
         charge: -50,
         collide: 150,
         offset: 50,
-        freedom: 120
+        freedom: 200
       },
       story: null
     }
