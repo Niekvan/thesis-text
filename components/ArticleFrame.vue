@@ -4,6 +4,9 @@
       <span class="bar">
         /{{ article.content.title }}
       </span>
+      <span class="trigger" @click="toggleOpen">
+        &#8675;
+      </span>
       <span class="close" @click="removeArticle">
         X
       </span>
@@ -27,7 +30,7 @@
             </transition>
           </div>
         </article>
-        <aside class="side-bar col-lg-4">
+        <aside class="side-bar col-lg-4" :class="{ open: settings.open }">
           <graph :nodes="[...linkedArticles, article]" :links="links" :settings="settings" />
         </aside>
       </div>
@@ -66,7 +69,8 @@ export default {
         strength: 0.3,
         charge: -1,
         collide: 300,
-        freedom: 1000
+        freedom: 1000,
+        open: false
       },
       localSources: [],
       source: null,
@@ -169,9 +173,11 @@ export default {
   },
   methods: {
     removeArticle() {
+      this.settings.open = false
       this.REMOVE_ACTIVE_ARTICLE(this.index)
     },
     removeNext() {
+      this.settings.open = false
       this.REMOVE_NEXT_ARTILCES(this.index)
     },
     handleQuote(event) {
@@ -211,6 +217,9 @@ export default {
         ''
       )}`
     },
+    toggleOpen() {
+      this.settings.open = !this.settings.open
+    },
     ...mapMutations(['REMOVE_ACTIVE_ARTICLE', 'REMOVE_NEXT_ARTILCES'])
   }
 }
@@ -227,7 +236,6 @@ export default {
   font-family: $font-serif;
   overflow: hidden;
   box-shadow: 2px 0 7px 1px rgba($color-text-primary, 0.1);
-  // border: 2px solid $color-text-primary;
 
   &:not(:last-child):hover {
     transform: translate(-50%, calc(-50% - 0.75rem));
@@ -243,20 +251,33 @@ export default {
     display: flex;
     z-index: 0;
     background: $white;
-    // border-bottom: 2px solid $color-text-primary;
 
     .bar {
       flex-grow: 1;
       padding: 0.25rem 1rem;
-      // background: $color-text-green;
     }
 
     .close {
       padding: 0.25rem 0.5rem;
-      // background: $color-text-red;
+      z-index: 5;
 
       &:hover {
         cursor: pointer;
+      }
+    }
+    .trigger {
+      display: block;
+      position: absolute;
+      padding-top: 0.25rem;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 1rem;
+      text-align: center;
+      z-index: 1;
+
+      @include media-up($bp-lg) {
+        display: none;
       }
     }
   }
@@ -277,6 +298,34 @@ export default {
 
       right: 12px;
       padding-top: 2rem;
+
+      @include media-down($bp-lg) {
+        max-height: 0;
+
+        &::before {
+          display: block;
+          position: absolute;
+          content: '';
+          width: 100%;
+          height: 0;
+          left: 0;
+          top: 0;
+          right: 0;
+          max-height: 0%;
+          background: $white;
+          transition: all 0.2s;
+          z-index: -1;
+        }
+        &.open {
+          max-height: 100%;
+          height: 100%;
+
+          &::before {
+            max-height: 100%;
+            height: 100%;
+          }
+        }
+      }
     }
 
     .heading-1 {

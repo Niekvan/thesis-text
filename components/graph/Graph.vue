@@ -114,6 +114,14 @@ export default {
     },
     ...mapState(['readArticles'])
   },
+  watch: {
+    settings: {
+      handler: function() {
+        this.restart(this.nodes, this.links)
+      },
+      deep: true
+    }
+  },
   mounted() {
     this.width = this.svg.node().clientWidth
     this.height = this.svg.node().clientHeight
@@ -261,6 +269,8 @@ export default {
       return `translate(${d.x}, ${d.y})`
     },
     restart(nodes, links) {
+      this.width = this.svg.node().clientWidth
+      this.height = this.svg.node().clientHeight
       this.simulation.nodes(nodes)
       this.simulation.force('link').links(links)
       this.simulation.alpha(1).restart()

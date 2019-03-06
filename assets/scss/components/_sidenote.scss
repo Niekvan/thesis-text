@@ -1,6 +1,7 @@
 .sidenote {
   &__wrapper {
     pointer-events: none;
+    display: inline;
 
     &>span {
       pointer-events: auto;
@@ -24,54 +25,36 @@
   &__link {
     display: inline-block;
     position: relative;
-    // margin-right: 0.75em;
 
     &::after {
       counter-increment: sidenote;
       content: "["counter(sidenote)"]";
-
       display: inline-block;
-      // position: absolute;
-      // right: -1em;
-      // bottom: 0.15em;
-
       text-align: center;
       line-height: 1em;
-
-      // width: 1em;
-      // height: 1em;
-      // border: 2px solid $color-text-red;
-      // border-radius: 50%;
-
-      // font-size: 0.5em;
       font-weight: 400;
       color: $color-text-red;
       z-index: 2;
     }
-
-    // &::before {
-    //   content: '';
-    //   position: absolute;
-    //   right: -0.75em;
-    //   top: 0.25em;
-
-    //   width: 0.75em;
-    //   height: 0.75em;
-    //   background: $color-text-primary;
-    // }
   }
 
   &__description {
-    position: absolute;
-    right: calc(-40% - 2em);
-    width: 40%;
-    z-index: 10;
-    background: $white;
+    display: block;
     font-size: 0.9em;
+    color: $color-text-red;
+
     max-height: 0px;
     overflow: hidden;
     transition: max-height 0.2s 0.75s;
-    color: $color-text-red;
+
+    @include media-up($bp-lg) {
+      position: absolute;
+      right: calc(-40% - 2em);
+      width: 40%;
+      z-index: 10;
+      background: $white;
+    }
+
 
     p {
       margin: 0;
