@@ -2,6 +2,7 @@
   position: relative;
   display: block;
   max-width: 100%;
+  margin-bottom: -1em;
 
   > *:not(.floridi) {
     margin-bottom: -25px;
@@ -11,30 +12,17 @@
     max-width: 67%;
     margin: auto;
   }
-  // padding-bottom: 56.25%;
+}
 
-  // background: linear-gradient(rgb(242, 242, 242) 66%, rgba(242, 242, 242, 0));
+.lazyload,
+.lazyloading {
+  opacity: 0;
+}
 
-//   &.image-loaded {
-//     background: transparent;
-//     padding-bottom: 0;
-//   }
-
-//   img {
-//     width: 100%;
-//     z-index: 2;
-//   }
-// }
-
-// .lazyload,
-// .lazyloading {
-//   opacity: 0;
-// }
-
-// .loading,
-// .lazyload,
-// .lazyloaded,
-// .image {
-//   opacity: 1;
-//   transition: 0.2s cubic-bezier(0.215, 0.61, 0.355, 1);
+.loading,
+.lazyload,
+.lazyloaded,
+.image {
+  opacity: 1;
+  transition: 0.2s cubic-bezier(0.215, 0.61, 0.355, 1);
 }

@@ -1,8 +1,9 @@
 <template>
-  <path class="link" />
+  <path class="link" :style="{ strokeOpacity: readArticles.includes(link.source.uuid) && readArticles.includes(link.target.uuid) ? 1 : 0.05 }" />
 </template>
 
 <script>
+import { mapState } from 'vuex'
 export default {
   props: {
     link: {
@@ -11,6 +12,9 @@ export default {
         return {}
       }
     }
+  },
+  computed: {
+    ...mapState(['readArticles'])
   }
 }
 </script>
@@ -19,7 +23,6 @@ export default {
 .link {
   fill: none;
   stroke-width: 1;
-  stroke-opacity: 0.05;
   stroke: $color-text-primary;
 }
 </style>

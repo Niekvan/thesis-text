@@ -5,7 +5,7 @@
         /{{ article.content.title }}
       </span>
       <span class="trigger" @click="toggleOpen">
-        &#8675;
+        {{ graphOpen ? '&#8673;' : '&#8675;' }}
       </span>
       <span class="close" @click="removeArticle">
         X
@@ -30,8 +30,8 @@
             </transition>
           </div>
         </article>
-        <aside class="side-bar col-lg-4" :class="{ open: settings.open }">
-          <graph :nodes="[...linkedArticles, article]" :links="links" :settings="settings" />
+        <aside class="side-bar col-lg-4" :class="{ open: graphOpen }">
+          <graph v-if="graphOpen || width > 768" :nodes="[...linkedArticles, article]" :links="links" :settings="settings" />
         </aside>
       </div>
       <!-- </custom-scroll> -->
@@ -69,8 +69,7 @@ export default {
         strength: 0.3,
         charge: -1,
         collide: 300,
-        freedom: 1000,
-        open: false
+        freedom: 1000
       },
       localSources: [],
       source: null,
@@ -87,34 +86,32 @@ export default {
           width: '900w',
           size: '900'
         }
-      ]
+      ],
+      graphOpen: false,
+      width: 0
     }
   },
   computed: {
     body() {
+      const regex = /<img src="(?<src>[\w\W]+?)" (?:.+) class="(?<classes>[\w\W]+?)"(?:\/?)>/g
       if (this.article.content.body) {
         let body = this.$md.render(this.article.content.body)
-        const regex = /<img src="([\w\W]+?)" alt="([\w\W]+?)" class="([\w\W]+?)"(\/?)>/g
         const links = body.match(regex)
         if (links) {
           links.forEach(link => {
-            const src = link.replace(
-              /<img src="([\w\W]+?)" alt="([\w\W]+?)"(\/?)>/,
-              '$1'
-            )
-            const classes = link.replace(
-              /<img src="([\w\W]+?)" alt="([\w\W]+?)" class="([\w\W]+?)"(\/?)>/,
-              '$3'
-            )
-            const srcSet = this.createSrcSet(src)
-            const newImg = `<div class="loading image"><img src=${this.resizeUrl(
-              src,
-              '900'
-            )} data-src=${this.resizeUrl(
-              src,
-              '900'
-            )} data-srcset="${srcSet}" data-sizes="auto" class="lazyload ${classes}" /></div>`
-            body = body.replace(link, newImg)
+            const groups = regex.exec(link)
+            if (groups) {
+              const { src, classes } = groups.groups
+              const srcSet = this.createSrcSet(src)
+              const newImg = `<div class="loading image"><img src=${this.resizeUrl(
+                src,
+                '900'
+              )} data-src=${this.resizeUrl(
+                src,
+                '900'
+              )} data-srcset="${srcSet}" data-sizes="auto" class="lazyload ${classes}" /></div>`
+              body = body.replace(link, newImg)
+            }
           })
         }
         return body
@@ -149,6 +146,7 @@ export default {
     ...mapState(['articles', 'sources'])
   },
   mounted() {
+    this.width = window.innerWidth
     this.localSources = this.$refs[`md-${this.article.uuid}-${this.index}`].querySelectorAll('.source') //eslint-disable-line
     this.localSources.forEach(source => {
       source.addEventListener('click', this.handleQuote)
@@ -218,7 +216,7 @@ export default {
       )}`
     },
     toggleOpen() {
-      this.settings.open = !this.settings.open
+      this.graphOpen = !this.graphOpen
     },
     ...mapMutations(['REMOVE_ACTIVE_ARTICLE', 'REMOVE_NEXT_ARTILCES'])
   }
@@ -290,6 +288,7 @@ export default {
   .content {
     margin: calc(25px + 0.75rem) 0;
     height: calc(100% - 25px - 0.75rem);
+    position: relative;
 
     .side-bar {
       position: fixed;
@@ -301,16 +300,20 @@ export default {
 
       @include media-down($bp-lg) {
         max-height: 0;
+        padding: 0;
+        right: 0;
+        padding-top: 1.5rem;
+        width: 100%;
 
         &::before {
           display: block;
           position: absolute;
           content: '';
-          width: 100%;
+          width: calc(100% + 2px);
           height: 0;
           left: 0;
-          top: 0;
-          right: 0;
+          top: -5px;
+          right: -2px;
           max-height: 0%;
           background: $white;
           transition: all 0.2s;
@@ -318,11 +321,11 @@ export default {
         }
         &.open {
           max-height: 100%;
-          height: 100%;
+          height: calc(100% - (25px + 0.75rem));
 
           &::before {
-            max-height: 100%;
-            height: 100%;
+            max-height: 200%;
+            height: calc(100% + 5px);
           }
         }
       }

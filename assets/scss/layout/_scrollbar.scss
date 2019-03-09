@@ -1,16 +1,18 @@
-::-webkit-scrollbar {
-  width: 12px;
-}
+@include media-up($bp-md) {
+  ::-webkit-scrollbar {
+    width: 12px;
+  }
 
-::-webkit-scrollbar-track {
-  background: none;
-}
+  ::-webkit-scrollbar-track {
+    background: none;
+  }
 
-::-webkit-scrollbar-thumb {
-  background: $color-text-primary;
-  transition: all 0.3s;
+  ::-webkit-scrollbar-thumb {
+    background: $color-text-primary;
+    transition: all 0.3s;
 
-  &:hover {
-    background: $color-text-red;
+    &:hover {
+      background: $color-text-red;
+    }
   }
 }

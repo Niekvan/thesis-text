@@ -9,8 +9,8 @@
       </span>
     </div>
     <div class="image-index__content row">
-      <div v-for="(image, index) in images" :key="image.uuid + index" class="col-lg-4 images">
-        <img :src="image.image" class="images__image" :class="image.class ? image.class.replace('.', '') : ''" :alt="image.caption" @click="handleImageClick(image.uuid)">
+      <div v-for="(image, index) in images" :key="image.uuid + index" class="col-lg-4 images" @click="handleImageClick(image.uuid)">
+        <image-resized :image="image" />
         <p class="images__caption caption">
           {{ image.caption }}
         </p>
@@ -21,16 +21,25 @@
 
 <script>
 import { mapState, mapMutations } from 'vuex'
+import ImageResized from './ImageResized.vue'
 export default {
+  components: {
+    'image-resized': ImageResized
+  },
   computed: {
     ...mapState(['images'])
   },
   methods: {
     handleImageClick(uuid) {
+      this.SET_READ_ARTICLES(uuid)
       this.SET_ACTIVE_ARTICLES(uuid)
       this.SET_IMAGE_INDEX(false)
     },
-    ...mapMutations(['SET_ACTIVE_ARTICLES', 'SET_IMAGE_INDEX'])
+    ...mapMutations([
+      'SET_ACTIVE_ARTICLES',
+      'SET_IMAGE_INDEX',
+      'SET_READ_ARTICLES'
+    ])
   }
 }
 </script>
@@ -44,7 +53,6 @@ export default {
   left: 50%;
   transform: translate(-50%, -50%);
   box-sizing: border-box;
-  overflow: hidden;
 
   background: $white;
   box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
@@ -77,7 +85,6 @@ export default {
 .images {
   display: flex;
   flex-direction: column;
-  // justify-content: space-between;
 
   &__image {
     max-width: 100%;
@@ -93,9 +100,10 @@ export default {
 
   &__caption {
     padding: 0.5em 0 1em;
-    &:hover {
-      cursor: pointer;
-    }
+  }
+
+  &:hover {
+    cursor: pointer;
   }
 }
 </style>

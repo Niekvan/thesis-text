@@ -101,6 +101,17 @@ export default {
   // async mounted() {
   //   await this.formatSources()
   // },
+  async asyncData(context) {
+    // const version =
+    //   context.query._storyblok || context.isDev ? 'draft' : 'published'
+    const { data: story } = await context.app.$storyapi.get(
+      `cdn/stories/home`,
+      {
+        version: 'draft'
+      }
+    )
+    return story
+  },
   methods: {
     // async formatSources() {
     //   const StoryblokClient = require('storyblok-js-client')
@@ -206,17 +217,6 @@ export default {
     //   console.log(check) //eslint-disable-line
     // },
     ...mapMutations(['SET_REFERENCE', 'SET_IMAGE_INDEX'])
-  },
-  async asyncData(context) {
-    // const version =
-    //   context.query._storyblok || context.isDev ? 'draft' : 'published'
-    const { data: story } = await context.app.$storyapi.get(
-      `cdn/stories/home`,
-      {
-        version: 'draft'
-      }
-    )
-    return story
   }
 }
 </script>

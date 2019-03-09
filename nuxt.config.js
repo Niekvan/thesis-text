@@ -85,6 +85,34 @@ module.exports = {
   },
 
   /*
+  ** Service worker config
+  */
+  workbox: {
+    runtimeCaching: [
+      {
+        urlPattern: 'https://img2.storyblok.com/.*',
+        handler: 'staleWhileRevalidate',
+        strategyOptions: {
+          cacheName: 'images',
+          cacheableResponse: {
+            statuses: [0, 200]
+          }
+        }
+      },
+      {
+        urlPattern: 'https://a.storyblok.com/.*',
+        handler: 'staleWhileRevalidate',
+        strategyOptions: {
+          cacheName: 'images',
+          cacheableResponse: {
+            statuses: [0, 200]
+          }
+        }
+      }
+    ]
+  },
+
+  /*
   ** Global scss vars and mixins
   */
   styleResources: {
@@ -106,6 +134,7 @@ module.exports = {
   ** Build configuration
   */
   build: {
+    analyze: true,
     /*
     ** You can extend webpack config here
     */
