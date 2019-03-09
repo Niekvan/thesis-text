@@ -8,8 +8,7 @@
     }
 
     &+p {
-      display: inline-block;
-      margin-top: 0;
+      display: inline;
     }
 
     &:hover {
@@ -66,6 +65,12 @@
 .quote {
   .sidenote {
     &__wrapper {
+
+      &+p {
+        display: inline-block;
+        margin-top: 0;
+      }
+
       &:hover {
         color: $color-text-red;
       }
