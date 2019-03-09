@@ -30,7 +30,7 @@
           </div>
         </article>
         <aside class="side-bar col-lg-4" :class="{ open: graphOpen }">
-          <graph v-if="graphOpen || width > 768" :nodes="[...linkedArticles, article]" :links="links" :settings="settings" />
+          <graph v-if="graphOpen || width >= 960" :nodes="[...linkedArticles, article]" :links="links" :settings="settings" />
         </aside>
       </div>
     </div>
