@@ -1,9 +1,26 @@
 <template>
   <span
+    v-if="date"
     v-editable="data"
     class="website"
   >
     Retrieved {{ date }}, from
+    <a
+      v-editable="data.link"
+      :href="link"
+      class="link"
+      target="_blank"
+      rel="noreferrer"
+    >
+      {{ link }}
+    </a>
+  </span>
+  <span
+    v-else
+    v-editable="data"
+    class="website"
+  >
+    Retrieved from
     <a
       v-editable="data.link"
       :href="link"
@@ -26,7 +43,10 @@ export default {
   },
   computed: {
     date() {
-      return this.$moment(this.data.accessed_at).format('MMMM D, YYYY')
+      if (this.data.accessed_at) {
+        return this.$moment(this.data.accessed_at).format('MMMM D, YYYY')
+      }
+      return false
     },
     link() {
       return this.data.link.url

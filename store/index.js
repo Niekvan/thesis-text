@@ -4,6 +4,7 @@ export const state = () => ({
   activeArticles: [],
   sources: [],
   images: [],
+  image_sources: [],
   ip: null,
   geo: null,
   loaded: false,
@@ -33,11 +34,6 @@ export const mutations = {
     state.activeArticles.splice(index + 1, state.activeArticles.length - index)
   },
   SET_SOURCES(state, sources) {
-    function compare(a, b) {
-      const aFirst = a.author ? a.author : a.title
-      const bFirst = b.author ? b.author : b.title
-      return aFirst.localeCompare(bFirst) || 0
-    }
     state.sources = sources.sort(compare)
   },
   SET_GEO(state, data) {
@@ -58,6 +54,9 @@ export const mutations = {
   },
   SET_IMAGES(state, images) {
     state.images = images
+  },
+  SET_IMAGE_SOURCES(state, list) {
+    state.image_sources = list.sort(compare)
   }
 }
 
@@ -75,7 +74,11 @@ export const actions = {
     const data = await this.$storyapi.get('cdn/stories/sources', {
       version: 'draft'
     })
+    const imageData = await this.$storyapi.get('cdn/stories/image-sources', {
+      version: 'draft'
+    })
     commit('SET_SOURCES', data.data.story.content.sources)
+    commit('SET_IMAGE_SOURCES', imageData.data.story.content.sources)
   },
   async setGEO({ commit, state }) {
     if (!state.loaded) {
@@ -128,4 +131,10 @@ export const getters = {
   getLinkedArticles: state => list => {
     return state.articles.filter(article => list.includes(article.uuid))
   }
+}
+
+function compare(a, b) {
+  const aFirst = a.author ? a.author : a.title
+  const bFirst = b.author ? b.author : b.title
+  return aFirst.localeCompare(bFirst) || 0
 }

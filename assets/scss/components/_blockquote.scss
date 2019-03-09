@@ -17,7 +17,7 @@ blockquote {
 .source {
   display: block;
 
-  &:hover {
+  &:not(.references__item):hover {
     cursor: pointer;
   }
 

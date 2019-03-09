@@ -9,9 +9,15 @@
       </span>
     </div>
     <div class="references__scroll">
+      <!-- <h2 class="heading-2">
+        Textual sources
+      </h2> -->
       <ul class="references__list line-width">
         <reference v-for="source in sources" :key="source.uuid" class="references__item" :source="source" />
       </ul>
+      <!-- <h2 class="heading-2">
+        Visual sources
+      </h2> -->
     </div>
   </section>
 </template>
@@ -79,6 +85,10 @@ export default {
   &__item {
     padding-left: 1rem;
     text-indent: -1rem;
+
+    &.source:hover {
+      cursor: normal;
+    }
   }
 }
 </style>

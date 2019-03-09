@@ -11,10 +11,10 @@
       </div>
       <graph :nodes="selectedArticles.reverse()" :links="links" :settings="settings" />
       <div class="indexes">
-        <h3 class="indexes__images indexes__text" @click="SET_IMAGE_INDEX(true)">
-          Index
+        <h3 class="indexes__images indexes__text" @click="clickSources('images')">
+          Images
         </h3>
-        <h3 class="indexes__sources indexes__text" @click="SET_REFERENCE(true)">
+        <h3 class="indexes__sources indexes__text" @click="clickSources('references')">
           References
         </h3>
       </div>
@@ -216,6 +216,18 @@ export default {
     //   const check = await Storyblok.put('spaces/52847/stories/551910', story)
     //   console.log(check) //eslint-disable-line
     // },
+    clickSources(ref) {
+      switch (ref) {
+        case 'images':
+          this.SET_IMAGE_INDEX(true)
+          this.SET_REFERENCE(false)
+          break
+        case 'references':
+          this.SET_IMAGE_INDEX(false)
+          this.SET_REFERENCE(true)
+          break
+      }
+    },
     ...mapMutations(['SET_REFERENCE', 'SET_IMAGE_INDEX'])
   }
 }

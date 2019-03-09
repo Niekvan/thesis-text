@@ -9,7 +9,7 @@
     <span class="year">
       ({{ year }}).
     </span>
-    <span v-if="source.author" class="name">
+    <span v-if="source.author && source.title" class="name">
       {{ source.title }}.
     </span>
     <component
@@ -51,6 +51,7 @@ export default {
 
 <style lang="scss" scoped>
 .source {
+  display: block;
   margin-bottom: 0.5em;
   list-style-type: none;
   font-style: normal;

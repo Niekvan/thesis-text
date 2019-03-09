@@ -2,7 +2,7 @@
   <section class="image-index">
     <div class="image-index__head">
       <span class="image-index__bar">
-        /Index
+        /Images
       </span>
       <span class="image-index__close" @click="SET_IMAGE_INDEX(false)">
         X
@@ -14,6 +14,16 @@
         <p class="images__caption caption">
           {{ image.caption }}
         </p>
+      </div>
+      <div class="col-12">
+        <div class="line-width references">
+          <h2 class="heading-2">
+            Image References
+          </h2>
+          <ul class="references__list">
+            <reference v-for="source in image_sources" :key="source.uuid" class="references__item" :source="source" />
+          </ul>
+        </div>
       </div>
     </div>
   </section>
@@ -27,7 +37,7 @@ export default {
     'image-resized': ImageResized
   },
   computed: {
-    ...mapState(['images'])
+    ...mapState(['images', 'image_sources'])
   },
   methods: {
     handleImageClick(uuid) {
@@ -104,6 +114,22 @@ export default {
 
   &:hover {
     cursor: pointer;
+  }
+}
+.references {
+  &__list {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+  }
+
+  &__item {
+    padding-left: 1rem;
+    text-indent: -1rem;
+
+    &.source:hover {
+      cursor: normal;
+    }
   }
 }
 </style>

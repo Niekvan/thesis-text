@@ -12,7 +12,6 @@
       </span>
     </div>
     <div class="content scroll">
-      <!-- <custom-scroll> -->
       <div class="row">
         <article class="col-lg-8">
           <div class="line-width">
@@ -34,7 +33,6 @@
           <graph v-if="graphOpen || width > 768" :nodes="[...linkedArticles, article]" :links="links" :settings="settings" />
         </aside>
       </div>
-      <!-- </custom-scroll> -->
     </div>
   </section>
 </template>
