@@ -134,7 +134,7 @@ module.exports = {
   ** Build configuration
   */
   build: {
-    analyze: true,
+    // analyze: true,
     /*
     ** You can extend webpack config here
     */
