@@ -8,7 +8,7 @@
 }
 
 @mixin media-down($bp) {
-  @media only screen and (max-width: $bp) {
+  @media only screen and (max-width: $bp - 1) {
     @content;
   }
 }
