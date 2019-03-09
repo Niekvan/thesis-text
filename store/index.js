@@ -10,7 +10,8 @@ export const state = () => ({
   loaded: false,
   middleware_ip: null,
   referenceOpen: false,
-  imagesOpen: false
+  imagesOpen: false,
+  consentOpen: true
 })
 
 export const mutations = {
@@ -57,6 +58,9 @@ export const mutations = {
   },
   SET_IMAGE_SOURCES(state, list) {
     state.image_sources = list.sort(compare)
+  },
+  SET_CONSENT_OPEN(state, open) {
+    state.consentOpen = open
   }
 }
 

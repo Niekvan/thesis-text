@@ -28,7 +28,9 @@
     />
     <source-list v-if="referenceOpen" />
     <image-index v-if="imagesOpen" />
-    <!-- <i-consent /> -->
+    <transition name="fade">
+      <i-consent v-if="consentOpen" />
+    </transition>
   </main>
 </template>
 
@@ -95,7 +97,8 @@ export default {
       'geo',
       'activeArticles',
       'referenceOpen',
-      'imagesOpen'
+      'imagesOpen',
+      'consentOpen'
     ])
   },
   // async mounted() {
