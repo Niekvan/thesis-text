@@ -66,11 +66,6 @@
   .sidenote {
     &__wrapper {
 
-      &+p {
-        display: inline-block;
-        margin-top: 0;
-      }
-
       &:hover {
         color: $color-text-red;
       }
