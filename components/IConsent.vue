@@ -109,9 +109,6 @@ export default {
 
     &::after {
       content: '';
-      // position: absolute;
-      // bottom: 0;
-      // left: 0;
       display: block;
       width: 100%;
       height: 0.1em;
@@ -125,6 +122,10 @@ export default {
     @include media-down($bp-lg) {
       background: $cobalt-green;
       padding: 0.5em 1em;
+
+      &::after {
+        display: none;
+      }
     }
 
     &:hover {

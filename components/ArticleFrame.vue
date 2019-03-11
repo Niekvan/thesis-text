@@ -263,14 +263,18 @@ export default {
     }
     .trigger {
       display: block;
-      position: absolute;
-      padding-top: 0.25rem;
-      top: 0;
-      left: 0;
-      right: 0;
-      height: 1rem;
+      padding: 0.25rem 1rem 0;
       text-align: center;
       z-index: 1;
+
+      &::before {
+        content: '';
+        position: absolute;
+        left: 0;
+        right: 0;
+        top: 0;
+        height: 100%;
+      }
 
       @include media-up($bp-lg) {
         display: none;

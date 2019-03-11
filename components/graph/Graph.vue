@@ -335,10 +335,14 @@ export default {
 }
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
 .svg {
   width: 100%;
   height: 100%;
   user-select: none;
+
+  @include media-down($bp-lg) {
+    flex-grow: 1;
+  }
 }
 </style>

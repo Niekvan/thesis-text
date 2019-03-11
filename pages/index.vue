@@ -285,4 +285,19 @@ export default {
     cursor: pointer;
   }
 }
+
+@include media-down($bp-lg) {
+  .titles,
+  .indexes {
+    position: relative;
+  }
+
+  .indexes {
+    z-index: 0;
+  }
+  .section {
+    display: flex;
+    flex-direction: column;
+  }
+}
 </style>
