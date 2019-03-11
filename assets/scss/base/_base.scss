@@ -2,6 +2,10 @@ html {
   margin: 0;
   padding: 0;
   height: 100%;
+
+  @include media-down($bp-lg) {
+    // overflow: hidden;
+  }
 }
 
 body {

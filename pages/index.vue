@@ -292,9 +292,8 @@ export default {
   display: flex;
 
   &__text {
-    display: inline-block;
-    margin: 0.3em 0.5em;
-    margin-left: 0;
+    margin: 0;
+    padding-right: 0.5em;
   }
 
   &:hover {
@@ -309,6 +308,7 @@ export default {
   }
 
   .indexes {
+    bottom: 0.5rem;
     z-index: 0;
   }
   .section {
