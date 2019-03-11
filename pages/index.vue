@@ -48,9 +48,9 @@ export default {
         nodes: {
           width: 200
         },
-        strength: 1,
-        charge: -50,
-        collide: 150,
+        strength: 0.1,
+        charge: 0,
+        collide: 100,
         offset: 50,
         freedom: 200
       },
@@ -271,7 +271,7 @@ export default {
   bottom: 0;
   right: 0;
   font-weight: 400;
-  font-size: 1.5rem;
+  font-size: 1rem;
   letter-spacing: -1px;
   z-index: 10;
 

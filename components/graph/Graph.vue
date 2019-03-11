@@ -20,7 +20,7 @@
 
 <script>
 import {
-  forceCenter,
+  // forceCenter,
   forceLink,
   forceManyBody,
   forceSimulation,
@@ -70,19 +70,19 @@ export default {
           y: this.height / 3
         },
         '2': {
-          x: (this.width / 6) * 2,
+          x: this.width / 5,
           y: this.height / 2
         },
         '3': {
-          x: (this.width / 6) * 3,
+          x: (this.width / 5) * 2,
           y: this.height / 2
         },
         '4': {
-          x: (this.width / 6) * 4,
+          x: (this.width / 5) * 3,
           y: this.height / 2
         },
         '5': {
-          x: (this.width / 6) * 5,
+          x: (this.width / 5) * 4,
           y: this.height / 2
         }
       }
@@ -156,7 +156,6 @@ export default {
     },
     forceSimulation(selector, strength, charge) {
       return forceSimulation()
-        .force('center', forceCenter(this.width / 2, this.height / 2))
         .force('charge', forceManyBody().strength(charge))
         .force('collision', forceCollide(this.settings.collide))
         .force('link', forceLink().id(d => d[selector]))
@@ -238,6 +237,9 @@ export default {
       return `M${d.source.x},${d.source.y} ${d.target.x},${d.target.y}` //eslint-disable-line
     },
     positionNode(d) {
+      if (d.content.level === '1' || d.content.level === '5') {
+        d.x = this.centers[d.content.level].x
+      }
       d.x = Math.max(
         Math.max(
           this.centers[d.content.level].x - this.settings.freedom,
