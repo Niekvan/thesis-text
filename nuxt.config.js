@@ -9,11 +9,13 @@ module.exports = {
   ** Headers of the page
   */
   head: {
-    title: 'I Consent | Thesis | Niek van Sleeuwen',
+    title: 'I Consent - Niek van Sleeuwen - Thesis',
     meta: [
       { charset: 'utf-8' },
       { name: 'viewport', content: 'width=device-width, initial-scale=1' },
-      { hid: 'description', name: 'description', content: pkg.description }
+      { hid: 'description', name: 'description', content: pkg.description },
+      { name: 'theme-color', content: '#071230' },
+      { name: 'apple-mobile-web-app-status-bar-style', content: '#071230' }
     ],
     link: [{ rel: 'icon', type: 'image/x-icon', href: '/icon.png' }]
   },
@@ -81,7 +83,8 @@ module.exports = {
     short_name: 'I Consent',
     start_url: '/',
     display: 'standalone',
-    lang: 'en-UK'
+    lang: 'en-UK',
+    theme_color: '#071230'
   },
 
   /*
