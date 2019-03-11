@@ -39,11 +39,28 @@ export default {
   computed: {
     ...mapState(['images', 'image_sources'])
   },
+  mounted() {
+    console.log(this.images) //eslint-disable-line
+    console.log(this.getUnique(this.images, 'caption')) //eslint-disable-line
+  },
   methods: {
     handleImageClick(uuid) {
       this.SET_READ_ARTICLES(uuid)
       this.SET_ACTIVE_ARTICLES(uuid)
       this.SET_IMAGE_INDEX(false)
+    },
+    getUnique(arr, comp) {
+      const unique = arr
+        .map(e => e[comp])
+
+        // store the keys of the unique objects
+        .map((e, i, final) => final.indexOf(e) === i && i)
+
+        // eliminate the dead keys & store unique objects
+        .filter(e => arr[e])
+        .map(e => arr[e])
+
+      return unique
     },
     ...mapMutations([
       'SET_ACTIVE_ARTICLES',

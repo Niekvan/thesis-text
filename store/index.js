@@ -118,7 +118,7 @@ export const actions = {
       }
       return images
     })
-    commit('SET_IMAGES', data)
+    commit('SET_IMAGES', getUnique(data, 'caption'))
   },
   async nuxtServerInit({ dispatch, commit, state }, { isDev }) {
     await dispatch('getArticles', isDev)
@@ -144,4 +144,14 @@ function compare(a, b) {
   const aFirst = a.author ? a.author : a.title
   const bFirst = b.author ? b.author : b.title
   return aFirst.localeCompare(bFirst) || 0
+}
+
+function getUnique(arr, comp) {
+  const unique = arr
+    .map(item => item[comp])
+    .map((item, i, final) => final.indexOf(item) === i && i)
+    .filter(item => arr[item])
+    .map(e => arr[e])
+
+  return unique
 }

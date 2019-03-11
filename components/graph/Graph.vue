@@ -123,8 +123,10 @@ export default {
     }
   },
   mounted() {
-    this.width = this.svg.node().clientWidth
-    this.height = this.svg.node().clientHeight
+    this.width =
+      this.svg.node().clientWidth || this.svg.node().parentNode.clientWidth
+    this.height =
+      this.svg.node().clientHeight || this.svg.node().parentNode.clientHeight
     this.start()
     window.addEventListener('resize', this.handleResize)
   },
@@ -269,8 +271,10 @@ export default {
       return `translate(${d.x}, ${d.y})`
     },
     restart(nodes, links) {
-      this.width = this.svg.node().clientWidth
-      this.height = this.svg.node().clientHeight
+      this.width =
+        this.svg.node().clientWidth || this.svg.node().parentNode.clientWidth
+      this.height =
+        this.svg.node().clientHeight || this.svg.node().parentNode.clientHeight
       this.simulation.nodes(nodes)
       this.simulation.force('link').links(links)
       this.simulation.alpha(1).restart()
@@ -340,6 +344,7 @@ export default {
   width: 100%;
   height: 100%;
   user-select: none;
+  display: block;
 
   @include media-down($bp-lg) {
     flex-grow: 1;
