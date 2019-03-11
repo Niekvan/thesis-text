@@ -134,6 +134,9 @@ export const actions = {
 export const getters = {
   getLinkedArticles: state => list => {
     return state.articles.filter(article => list.includes(article.uuid))
+  },
+  getAbstract: state => () => {
+    return state.articles.find(article => article.slug === 'abstract')
   }
 }
 
