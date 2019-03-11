@@ -67,7 +67,7 @@ export default {
       return {
         '1': {
           x: this.width / 6,
-          y: this.height / 3
+          y: this.height / 2
         },
         '2': {
           x: this.width / 5,
@@ -174,6 +174,9 @@ export default {
         .stop()
     },
     positionLink(d) {
+      if (d.source.content.level === '1' || d.source.content.level === '5') {
+        d.source.x = this.centers[d.source.content.level].x
+      }
       d.source.x = Math.max(
         Math.max(
           this.centers[d.source.content.level].x - this.settings.freedom,
@@ -203,6 +206,9 @@ export default {
             d.source.y
           )
         )
+      }
+      if (d.target.content.level === '1' || d.target.content.level === '5') {
+        d.target.x = this.centers[d.target.content.level].x
       }
       d.target.x = Math.max(
         Math.max(

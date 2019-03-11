@@ -8,6 +8,7 @@ import nodeLink from '@/components/graph/Link.vue'
 import Node from '@/components/graph/Node.vue'
 import SourceList from '@/components/SourceList.vue'
 import ImageIndex from '@/components/ImageIndex.vue'
+import Credits from '@/components/Credits.vue'
 
 export default () => {
   Vue.component('reference', Source)
@@ -18,4 +19,5 @@ export default () => {
   Vue.component('i-consent', IConsent)
   Vue.component('source-list', SourceList)
   Vue.component('image-index', ImageIndex)
+  Vue.component('credits', Credits)
 }

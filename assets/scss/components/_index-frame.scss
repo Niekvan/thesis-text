@@ -1,0 +1,50 @@
+.frame {
+  position: fixed;
+  width: 90%;
+  height: 95%;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  box-sizing: border-box;
+
+  background: $white;
+  box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+
+  &__head {
+    box-sizing: border-box;
+    display: flex;
+    z-index: 0;
+    background: $white;
+  }
+
+  &__bar {
+    flex-grow: 1;
+    padding: 0.25rem 0.5rem;
+  }
+
+  &__close {
+    padding: 0.25rem 0.5rem;
+
+    &:hover {
+      cursor: pointer;
+    }
+  }
+
+  &__content {
+    overflow-y: auto;
+    height: calc(100% - 2rem);
+
+    &.credits {
+      .heading-1 {
+        // margin-bottom: 0;
+      }
+      .bold {
+        font-weight: 600;
+        margin-bottom: 0;
+        & ~ p {
+          margin-top: 0;
+        }
+      }
+    }
+  }
+}

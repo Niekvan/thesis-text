@@ -17,6 +17,9 @@
         <h3 class="indexes__sources indexes__text" @click="clickSources('references')">
           References
         </h3>
+        <h3 class="indexes__credits indexes__text" @click="clickSources('credits')">
+          Credits
+        </h3>
       </div>
     </section>
     <article-frame
@@ -28,6 +31,7 @@
     />
     <source-list v-if="referenceOpen" />
     <image-index v-if="imagesOpen" />
+    <credits v-if="creditsOpen" />
     <transition name="fade">
       <i-consent v-if="consentOpen" />
     </transition>
@@ -88,6 +92,9 @@ export default {
         })
       return this.flatten(links)
     },
+    colophoneBody() {
+      return this.$md.render(this.colophone.content.body)
+    },
     opacityClass() {
       return this.activeArticles.length ? 'opaque' : ''
     },
@@ -98,7 +105,8 @@ export default {
       'activeArticles',
       'referenceOpen',
       'imagesOpen',
-      'consentOpen'
+      'consentOpen',
+      'creditsOpen'
     ])
   },
   // async mounted() {
@@ -224,14 +232,21 @@ export default {
         case 'images':
           this.SET_IMAGE_INDEX(true)
           this.SET_REFERENCE(false)
+          this.SET_CREDITS_OPEN(false)
           break
         case 'references':
           this.SET_IMAGE_INDEX(false)
           this.SET_REFERENCE(true)
+          this.SET_CREDITS_OPEN(false)
+          break
+        case 'credits':
+          this.SET_IMAGE_INDEX(false)
+          this.SET_REFERENCE(false)
+          this.SET_CREDITS_OPEN(true)
           break
       }
     },
-    ...mapMutations(['SET_REFERENCE', 'SET_IMAGE_INDEX'])
+    ...mapMutations(['SET_REFERENCE', 'SET_IMAGE_INDEX', 'SET_CREDITS_OPEN'])
   }
 }
 </script>
@@ -274,6 +289,7 @@ export default {
   font-size: 1rem;
   letter-spacing: -1px;
   z-index: 10;
+  display: flex;
 
   &__text {
     display: inline-block;

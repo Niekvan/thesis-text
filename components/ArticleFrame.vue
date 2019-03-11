@@ -61,12 +61,11 @@ export default {
         nodes: {
           width: 300,
           height: 300,
-          scale: 2.5,
           active: this.articleUuid
         },
         strength: 0.3,
-        charge: -1,
-        collide: 300,
+        charge: -0.1,
+        collide: 100,
         freedom: 1000
       },
       localSources: [],
@@ -189,7 +188,7 @@ export default {
           keys[0]
             .replace(/ et al./, '')
             .split(', ')
-            .some(name => author.includes(name)) &&
+            .some(name => author.toLowerCase().includes(name.toLowerCase())) &&
           year.includes(keys[1].replace(/[^\d]/g, ''))
         )
       })

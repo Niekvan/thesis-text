@@ -1,21 +1,21 @@
 <template>
-  <section class="image-index">
-    <div class="image-index__head">
-      <span class="image-index__bar">
+  <section class="frame">
+    <div class="frame__head">
+      <span class="frame__bar">
         /Images
       </span>
-      <span class="image-index__close" @click="SET_IMAGE_INDEX(false)">
+      <span class="frame__close" @click="SET_IMAGE_INDEX(false)">
         X
       </span>
     </div>
-    <div class="image-index__content row">
+    <div class="frame__content row">
       <div v-for="(image, index) in images" :key="image.uuid + index" class="col-lg-4 images" @click="handleImageClick(image.uuid)">
         <image-resized :image="image" />
         <p class="images__caption caption">
           {{ image.caption }}
         </p>
       </div>
-      <div class="col-12">
+      <!-- <div class="col-12">
         <div class="line-width references">
           <h2 class="heading-2">
             Image References
@@ -24,7 +24,7 @@
             <reference v-for="source in image_sources" :key="source.uuid" class="references__item" :source="source" />
           </ul>
         </div>
-      </div>
+      </div> -->
     </div>
   </section>
 </template>
@@ -39,10 +39,6 @@ export default {
   computed: {
     ...mapState(['images', 'image_sources'])
   },
-  mounted() {
-    console.log(this.images) //eslint-disable-line
-    console.log(this.getUnique(this.images, 'caption')) //eslint-disable-line
-  },
   methods: {
     handleImageClick(uuid) {
       this.SET_READ_ARTICLES(uuid)
@@ -52,10 +48,8 @@ export default {
     getUnique(arr, comp) {
       const unique = arr
         .map(e => e[comp])
-
         // store the keys of the unique objects
         .map((e, i, final) => final.indexOf(e) === i && i)
-
         // eliminate the dead keys & store unique objects
         .filter(e => arr[e])
         .map(e => arr[e])
@@ -72,43 +66,6 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.image-index {
-  position: fixed;
-  width: 90%;
-  height: 95%;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  box-sizing: border-box;
-
-  background: $white;
-  box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
-
-  &__head {
-    box-sizing: border-box;
-    display: flex;
-    z-index: 0;
-    background: $white;
-  }
-
-  &__bar {
-    flex-grow: 1;
-    padding: 0.25rem 1rem;
-  }
-
-  &__close {
-    padding: 0.25rem 0.5rem;
-
-    &:hover {
-      cursor: pointer;
-    }
-  }
-
-  &__content {
-    overflow-y: auto;
-    height: calc(100% - 2rem);
-  }
-}
 .images {
   display: flex;
   flex-direction: column;

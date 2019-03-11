@@ -1,5 +1,6 @@
 export const state = () => ({
   articles: [],
+  credits: null,
   readArticles: [],
   activeArticles: [],
   sources: [],
@@ -11,12 +12,16 @@ export const state = () => ({
   middleware_ip: null,
   referenceOpen: false,
   imagesOpen: false,
+  creditsOpen: false,
   consentOpen: true
 })
 
 export const mutations = {
   SET_ARTICLES(state, articles) {
     state.articles = articles
+  },
+  SET_CREDITS(state, credits) {
+    state.credits = credits
   },
   SET_ACTIVE_ARTICLES(state, article) {
     state.activeArticles.push(article)
@@ -47,20 +52,23 @@ export const mutations = {
   SET_MIDDLEWARE_IP(state, ip) {
     state.middleware_ip = ip
   },
-  SET_REFERENCE(state, open) {
-    state.referenceOpen = open
-  },
-  SET_IMAGE_INDEX(state, open) {
-    state.imagesOpen = open
-  },
   SET_IMAGES(state, images) {
     state.images = images
   },
   SET_IMAGE_SOURCES(state, list) {
     state.image_sources = list.sort(compare)
   },
+  SET_REFERENCE(state, open) {
+    state.referenceOpen = open
+  },
+  SET_IMAGE_INDEX(state, open) {
+    state.imagesOpen = open
+  },
   SET_CONSENT_OPEN(state, open) {
     state.consentOpen = open
+  },
+  SET_CREDITS_OPEN(state, open) {
+    state.creditsOpen = open
   }
 }
 
@@ -71,6 +79,10 @@ export const actions = {
       starts_with: 'articles',
       version: 'draft'
     })
+    const credits = await this.$storyapi.get('cdn/stories/credits', {
+      version: 'draft'
+    })
+    commit('SET_CREDITS', credits.data.story)
     commit('SET_ARTICLES', data.data.stories)
   },
   async getSources({ commit }, isDev) {
