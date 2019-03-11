@@ -232,9 +232,23 @@ export default {
   overflow: hidden;
   box-shadow: 2px 0 7px 1px rgba($color-text-primary, 0.1);
 
-  &:not(:last-child):hover {
-    transform: translate(-50%, calc(-50% - 0.75rem));
-    cursor: pointer;
+  -webkit-filter: blur(0);
+  text-rendering: optimizeLegibility;
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-font-smoothing: antialiased;
+  backface-visibility: hidden;
+
+  &:not(:last-child) {
+    &:hover {
+      transform: translate(-50%, calc(-50% - 0.75rem));
+      cursor: pointer;
+    }
+
+    @include media-up($bp-lg) {
+      ::-webkit-scrollbar {
+        width: 0;
+      }
+    }
   }
 
   .header {
@@ -249,7 +263,7 @@ export default {
 
     .bar {
       flex-grow: 1;
-      padding: 0.25rem 1rem;
+      padding: 0.25rem 0 0.25rem 1rem;
     }
 
     .close {
@@ -262,7 +276,7 @@ export default {
     }
     .trigger {
       display: block;
-      padding: 0.25rem 1rem 0;
+      padding: 0.25rem 1rem 0.25rem 0;
       text-align: center;
       z-index: 1;
 
@@ -351,8 +365,13 @@ export default {
       background: $white;
       padding: 1.5rem 1rem;
       box-shadow: 2px 0 7px 1px rgba($color-text-primary, 0.1);
-      // border: 1px solid $color-text-primary;
       z-index: 5;
+
+      -webkit-filter: blur(0);
+      text-rendering: optimizeLegibility;
+      -moz-osx-font-smoothing: grayscale;
+      -webkit-font-smoothing: antialiased;
+      backface-visibility: hidden;
 
       .close {
         position: fixed;

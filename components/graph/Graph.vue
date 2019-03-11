@@ -71,19 +71,19 @@ export default {
         },
         '2': {
           x: this.width / 5,
-          y: this.height / 2
+          y: (this.height / 3) * 2
         },
         '3': {
           x: (this.width / 5) * 2,
-          y: this.height / 2
+          y: this.height / 4
         },
         '4': {
           x: (this.width / 5) * 3,
-          y: this.height / 2
+          y: (this.height / 5) * 4
         },
         '5': {
           x: (this.width / 5) * 4,
-          y: this.height / 2
+          y: (this.height / 3) * 2
         }
       }
     },

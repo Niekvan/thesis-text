@@ -35,6 +35,11 @@
     <transition name="fade">
       <i-consent v-if="consentOpen" />
     </transition>
+    <div class="mobile-check">
+      <h1 class="heading-2 mobile-check__text">
+        Please rotate to portrait mode or visit the site on a computer
+      </h1>
+    </div>
   </main>
 </template>
 
@@ -314,6 +319,26 @@ export default {
   .section {
     display: flex;
     flex-direction: column;
+  }
+}
+
+@media only screen and (orientation: landscape) and (max-height: 500px) {
+  .mobile-check {
+    position: fixed;
+    right: 0;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    background: $color-text-primary;
+    color: $color-text-inverse;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    &__text {
+      padding: 0 1em;
+      text-align: center;
+    }
   }
 }
 </style>
