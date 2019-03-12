@@ -321,6 +321,9 @@ export default {
     flex-direction: column;
   }
 }
+.mobile-check {
+  display: none;
+}
 
 @media only screen and (orientation: landscape) and (max-height: 500px) {
   .mobile-check {

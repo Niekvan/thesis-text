@@ -233,12 +233,8 @@ export default {
   box-shadow: 2px 0 7px 1px rgba($color-text-primary, 0.1);
 
   -webkit-filter: blur(0);
-  text-rendering: optimizeLegibility;
-  -moz-osx-font-smoothing: grayscale;
-  -webkit-font-smoothing: antialiased;
-  backface-visibility: hidden;
 
-  &:not(:last-child) {
+  &:not(:last-of-type) {
     &:hover {
       transform: translate(-50%, calc(-50% - 0.75rem));
       cursor: pointer;
@@ -263,7 +259,7 @@ export default {
 
     .bar {
       flex-grow: 1;
-      padding: 0.25rem 0 0.25rem 1rem;
+      padding: 0.25rem 1rem;
     }
 
     .close {
@@ -276,7 +272,7 @@ export default {
     }
     .trigger {
       display: block;
-      padding: 0.25rem 1rem 0.25rem 0;
+      padding: 0.25rem 1rem 0;
       text-align: center;
       z-index: 1;
 
