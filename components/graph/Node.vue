@@ -10,11 +10,11 @@
         :x="BBox.x - padding.left / 2"
         :y="BBox.y - padding.top / 2"
         :width="BBox.width + padding.left"
-        :height="BBox.height +padding.top"
+        :height="BBox.height + padding.top"
         class="node__background"
       />
     </no-ssr>
-    <text class="node__text body" :class="{ active: settings.active === node.uuid }" :style="{ opacity: readArticles.includes(node.uuid) ? 1 : 0.2 }" alignment-baseline="middle">
+    <text class="node__text body" :class="classes" :style="styles" alignment-baseline="middle">
       {{ node.slug }}
     </text>
   </g>
@@ -35,6 +35,12 @@ export default {
       type: Object,
       default() {
         return {}
+      }
+    },
+    connected: {
+      type: Array,
+      default() {
+        return []
       }
     }
   },
@@ -81,6 +87,22 @@ export default {
       }
       return null
     },
+    classes() {
+      return {
+        active: this.settings.active === this.node.uuid,
+        read: this.readArticles.includes(this.node.uuid)
+      }
+    },
+    styles() {
+      return {
+        opacity:
+          this.readArticles.includes(this.node.uuid) ||
+          this.node.name === 'introduction' ||
+          this.connected.length
+            ? 1
+            : 0.2
+      }
+    },
     ...mapState(['readArticles'])
   },
   methods: {
@@ -111,10 +133,22 @@ export default {
     text-anchor: middle;
     font-size: 1rem;
     text-transform: capitalize;
+    opacity: 0.2;
 
     &.active {
       // text-decoration: underline;
       fill: $color-text-red;
+    }
+
+    &.read {
+      opacity: 1;
+      text-decoration: line-through;
+    }
+  }
+
+  &.introduction {
+    .node__text {
+      opacity: 1;
     }
   }
 }
