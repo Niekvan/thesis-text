@@ -45,10 +45,6 @@ module.exports = {
     {
       src: '~/node_modules/lazysizes/lazysizes.js',
       mode: 'client'
-    },
-    {
-      src: '~/plugins/iNoBounce.js',
-      mode: 'client'
     }
   ],
 
