@@ -13,7 +13,7 @@
     </div>
     <div class="content scroll">
       <div class="row">
-        <article class="col-lg-8 content__text">
+        <article class="col-lg-8">
           <div class="line-width">
             <h1 class="heading-1">
               {{ article.content.title }}
@@ -294,11 +294,13 @@ export default {
   .scroll {
     overflow-y: auto;
     width: 100%;
+    -webkit-overflow-scrolling: touch;
+    overscroll-behavior: none;
   }
 
   .content {
     margin: calc(25px + 0.75rem) 0;
-    // height: calc(100% - 25px - 0.75rem);
+    height: calc(100% - 25px - 0.75rem);
     position: relative;
 
     .side-bar {
@@ -342,12 +344,12 @@ export default {
       }
     }
 
-    &__text {
-      height: calc(100% - 25px - 0.75rem);
-      overflow-y: auto;
-      -webkit-overflow-scrolling: touch;
-      overscroll-behavior: none;
+    .heading-1 {
+      line-height: 1;
+      margin-bottom: 0.5em;
     }
+
+    .body {
       position: relative;
     }
 
