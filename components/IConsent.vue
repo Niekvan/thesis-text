@@ -75,6 +75,7 @@ export default {
     height: 100%;
     overflow-y: auto;
     -webkit-overflow-scrolling: touch;
+    overscroll-behavior: none;
   }
 
   .heading-1 {

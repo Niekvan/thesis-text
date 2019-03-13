@@ -294,15 +294,13 @@ export default {
   .scroll {
     overflow-y: auto;
     width: 100%;
-    height: calc(100% - 25px - 0.75rem);
     -webkit-overflow-scrolling: touch;
-    position: relative;
+    overscroll-behavior: none;
   }
 
   .content {
     margin: calc(25px + 0.75rem) 0;
-    // height: calc(100% - 25px - 0.75rem);
-    height: 100%;
+    height: calc(100% - 25px - 0.75rem);
     position: relative;
 
     .side-bar {
