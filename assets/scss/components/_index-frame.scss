@@ -33,9 +33,11 @@
   &__content {
     overflow-y: auto;
     height: calc(100% - 2rem);
-    -webkit-overflow-scrolling: touch;
 
     &.credits {
+      .heading-1 {
+        // margin-bottom: 0;
+      }
       .bold {
         font-weight: 600;
         margin-bottom: 0;
