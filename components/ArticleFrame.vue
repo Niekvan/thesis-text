@@ -295,9 +295,6 @@ export default {
     overflow-y: auto;
     width: 100%;
     -webkit-overflow-scrolling: touch;
-    transform: translateZ(0px);
-    transform: translate3d(0, 0, 0);
-    perspective: 1000;
   }
 
   .content {
