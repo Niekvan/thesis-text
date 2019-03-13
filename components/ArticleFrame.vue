@@ -295,6 +295,9 @@ export default {
     overflow-y: auto;
     width: 100%;
     -webkit-overflow-scrolling: touch;
+    transform: translateZ(0px);
+    transform: translate3d(0, 0, 0);
+    perspective: 1000;
   }
 
   .content {
@@ -365,9 +368,6 @@ export default {
       z-index: 5;
 
       -webkit-filter: blur(0);
-      text-rendering: optimizeLegibility;
-      -moz-osx-font-smoothing: grayscale;
-      -webkit-font-smoothing: antialiased;
 
       .close {
         position: fixed;
@@ -379,8 +379,7 @@ export default {
         text-align: center;
         padding-top: 0.25rem;
         display: block;
-        // border-left: 1px solid $color-text-primary;
-        // border-bottom: 1px solid $color-text-primary;
+
         &:hover {
           cursor: pointer;
         }
