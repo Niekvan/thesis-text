@@ -1,5 +1,5 @@
 <template>
-  <path class="link" :style="{ strokeOpacity: readArticles.includes(link.source.uuid) && readArticles.includes(link.target.uuid) ? 1 : 0.05 }" />
+  <path class="link" :style="styles" />
 </template>
 
 <script>
@@ -14,6 +14,15 @@ export default {
     }
   },
   computed: {
+    styles() {
+      return {
+        strokeOpacity:
+          this.readArticles.includes(this.link.source.uuid) ||
+          this.readArticles.includes(this.link.target.uuid)
+            ? 1
+            : 0.05
+      }
+    },
     ...mapState(['readArticles'])
   }
 }

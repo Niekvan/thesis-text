@@ -40,7 +40,7 @@ export const mutations = {
     state.activeArticles.splice(index + 1, state.activeArticles.length - index)
   },
   SET_SOURCES(state, sources) {
-    state.sources = sources.sort(compare)
+    state.sources = sources.sort(compareAuthor)
   },
   SET_GEO(state, data) {
     state.geo = data
@@ -53,10 +53,10 @@ export const mutations = {
     state.middleware_ip = ip
   },
   SET_IMAGES(state, images) {
-    state.images = images
+    state.images = images.sort(compareImages)
   },
   SET_IMAGE_SOURCES(state, list) {
-    state.image_sources = list.sort(compare)
+    state.image_sources = list.sort(compareAuthor)
   },
   SET_REFERENCE(state, open) {
     state.referenceOpen = open
@@ -136,10 +136,6 @@ export const actions = {
     await dispatch('getArticles', isDev)
     await dispatch('getSources', isDev)
     dispatch('getImages')
-    const intro = state.articles.find(
-      article => article.name === 'introduction'
-    )
-    commit('SET_READ_ARTICLES', intro.uuid)
   }
 }
 
@@ -152,10 +148,22 @@ export const getters = {
   }
 }
 
-function compare(a, b) {
-  const aFirst = a.author ? a.author : a.title
+function compareAuthor(a, b) {
   const bFirst = b.author ? b.author : b.title
+  const aFirst = a.author ? a.author : a.title
   return aFirst.localeCompare(bFirst) || 0
+}
+
+function compareImages(a, b) {
+  const reg = /(?:Figure )(?<number>\d+)\./g
+  const numA = reg.exec(a.caption)
+  reg.lastIndex = 0
+  const numB = reg.exec(b.caption)
+
+  if (numA && numB) {
+    return parseInt(numA.groups.number) - parseInt(numB.groups.number)
+  }
+  return a.caption.localeCompare(b.caption)
 }
 
 function getUnique(arr, comp) {
