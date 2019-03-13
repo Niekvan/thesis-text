@@ -368,6 +368,7 @@ export default {
       text-rendering: optimizeLegibility;
       -moz-osx-font-smoothing: grayscale;
       -webkit-font-smoothing: antialiased;
+      backface-visibility: hidden;
 
       .close {
         position: fixed;

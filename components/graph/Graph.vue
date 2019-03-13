@@ -13,7 +13,6 @@
         :key="nodeData.uuid"
         :node="nodeData"
         :settings="settings.nodes"
-        :connected="getConnections(nodeData)"
       />
     </g>
   </svg>
@@ -304,16 +303,11 @@ export default {
       this.link.attr('d', this.positionLink)
       this.node.attr('transform', this.positionNode)
     },
-    getConnections(node) {
-      return this.readArticles.filter(item => {
-        return this.isConnected({ uuid: item }, node)
-      })
-    },
     isConnected(a, b) {
       return (
         this.linkedIndex[`${a.uuid},${b.uuid}`] ||
         this.linkedIndex[`${b.uuid},${a.uuid}`] ||
-        a.uuid === b.uuid
+        a.index === b.index
       )
     },
     handleMouseOver(opacity) {
@@ -329,14 +323,10 @@ export default {
     handleMouseOut(opacity) {
       return d => {
         this.node.select('.node__text').style('opacity', o => {
-          return this.readArticles.includes(o.uuid) ||
-            o.name === 'introduction' ||
-            this.getConnections(o).length
-            ? 1
-            : opacity
+          return this.readArticles.includes(o.uuid) ? 1 : opacity
         })
         this.link.style('stroke-opacity', o => {
-          return this.readArticles.includes(o.source.uuid) ||
+          return this.readArticles.includes(o.source.uuid) &&
             this.readArticles.includes(o.target.uuid)
             ? 1
             : 0.05
