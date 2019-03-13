@@ -21,7 +21,6 @@
 
 <script>
 import {
-  // forceCenter,
   forceLink,
   forceManyBody,
   forceSimulation,
@@ -313,7 +312,7 @@ export default {
       return (
         this.linkedIndex[`${a.uuid},${b.uuid}`] ||
         this.linkedIndex[`${b.uuid},${a.uuid}`] ||
-        a.index === b.index
+        a.uuid === b.uuid
       )
     },
     handleMouseOver(opacity) {
