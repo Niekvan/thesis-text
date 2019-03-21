@@ -1,14 +1,19 @@
 <template>
   <div class="consent consent__wrapper">
-    <main class="consent__content">
-      <div class="consent__scroll">
+    <section class="frame">
+      <div class="frame__head">
+        <span class="frame__bar">
+          /Abstract
+        </span>
+      </div>
+      <div class="frame__content">
         <div class="row">
-          <section class="col-lg-8 consent__text">
+          <article class="col-lg-8">
             <h1 class="heading-1">
               {{ article.content.title }}
             </h1>
             <div class="consent__body line-width" v-html="body" />
-          </section>
+          </article>
           <aside class="consent__button-wrapper col-lg-4">
             <button class="consent__button heading-1" @click="SET_CONSENT_OPEN(false)">
               I Consent
@@ -16,7 +21,7 @@
           </aside>
         </div>
       </div>
-    </main>
+    </section>
   </div>
 </template>
 
@@ -58,30 +63,8 @@ export default {
     z-index: 50;
   }
 
-  &__content {
-    display: block;
-    position: fixed;
-    width: 80%;
-    height: 80%;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    background: $white;
-  }
-
-  &__scroll {
-    position: relative;
-    width: 100%;
-    height: 100%;
-    overflow-y: auto;
-  }
-
   .heading-1 {
     margin-bottom: 0.5em;
-  }
-
-  .body {
-    margin-top: 0;
   }
 
   &__button-wrapper {

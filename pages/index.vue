@@ -129,109 +129,109 @@ export default {
     return story
   },
   methods: {
-    // async formatSources() {
-    //   const StoryblokClient = require('storyblok-js-client')
-    //   const Storyblok = new StoryblokClient({
-    //     oauthToken: 'okhpYrRocrS5X8sUrpWwxQtt-41094-PYBv5iyG6Z5Sz3BD5Lro'
-    //   })
-    //   const sources = require('@/assets/Thesis-new.json')
-    //   const formatted = sources.map(source => {
-    //     const title = source.title
-    //     const year = source.issued
-    //       ? this.$moment(source.issued['date-parts'][0].join('-'), [
-    //           'YYYY-MM-DD',
-    //           'YYYY'
-    //         ]).format('YYYY-MM-DD 00:00')
-    //       : null
-    //     const accessed = source.accessed
-    //       ? this.$moment(
-    //           source.accessed['date-parts'][0].join('-'),
-    //           'YYYY-MM-DD'
-    //         ).format('YYYY-MM-DD 00:00')
-    //       : null
-    //     const author = source.author
-    //       ? source.type === 'motion_picture'
-    //         ? source.author.map(author => author.literal).length > 1
-    //           ? `${source.author
-    //               .map(author => author.literal)
-    //               .slice(0, -1)
-    //               .join(', ')}, and ${source.author
-    //               .map(author => author.literal)
-    //               .slice(-1)}`
-    //           : source.author.map(author => author.literal).join(', ')
-    //         : source.author.map(author => {
-    //             return author.given
-    //               ? `${author.family}, ${author.given
-    //                   .match(/\b(\w)/g)
-    //                   .join('. ')}.`
-    //               : author.family
-    //           }).length > 1
-    //           ? `${source.author
-    //               .map(author => {
-    //                 return author.given
-    //                   ? `${author.family}, ${author.given
-    //                       .match(/\b(\w)/g)
-    //                       .join('. ')}.`
-    //                   : author.family
-    //               })
-    //               .slice(0, -1)
-    //               .join(', ')}, and ${source.author
-    //               .map(author => {
-    //                 return author.given
-    //                   ? `${author.family}, ${author.given
-    //                       .match(/\b(\w)/g)
-    //                       .join('. ')}.`
-    //                   : author.family
-    //               })
-    //               .slice(-1)}`
-    //           : source.author
-    //               .map(author => {
-    //                 return author.given
-    //                   ? `${author.family}, ${author.given
-    //                       .match(/\b(\w)/g)
-    //                       .join('. ')}.`
-    //                   : author.family
-    //               })
-    //               .join(', ')
-    //       : null
-    //     const location = source.URL
-    //       ? [
-    //           {
-    //             component: 'website',
-    //             accessed_at: accessed,
-    //             link: {
-    //               url: source.URL,
-    //               linktype: 'url',
-    //               fieldtype: 'multilink',
-    //               cached_url: source.URL
-    //             }
-    //           }
-    //         ]
-    //       : [
-    //           {
-    //             component: 'publisher',
-    //             publisher: `${source['publisher-place']}: ${source.publisher}.`
-    //           }
-    //         ]
-    //     return {
-    //       author,
-    //       year,
-    //       title,
-    //       location,
-    //       component: 'source'
-    //     }
-    //   })
-    //   const story = {
-    //     story: {
-    //       content: {
-    //         sources: formatted,
-    //         component: 'source_page'
-    //       }
-    //     }
-    //   }
-    //   const check = await Storyblok.put('spaces/52847/stories/551910', story)
-    //   console.log(check) //eslint-disable-line
-    // },
+    async formatSources() {
+      // const StoryblokClient = require('storyblok-js-client')
+      // const Storyblok = new StoryblokClient({
+      //   oauthToken: 'okhpYrRocrS5X8sUrpWwxQtt-41094-PYBv5iyG6Z5Sz3BD5Lro'
+      // })
+      // const sources = require('@/assets/Thesis.json')
+      // const formatted = sources.map(source => {
+      //   const title = source.title
+      //   const year = source.issued
+      //     ? this.$moment(source.issued['date-parts'][0].join('-'), [
+      //         'YYYY-MM-DD',
+      //         'YYYY'
+      //       ]).format('YYYY-MM-DD 00:00')
+      //     : null
+      //   const accessed = source.accessed
+      //     ? this.$moment(
+      //         source.accessed['date-parts'][0].join('-'),
+      //         'YYYY-MM-DD'
+      //       ).format('YYYY-MM-DD 00:00')
+      //     : null
+      //   const author = source.author
+      //     ? source.type === 'motion_picture'
+      //       ? source.author.map(author => author.literal).length > 1
+      //         ? `${source.author
+      //             .map(author => author.literal)
+      //             .slice(0, -1)
+      //             .join(', ')}, and ${source.author
+      //             .map(author => author.literal)
+      //             .slice(-1)}`
+      //         : source.author.map(author => author.literal).join(', ')
+      //       : source.author.map(author => {
+      //           return author.given
+      //             ? `${author.family}, ${author.given
+      //                 .match(/\b(\w)/g)
+      //                 .join('. ')}.`
+      //             : author.family
+      //         }).length > 1
+      //         ? `${source.author
+      //             .map(author => {
+      //               return author.given
+      //                 ? `${author.family}, ${author.given
+      //                     .match(/\b(\w)/g)
+      //                     .join('. ')}.`
+      //                 : author.family
+      //             })
+      //             .slice(0, -1)
+      //             .join(', ')}, and ${source.author
+      //             .map(author => {
+      //               return author.given
+      //                 ? `${author.family}, ${author.given
+      //                     .match(/\b(\w)/g)
+      //                     .join('. ')}.`
+      //                 : author.family
+      //             })
+      //             .slice(-1)}`
+      //         : source.author
+      //             .map(author => {
+      //               return author.given
+      //                 ? `${author.family}, ${author.given
+      //                     .match(/\b(\w)/g)
+      //                     .join('. ')}.`
+      //                 : author.family
+      //             })
+      //             .join(', ')
+      //     : null
+      //   const location = source.URL
+      //     ? [
+      //         {
+      //           component: 'website',
+      //           accessed_at: accessed,
+      //           link: {
+      //             url: source.URL,
+      //             linktype: 'url',
+      //             fieldtype: 'multilink',
+      //             cached_url: source.URL
+      //           }
+      //         }
+      //       ]
+      //     : [
+      //         {
+      //           component: 'publisher',
+      //           publisher: `${source['publisher-place']}: ${source.publisher}.`
+      //         }
+      //       ]
+      //   return {
+      //     author,
+      //     year,
+      //     title,
+      //     location,
+      //     component: 'source'
+      //   }
+      // })
+      // const story = {
+      //   story: {
+      //     content: {
+      //       sources: formatted,
+      //       component: 'source_page'
+      //     }
+      //   }
+      // }
+      // const check = await Storyblok.put('spaces/52847/stories/551910', story)
+      // console.log(check) //eslint-disable-line
+    },
     clickSources(ref) {
       switch (ref) {
         case 'images':

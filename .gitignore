@@ -82,3 +82,6 @@ dist
 
 # Service worker
 sw.*
+
+#json files
+assets/*.json

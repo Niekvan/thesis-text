@@ -145,8 +145,12 @@ export default {
   mounted() {
     this.width = window.innerWidth
     this.localSources = this.$refs[`md-${this.article.uuid}-${this.index}`].querySelectorAll('.source') //eslint-disable-line
+    this.sidenotes = this.$refs[`md-${this.article.uuid}-${this.index}`].querySelectorAll('.sidenote') //eslint-disable-line
     this.localSources.forEach(source => {
       source.addEventListener('click', this.handleQuote)
+    })
+    this.sidenotes.forEach(sidenote => {
+      sidenote.addEventListener('click', this.handleSidenote)
     })
     document.addEventListener(
       'lazyloaded',
@@ -160,6 +164,9 @@ export default {
   beforeDestroy() {
     this.localSources.forEach(source => {
       source.removeEventListener('click', this.handleQuote)
+    })
+    this.sidenotes.forEach(sidenote => {
+      sidenote.removeEventListener('click', this.handleSidenote)
     })
     document.removeEventListener('lazyloaded', function(e) {
       e.target.parentNode.classList.add('image-loaded')
@@ -199,6 +206,9 @@ export default {
         const index = keys[1].replace(/[\d]/g, '').charCodeAt(0) - 97
         this.source = filteredSources[index]
       }
+    },
+    handleSidenote(event) {
+      event.target.parentNode.classList.toggle('active')
     },
     createSrcSet(link) {
       const list = this.sizes.map(size => {

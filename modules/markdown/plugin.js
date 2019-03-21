@@ -75,7 +75,7 @@ const md = require('markdown-it')({
     render: function(tokens, idx) {
       const m = tokens[idx].info.trim().match(/^sidenote\s+(.*)$/)
       if (tokens[idx].nesting === 1) {
-        return ` <span class="sidenote__wrapper"><span class="sidenote__link">${
+        return ` <span class="sidenote sidenote__wrapper"><span class="sidenote__link">${
           m[1]
         }</span>\n<span class="sidenote__description">`
       } else {

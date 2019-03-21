@@ -11,16 +11,20 @@
       display: inline;
     }
 
-    &:hover {
-      color: $color-text-red;
-      cursor: help;
+  }
 
-      .sidenote__description {
-        transition: max-height 0.3s 0s;
-        max-height: 1000px;
-        padding: 0.25rem 0.5rem;
-      }
+  &.active {
+    color: $color-text-red;
+    .sidenote__description {
+      transition: all 0.3s;
+      max-height: 1000px;
+      padding: 0.25rem 0.5rem;
     }
+  }
+
+  &:hover {
+    color: $color-text-red;
+    cursor: help;
   }
 
   &__link {
@@ -34,7 +38,6 @@
       text-align: center;
       line-height: 1em;
       font-weight: 400;
-      color: $color-text-red;
       z-index: 2;
     }
   }
@@ -46,7 +49,11 @@
 
     max-height: 0px;
     overflow: hidden;
-    transition: all 0.2s 0.75s;
+    transition: all 0.3s;
+
+    &:hover {
+      cursor: auto;
+    }
 
     @include media-up($bp-lg) {
       position: absolute;

@@ -62,7 +62,7 @@ module.exports = {
         accessToken:
           process.env.NODE_ENV === 'dev'
             ? process.env.STORYBLOK_TOKEN_PREVIEW
-            : process.env.STORYBLOK_TOKEN_PREVIEW,
+            : process.env.STORYBLOK_TOKEN_PROD,
         cacheProvider: 'memory'
       }
     ],
