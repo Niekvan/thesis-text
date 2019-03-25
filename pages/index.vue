@@ -115,12 +115,12 @@ export default {
     ])
   },
   async asyncData(context) {
-    // const version =
-    //   context.query._storyblok || context.isDev ? 'draft' : 'published'
+    const version =
+      context.query._storyblok || context.isDev ? 'draft' : 'published'
     const { data: story } = await context.app.$storyapi.get(
       `cdn/stories/home`,
       {
-        version: 'draft'
+        version: version
       }
     )
     return story
