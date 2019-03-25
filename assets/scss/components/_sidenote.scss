@@ -44,7 +44,7 @@
 
   &__description {
     display: block;
-    font-size: 0.9em;
+    font-size: 0.8em;
     color: $color-text-red;
 
     max-height: 0px;
@@ -59,7 +59,7 @@
       position: absolute;
       right: calc(-40% - 2em);
       width: 40%;
-      margin-top: -1rem;
+      margin-top: -1.25rem;
       z-index: 10;
       background: #ffffff;
       padding: 0 0.5rem;
@@ -68,6 +68,12 @@
 
     p {
       margin: 0;
+    }
+
+    .caption {
+      &:not(:last-child) {
+        margin-bottom: 1em;
+      }
     }
   }
 }

@@ -90,7 +90,7 @@ export default {
   },
   computed: {
     body() {
-      const regex = /<img src="(?<src>[\w\W]+?)" (?:.+) class="(?<classes>[\w\W]+?)"(?:\/?)>/g
+      const regex = /<img src="(?<src>[\w\W]+?)"(?:.+)class="(?<classes>[\w\W]+?)"(?:\/?)>/g
       if (this.article.content.body) {
         let body = this.$md.render(this.article.content.body)
         const links = body.match(regex)
