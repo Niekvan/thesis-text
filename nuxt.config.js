@@ -59,18 +59,12 @@ module.exports = {
       'storyblok-nuxt',
       {
         accessToken:
-          process.env.NODE_ENV === 'dev'
+          process.env.ENV === 'dev'
             ? process.env.STORYBLOK_TOKEN_PREVIEW
             : process.env.STORYBLOK_TOKEN_PROD,
         cacheProvider: 'memory'
       }
     ],
-    // [
-    //   '@/modules/assetsApi',
-    //   {
-    //     token: process.env.API_TOKEN
-    //   }
-    // ],
     '@nuxtjs/style-resources'
   ],
 
@@ -130,8 +124,6 @@ module.exports = {
     // See https://github.com/nuxt-community/axios-module#options
   },
 
-  // serverMiddleware: ['~/middleware/detectIP'],
-
   /*
   ** Build configuration
   */
@@ -152,31 +144,4 @@ module.exports = {
       }
     }
   }
-
-  // generate: {
-  //   routes: function() {
-  //     return axios
-  //       .get('https://api.storyblok.com/v1/cdn/links', {
-  //         params: {
-  //           version: 'draft',
-  //           token: process.env.STORYBLOK_TOKEN_PREVIEW,
-  //           cv: Math.floor(Date.now() / 1e3)
-  //         }
-  //       })
-  //       .then(res => {
-  //         const routes = Object.keys(res.data.links)
-  //           .map(e => res.data.links[e])
-  //           .filter(link => {
-  //             return (
-  //               !link.is_folder &&
-  //               link.name !== 'Home' &&
-  //               link.name !== 'sources' &&
-  //               link.name !== 'abstract'
-  //             )
-  //           })
-  //           .map(link => `/${link.slug}`)
-  //         return routes
-  //       })
-  //   }
-  // }
 }

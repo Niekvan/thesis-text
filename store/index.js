@@ -6,10 +6,7 @@ export const state = () => ({
   sources: [],
   images: [],
   image_sources: [],
-  ip: null,
-  geo: null,
   loaded: false,
-  middleware_ip: null,
   referenceOpen: false,
   imagesOpen: false,
   creditsOpen: false,
@@ -41,16 +38,6 @@ export const mutations = {
   },
   SET_SOURCES(state, sources) {
     state.sources = sources.sort(compareAuthor)
-  },
-  SET_GEO(state, data) {
-    state.geo = data
-    state.loaded = true
-  },
-  SET_IP(state, ip) {
-    state.ip = ip
-  },
-  SET_MIDDLEWARE_IP(state, ip) {
-    state.middleware_ip = ip
   },
   SET_IMAGES(state, images) {
     state.images = images.sort(compareImages)
@@ -96,21 +83,6 @@ export const actions = {
     commit('SET_SOURCES', data.data.story.content.sources)
     commit('SET_IMAGE_SOURCES', imageData.data.story.content.sources)
   },
-  async setGEO({ commit, state }) {
-    if (!state.loaded) {
-      const { data: geoData } = await this.$axios.get(
-        'https://api.ipdata.co/',
-        {
-          params: {
-            'api-key':
-              '40ab9abe58d4444d4010e0db73473c8518b032b939dd62c0c6ec9815'
-          }
-        }
-      )
-      commit('SET_IP', geoData.ip)
-      commit('SET_GEO', geoData)
-    }
-  },
   getImages({ commit, state }) {
     const reg = /!\[[^\]]*\]\((?<filename>.*?)(?="|\))(?<optionalpart>".*")?\)(?:{.image ?(?<extraClass>.+)?}\n?\n?)(?<caption>.+)?\{/g
     const data = state.articles.flatMap(article => {
@@ -132,7 +104,7 @@ export const actions = {
     })
     commit('SET_IMAGES', getUnique(data, 'caption'))
   },
-  async nuxtServerInit({ dispatch, commit, state }, { isDev }) {
+  async nuxtServerInit({ dispatch }, { isDev }) {
     await dispatch('getArticles', isDev)
     await dispatch('getSources', isDev)
     dispatch('getImages')
