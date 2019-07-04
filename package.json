@@ -30,7 +30,7 @@
     "normalize-scss": "^7.0.1",
     "nuxt": "^2.6.3",
     "storyblok-nuxt": "^1.0.1",
-    "snyk": "^1.161.1"
+    "snyk": "^1.190.0"
   },
   "devDependencies": {
     "@nuxtjs/eslint-config": "^0.0.1",
