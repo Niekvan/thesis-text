@@ -23,7 +23,7 @@
     "d3": "^5.9.2",
     "dotenv": "^6.2.0",
     "lazysizes": "^4.1.8",
-    "markdown-it": "^8.4.2",
+    "markdown-it": "^10.0.0",
     "markdown-it-attrs": "^2.3.4",
     "markdown-it-container": "^2.0.0",
     "moment": "^2.24.0",
