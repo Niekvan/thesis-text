@@ -22,7 +22,7 @@
     "cross-env": "^5.2.0",
     "d3": "^5.9.2",
     "dotenv": "^6.2.0",
-    "lazysizes": "^4.1.8",
+    "lazysizes": "^5.2.1",
     "markdown-it": "^8.4.2",
     "markdown-it-attrs": "^2.3.4",
     "markdown-it-container": "^2.0.0",
