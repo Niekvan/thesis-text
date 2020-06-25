@@ -31,6 +31,32 @@ patch:
         patched: '2019-07-04T13:46:51.097Z'
     - snyk > @snyk/dep-graph > graphlib > lodash:
         patched: '2019-07-04T13:46:51.097Z'
+    - snyk > @snyk/dep-graph > lodash:
+        patched: '2020-06-25T14:22:42.497Z'
+    - snyk > inquirer > lodash:
+        patched: '2020-06-25T14:22:42.497Z'
+    - '@nuxtjs/axios > @nuxtjs/proxy > http-proxy-middleware > lodash':
+        patched: '2020-06-25T14:22:42.497Z'
+    - '@nuxtjs/style-resources > sass-resources-loader > async > lodash':
+        patched: '2020-06-25T14:22:42.497Z'
+    - nuxt > @nuxt/webpack > hard-source-webpack-plugin > lodash:
+        patched: '2020-06-25T14:22:42.497Z'
+    - nuxt > @nuxt/webpack > html-webpack-plugin > lodash:
+        patched: '2020-06-25T14:22:42.497Z'
+    - snyk > @snyk/snyk-cocoapods-plugin > @snyk/dep-graph > lodash:
+        patched: '2020-06-25T14:22:42.497Z'
+    - snyk > snyk-nuget-plugin > dotnet-deps-parser > lodash:
+        patched: '2020-06-25T14:22:42.497Z'
+    - nuxt > @nuxt/builder > @nuxt/webpack > hard-source-webpack-plugin > lodash:
+        patched: '2020-06-25T14:22:42.497Z'
+    - nuxt > @nuxt/builder > @nuxt/webpack > html-webpack-plugin > lodash:
+        patched: '2020-06-25T14:22:42.497Z'
+    - nuxt > @nuxt/webpack > optimize-css-assets-webpack-plugin > last-call-webpack-plugin > lodash:
+        patched: '2020-06-25T14:22:42.497Z'
+    - snyk > @snyk/snyk-cocoapods-plugin > @snyk/cocoapods-lockfile-parser > @snyk/dep-graph > lodash:
+        patched: '2020-06-25T14:22:42.497Z'
+    - nuxt > @nuxt/builder > @nuxt/webpack > optimize-css-assets-webpack-plugin > last-call-webpack-plugin > lodash:
+        patched: '2020-06-25T14:22:42.497Z'
   SNYK-JS-LODASH-567746:
     - snyk > @snyk/dep-graph > lodash:
         patched: '2020-06-25T14:09:15.902Z'
