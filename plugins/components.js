@@ -11,13 +11,13 @@ import ImageIndex from '@/components/ImageIndex.vue'
 import Credits from '@/components/Credits.vue'
 
 export default () => {
-  Vue.component('reference', Source)
-  Vue.component('graph', Graph)
-  Vue.component('node-link', nodeLink)
-  Vue.component('node', Node)
-  Vue.component('article-frame', ArticleFrame)
-  Vue.component('i-consent', IConsent)
-  Vue.component('source-list', SourceList)
-  Vue.component('image-index', ImageIndex)
-  Vue.component('credits', Credits)
+  Vue.component('Reference', Source)
+  Vue.component('Graph', Graph)
+  Vue.component('NodeLink', nodeLink)
+  Vue.component('Node', Node)
+  Vue.component('ArticleFrame', ArticleFrame)
+  Vue.component('IConsent', IConsent)
+  Vue.component('SourceList', SourceList)
+  Vue.component('ImageIndex', ImageIndex)
+  Vue.component('Credits', Credits)
 }

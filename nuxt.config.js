@@ -2,11 +2,11 @@ const pkg = require('./package')
 require('dotenv').config()
 
 module.exports = {
-  mode: 'universal',
+  target: 'static',
 
   /*
-  ** Headers of the page
-  */
+   ** Headers of the page
+   */
   head: {
     title: 'I Consent - Niek van Sleeuwen - Thesis',
     meta: [
@@ -14,42 +14,35 @@ module.exports = {
       { name: 'viewport', content: 'width=device-width, initial-scale=1' },
       { hid: 'description', name: 'description', content: pkg.description },
       { name: 'theme-color', content: '#071230' },
-      { name: 'apple-mobile-web-app-status-bar-style', content: '#071230' }
+      { name: 'apple-mobile-web-app-status-bar-style', content: '#071230' },
     ],
-    link: [{ rel: 'icon', type: 'image/x-icon', href: '/icon.png' }]
+    link: [{ rel: 'icon', type: 'image/x-icon', href: '/icon.png' }],
   },
 
   /*
-  ** Customize the progress-bar color
-  */
+   ** Customize the progress-bar color
+   */
   loading: { color: '#fff' },
 
   /*
-  ** Global CSS
-  */
-  css: [
-    {
-      src: '~/assets/scss/main.scss',
-      lang: 'scss'
-    }
-  ],
+   ** Global CSS
+   */
+  css: ['~/assets/scss/main.scss'],
 
   /*
-  ** Plugins to load before mounting the App
-  */
+   ** Plugins to load before mounting the App
+   */
   plugins: [
     '~/plugins/components',
-    // '~/api/ipApi.js',
-    // '~/plugins/vuescroll',
     {
       src: '~/node_modules/lazysizes/lazysizes.js',
-      mode: 'client'
-    }
+      mode: 'client',
+    },
   ],
 
   /*
-  ** Nuxt.js modules
-  */
+   ** Nuxt.js modules
+   */
   modules: [
     '@nuxtjs/axios',
     '@nuxtjs/pwa',
@@ -62,27 +55,27 @@ module.exports = {
           process.env.ENV === 'dev'
             ? process.env.STORYBLOK_TOKEN_PREVIEW
             : process.env.STORYBLOK_TOKEN_PROD,
-        cacheProvider: 'memory'
-      }
+        cacheProvider: 'memory',
+      },
     ],
-    '@nuxtjs/style-resources'
+    '@nuxtjs/style-resources',
   ],
 
   /*
-  ** PWA manifest
-  */
+   ** PWA manifest
+   */
   manifest: {
     name: 'I Consent',
     short_name: 'I Consent',
     start_url: '/',
     display: 'standalone',
     lang: 'en-UK',
-    theme_color: '#071230'
+    theme_color: '#071230',
   },
 
   /*
-  ** Service worker config
-  */
+   ** Service worker config
+   */
   workbox: {
     runtimeCaching: [
       {
@@ -91,9 +84,9 @@ module.exports = {
         strategyOptions: {
           cacheName: 'images',
           cacheableResponse: {
-            statuses: [0, 200]
-          }
-        }
+            statuses: [0, 200],
+          },
+        },
       },
       {
         urlPattern: 'https://a.storyblok.com/.*',
@@ -101,37 +94,37 @@ module.exports = {
         strategyOptions: {
           cacheName: 'images',
           cacheableResponse: {
-            statuses: [0, 200]
-          }
-        }
-      }
-    ]
+            statuses: [0, 200],
+          },
+        },
+      },
+    ],
   },
 
   /*
-  ** Global scss vars and mixins
-  */
+   ** Global scss vars and mixins
+   */
   styleResources: {
     scss: [
       '@/assets/scss/abstracts/_variables.scss',
-      '@/assets/scss/abstracts/_mixins.scss'
-    ]
+      '@/assets/scss/abstracts/_mixins.scss',
+    ],
   },
   /*
-  ** Axios module configuration
-  */
+   ** Axios module configuration
+   */
   axios: {
     // See https://github.com/nuxt-community/axios-module#options
   },
 
   /*
-  ** Build configuration
-  */
+   ** Build configuration
+   */
   build: {
     // analyze: true,
     /*
-    ** You can extend webpack config here
-    */
+     ** You can extend webpack config here
+     */
     extend(config, ctx) {
       // Run ESLint on save
       if (ctx.isDev && ctx.isClient) {
@@ -139,9 +132,9 @@ module.exports = {
           enforce: 'pre',
           test: /\.(js|vue)$/,
           loader: 'eslint-loader',
-          exclude: /(node_modules)/
+          exclude: /(node_modules)/,
         })
       }
-    }
-  }
+    },
+  },
 }

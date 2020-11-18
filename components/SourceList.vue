@@ -1,25 +1,27 @@
 <template>
   <section class="frame">
     <div class="frame__head">
-      <span class="frame__bar">
-        /References
-      </span>
-      <span class="frame__close" @click="SET_REFERENCE(false)">
-        X
-      </span>
+      <span class="frame__bar"> /References </span>
+      <span class="frame__close" @click="SET_REFERENCE(false)"> X </span>
     </div>
     <div class="frame__content">
-      <h2 class="heading-2">
-        Textual references
-      </h2>
+      <h2 class="heading-2">Textual references</h2>
       <ul class="references__list line-width">
-        <reference v-for="source in sources" :key="source.uuid" class="references__item" :source="source" />
+        <reference
+          v-for="source in sources"
+          :key="source.uuid"
+          class="references__item"
+          :source="source"
+        />
       </ul>
-      <h2 class="heading-2">
-        Image references
-      </h2>
+      <h2 class="heading-2">Image references</h2>
       <ul class="references__list line-width">
-        <reference v-for="source in image_sources" :key="source.uuid" class="references__item" :source="source" />
+        <reference
+          v-for="source in image_sources"
+          :key="source.uuid"
+          class="references__item"
+          :source="source"
+        />
       </ul>
     </div>
   </section>
@@ -29,11 +31,11 @@
 import { mapState, mapMutations } from 'vuex'
 export default {
   computed: {
-    ...mapState(['sources', 'image_sources'])
+    ...mapState(['sources', 'image_sources']),
   },
   methods: {
-    ...mapMutations(['SET_REFERENCE'])
-  }
+    ...mapMutations(['SET_REFERENCE']),
+  },
 }
 </script>
 

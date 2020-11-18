@@ -26,7 +26,7 @@ import {
   forceSimulation,
   forceCollide,
   forceX,
-  forceY
+  forceY,
 } from 'd3-force'
 import { drag } from 'd3-drag'
 import * as d3 from 'd3-selection'
@@ -38,20 +38,20 @@ export default {
       type: Array,
       default() {
         return []
-      }
+      },
     },
     nodes: {
       type: Array,
       default() {
         return []
-      }
+      },
     },
     settings: {
       type: Object,
       default() {
         return {}
-      }
-    }
+      },
+    },
   },
   data() {
     return {
@@ -59,32 +59,32 @@ export default {
       width: 0,
       height: 0,
       resizeTimeout: null,
-      opacityNode: 0.2
+      opacityNode: 0.2,
     }
   },
   computed: {
     centers() {
       return {
-        '1': {
+        1: {
           x: this.width / 6,
-          y: this.height / 2
+          y: this.height / 2,
         },
-        '2': {
+        2: {
           x: this.width / 5,
-          y: (this.height / 3) * 2
+          y: (this.height / 3) * 2,
         },
-        '3': {
+        3: {
           x: (this.width / 5) * 2,
-          y: this.height / 4
+          y: this.height / 4,
         },
-        '4': {
+        4: {
           x: (this.width / 5) * 3,
-          y: (this.height / 5) * 4
+          y: (this.height / 5) * 4,
         },
-        '5': {
+        5: {
           x: (this.width / 5) * 4,
-          y: (this.height / 3) * 2
-        }
+          y: (this.height / 3) * 2,
+        },
       }
     },
     svg() {
@@ -100,27 +100,24 @@ export default {
         .on('mouseout', this.handleMouseOut(this.opacityNode))
     },
     link() {
-      return this.svg
-        .select('g.links')
-        .selectAll('.link')
-        .data(this.links)
+      return this.svg.select('g.links').selectAll('.link').data(this.links)
     },
     linkedIndex() {
       const linkIndex = {}
-      this.links.forEach(link => {
+      this.links.forEach((link) => {
         linkIndex[`${link.source.uuid},${link.target.uuid}`] = 1
       })
       return linkIndex
     },
-    ...mapState(['readArticles'])
+    ...mapState(['readArticles']),
   },
   watch: {
     settings: {
-      handler: function() {
+      handler() {
         this.restart(this.nodes, this.links)
       },
-      deep: true
-    }
+      deep: true,
+    },
   },
   mounted() {
     this.width =
@@ -135,17 +132,17 @@ export default {
   },
   methods: {
     drag(simulation) {
-      function dragstarted(d) {
-        if (!d3.event.active) simulation.alphaTarget(0.3).restart()
+      function dragstarted(event, d) {
+        if (!event.active) simulation.alphaTarget(0.3).restart()
         d.fx = d.x
         d.fy = d.y
       }
-      function dragged(d) {
-        d.fx = d3.event.x
-        d.fy = d3.event.y
+      function dragged(event, d) {
+        d.fx = event.x
+        d.fy = event.y
       }
-      function dragended(d) {
-        if (!d3.event.active) simulation.alphaTarget(0)
+      function dragended(event, d) {
+        if (!event.active) simulation.alphaTarget(0)
         d.fx = null
         d.fy = null
       }
@@ -158,7 +155,10 @@ export default {
       return forceSimulation()
         .force('charge', forceManyBody().strength(charge))
         .force('collision', forceCollide(this.settings.collide))
-        .force('link', forceLink().id(d => d[selector]))
+        .force(
+          'link',
+          forceLink().id((d) => d[selector])
+        )
         .force(
           'y',
           forceY()
@@ -169,7 +169,7 @@ export default {
           'x',
           forceX()
             .strength(strength)
-            .x(d => this.centers[d.content.level].x)
+            .x((d) => this.centers[d.content.level].x)
         )
         .stop()
     },
@@ -287,7 +287,8 @@ export default {
       this.simulation.force('link').links(links)
       this.simulation.alpha(1).restart()
       const that = this
-      this.svg.selectAll('.node text').each(function(d, i) {
+      this.svg.selectAll('.node text').each(function (d, i) {
+        // eslint-disable-next-line vue/no-mutating-props
         that.nodes[i].bb = this.getBBox()
       })
     },
@@ -304,7 +305,7 @@ export default {
       this.node.attr('transform', this.positionNode)
     },
     getConnections(node) {
-      return this.readArticles.filter(item => {
+      return this.readArticles.filter((item) => {
         return this.isConnected({ uuid: item }, node)
       })
     },
@@ -316,25 +317,25 @@ export default {
       )
     },
     handleMouseOver(opacity) {
-      return d => {
-        this.node.select('.node__text').style('opacity', o => {
+      return (d) => {
+        this.node.select('.node__text').style('opacity', (o) => {
           return this.isConnected(d, o) ? 1 : opacity
         })
-        this.link.style('stroke-opacity', o => {
+        this.link.style('stroke-opacity', (o) => {
           return o.source.uuid === d.uuid || o.target.uuid === d.uuid ? 1 : 0.05
         })
       }
     },
     handleMouseOut(opacity) {
-      return d => {
-        this.node.select('.node__text').style('opacity', o => {
+      return (d) => {
+        this.node.select('.node__text').style('opacity', (o) => {
           return this.readArticles.includes(o.uuid) ||
             o.name === 'introduction' ||
             this.getConnections(o).length
             ? 1
             : opacity
         })
-        this.link.style('stroke-opacity', o => {
+        this.link.style('stroke-opacity', (o) => {
           return this.readArticles.includes(o.source.uuid) ||
             this.readArticles.includes(o.target.uuid)
             ? 1
@@ -351,8 +352,8 @@ export default {
           this.restart(this.nodes, this.links)
         }, 66)
       }
-    }
-  }
+    },
+  },
 }
 </script>
 

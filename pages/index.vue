@@ -1,6 +1,9 @@
 <template>
   <main v-if="story" class="wrapper row" :class="opacityClass">
-    <section v-editable="story.content" class="section section__legend col-lg-12">
+    <section
+      v-editable="story.content"
+      class="section section__legend col-lg-12"
+    >
       <div class="titles">
         <h1 class="heading-1 title">
           {{ story.content.title }}
@@ -9,21 +12,34 @@
           {{ story.content.sub_title }}
         </h2>
       </div>
-      <graph :nodes="selectedArticles.reverse()" :links="links" :settings="settings" />
+      <graph
+        :nodes="selectedArticles.reverse()"
+        :links="links"
+        :settings="settings"
+      />
       <div class="indexes">
-        <h3 class="indexes__images indexes__text" @click="clickSources('images')">
+        <h3
+          class="indexes__images indexes__text"
+          @click="clickSources('images')"
+        >
           Images
         </h3>
-        <h3 class="indexes__sources indexes__text" @click="clickSources('references')">
+        <h3
+          class="indexes__sources indexes__text"
+          @click="clickSources('references')"
+        >
           References
         </h3>
-        <h3 class="indexes__credits indexes__text" @click="clickSources('credits')">
+        <h3
+          class="indexes__credits indexes__text"
+          @click="clickSources('credits')"
+        >
           Credits
         </h3>
       </div>
     </section>
     <article-frame
-      v-for="(article,index) in activeArticles"
+      v-for="(article, index) in activeArticles"
       :key="`${article.uuid}-${index}-active`"
       :article-uuid="article"
       :index="index"
@@ -50,27 +66,38 @@ import helpers from '@/mixins/helpers'
 
 export default {
   mixins: [storyblokPreview, helpers],
+  async asyncData(context) {
+    const version =
+      context.query._storyblok || context.isDev ? 'draft' : 'published'
+    const { data: story } = await context.app.$storyapi.get(
+      `cdn/stories/home`,
+      {
+        version,
+      }
+    )
+    return story
+  },
   data() {
     return {
       settings: {
         selector: 'index-graph',
         nodes: {
-          width: 200
+          width: 200,
         },
         strength: 0.1,
         charge: 0,
         collide: 100,
         offset: 50,
-        freedom: 200
+        freedom: 200,
       },
-      story: null
+      story: null,
     }
   },
   computed: {
     selectedArticles() {
       return this.articles
-        .filter(article => this.story.content.articles.includes(article.uuid))
-        .map(article => {
+        .filter((article) => this.story.content.articles.includes(article.uuid))
+        .map((article) => {
           if (article.name === 'introduction') {
             article.primary = true
           }
@@ -80,16 +107,16 @@ export default {
     links() {
       const connections = []
       const links = this.selectedArticles
-        .filter(article => article.content.linked)
-        .map(article => {
+        .filter((article) => article.content.linked)
+        .map((article) => {
           const links = []
-          article.content.linked.forEach(link => {
+          article.content.linked.forEach((link) => {
             if (!connections.includes(`${link}-to-${article.uuid}`)) {
               connections.push(`${article.uuid}-to-${link}`)
               links.push({
                 source: article.uuid,
                 target: link,
-                name: `${article.uuid}-to-${link}`
+                name: `${article.uuid}-to-${link}`,
               })
             }
           })
@@ -111,19 +138,8 @@ export default {
       'referenceOpen',
       'imagesOpen',
       'consentOpen',
-      'creditsOpen'
-    ])
-  },
-  async asyncData(context) {
-    const version =
-      context.query._storyblok || context.isDev ? 'draft' : 'published'
-    const { data: story } = await context.app.$storyapi.get(
-      `cdn/stories/home`,
-      {
-        version: version
-      }
-    )
-    return story
+      'creditsOpen',
+    ]),
   },
   methods: {
     clickSources(ref) {
@@ -145,8 +161,8 @@ export default {
           break
       }
     },
-    ...mapMutations(['SET_REFERENCE', 'SET_IMAGE_INDEX', 'SET_CREDITS_OPEN'])
-  }
+    ...mapMutations(['SET_REFERENCE', 'SET_IMAGE_INDEX', 'SET_CREDITS_OPEN']),
+  },
 }
 </script>
 

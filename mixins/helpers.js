@@ -5,6 +5,6 @@ export default {
         (a, b) => a.concat(Array.isArray(b) ? this.flatten(b) : b),
         []
       )
-    }
-  }
+    },
+  },
 }

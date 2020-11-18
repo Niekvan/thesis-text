@@ -10,8 +10,8 @@ export default {
       type: Object,
       default() {
         return {}
-      }
-    }
+      },
+    },
   },
   computed: {
     styles() {
@@ -20,11 +20,11 @@ export default {
           this.readArticles.includes(this.link.source.uuid) ||
           this.readArticles.includes(this.link.target.uuid)
             ? 1
-            : 0.05
+            : 0.05,
       }
     },
-    ...mapState(['readArticles'])
-  }
+    ...mapState(['readArticles']),
+  },
 }
 </script>
 

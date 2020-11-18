@@ -14,7 +14,12 @@
         class="node__background"
       />
     </no-ssr>
-    <text class="node__text body" :class="classes" :style="styles" alignment-baseline="middle">
+    <text
+      class="node__text body"
+      :class="classes"
+      :style="styles"
+      alignment-baseline="middle"
+    >
       {{ node.slug }}
     </text>
   </g>
@@ -29,27 +34,27 @@ export default {
       type: Object,
       default() {
         return {}
-      }
+      },
     },
     settings: {
       type: Object,
       default() {
         return {}
-      }
+      },
     },
     connected: {
       type: Array,
       default() {
         return []
-      }
-    }
+      },
+    },
   },
   data() {
     return {
       padding: {
         top: 10,
-        left: 20
-      }
+        left: 20,
+      },
     }
   },
   computed: {
@@ -81,16 +86,14 @@ export default {
     },
     BBox() {
       if (process.browser && select('.node').node()) {
-        return select(`.node.${this.node.slug}`)
-          .node()
-          .getBBox()
+        return select(`.node.${this.node.slug}`).node().getBBox()
       }
       return null
     },
     classes() {
       return {
         active: this.settings.active === this.node.uuid,
-        read: this.readArticles.includes(this.node.uuid)
+        read: this.readArticles.includes(this.node.uuid),
       }
     },
     styles() {
@@ -100,10 +103,10 @@ export default {
           this.node.name === 'introduction' ||
           this.connected.length
             ? 1
-            : 0.2
+            : 0.2,
       }
     },
-    ...mapState(['readArticles'])
+    ...mapState(['readArticles']),
   },
   methods: {
     showArticle(uuid) {
@@ -113,8 +116,8 @@ export default {
       this.SET_ACTIVE_ARTICLES(uuid)
       this.SET_READ_ARTICLES(uuid)
     },
-    ...mapMutations(['SET_ACTIVE_ARTICLES', 'SET_READ_ARTICLES'])
-  }
+    ...mapMutations(['SET_ACTIVE_ARTICLES', 'SET_READ_ARTICLES']),
+  },
 }
 </script>
 

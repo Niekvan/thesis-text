@@ -2,20 +2,16 @@ module.exports = {
   root: true,
   env: {
     browser: true,
-    node: true
+    node: true,
   },
   parserOptions: {
-    parser: 'babel-eslint'
+    parser: 'babel-eslint',
   },
-  extends: [
-    '@nuxtjs',
-    'plugin:prettier/recommended'
-  ],
-  plugins: [
-    'prettier'
-  ],
+  extends: ['@nuxtjs', 'plugin:prettier/recommended'],
+  plugins: ['prettier'],
   // add your custom rules here
   rules: {
-    'vue/no-v-html': 'off'
-  }
+    'vue/no-v-html': 'off',
+    'vue/singleline-html-element-content-newline': 'off',
+  },
 }

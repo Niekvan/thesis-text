@@ -1,12 +1,8 @@
 <template>
   <section v-editable="credits.content" class="frame">
     <div class="frame__head">
-      <div class="frame__bar">
-        /Credits
-      </div>
-      <div class="frame__close" @click="SET_CREDITS_OPEN(false)">
-        X
-      </div>
+      <div class="frame__bar">/credits</div>
+      <div class="frame__close" @click="SET_CREDITS_OPEN(false)">X</div>
     </div>
     <div class="frame__content credits">
       <div class="line-width" v-html="body" />
@@ -21,11 +17,11 @@ export default {
     body() {
       return this.$md.render(this.credits.content.body)
     },
-    ...mapState(['credits'])
+    ...mapState(['credits']),
   },
   methods: {
-    ...mapMutations(['SET_CREDITS_OPEN'])
-  }
+    ...mapMutations(['SET_CREDITS_OPEN']),
+  },
 }
 </script>
 

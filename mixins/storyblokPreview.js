@@ -1,6 +1,6 @@
 export default {
   mounted() {
-    this.$storybridge.on(['input', 'published', 'change'], event => {
+    this.$storybridge.on(['input', 'published', 'change'], (event) => {
       if (event.action === 'input') {
         // Inject content on the input event
         if (event.story.id === this.story.id) {
@@ -11,5 +11,5 @@ export default {
         window.location.reload()
       }
     })
-  }
+  },
 }

@@ -1,8 +1,5 @@
 <template>
-  <span
-    v-editable="data"
-    class="publisher"
-  >
+  <span v-editable="data" class="publisher">
     {{ data.publisher }}
   </span>
 </template>
@@ -12,9 +9,9 @@ export default {
   props: {
     data: {
       type: Object,
-      default: () => {}
-    }
-  }
+      default: () => {},
+    },
+  },
 }
 </script>
 

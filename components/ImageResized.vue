@@ -7,7 +7,7 @@
       :data-srcset="srcSet"
       data-sizes="auto"
       :alt="image.alt"
-    >
+    />
   </div>
 </template>
 
@@ -16,50 +16,50 @@ export default {
   props: {
     image: {
       type: Object,
-      default() {}
-    }
+      default() {},
+    },
   },
   data() {
     return {
       sizes: [
         {
           width: '300w',
-          size: '300'
+          size: '300',
         },
         {
           width: '600w',
-          size: '600'
+          size: '600',
         },
         {
           width: '900w',
-          size: '900'
-        }
+          size: '900',
+        },
       ],
-      reg: /(?:^\/\/a\.storyblok\.com\/f\/[0-9]+\/)(?<width>[0-9]+)x(?<height>[0-9]+)/g
+      reg: /(?:^\/\/a\.storyblok\.com\/f\/[0-9]+\/)(?<width>[0-9]+)x(?<height>[0-9]+)/g,
     }
   },
   computed: {
     padding() {
       const { width, height } = this.reg.exec(this.image.image).groups
       return {
-        paddingBottom: `${(height / width) * 100}% `
+        paddingBottom: `${(height / width) * 100}% `,
       }
     },
     srcSet() {
-      const list = this.sizes.map(size => {
+      const list = this.sizes.map((size) => {
         return `${this.resizeUrl(this.image.image, size.size)} ${size.width}`
       })
       return list.join(', ')
-    }
+    },
   },
   mounted() {
-    document.addEventListener('lazyloaded', function(e) {
+    document.addEventListener('lazyloaded', function (e) {
       e.target.parentNode.classList.add('image-loaded')
       e.target.parentNode.classList.remove('loading')
     })
   },
   beforeDestroy() {
-    document.removeEventListener('lazyloaded', function(e) {
+    document.removeEventListener('lazyloaded', function (e) {
       e.target.parentNode.classList.add('image-loaded')
       e.target.parentNode.classList.remove('loading')
     })
@@ -70,8 +70,8 @@ export default {
         '//a.storyblok.com',
         ''
       )}`
-    }
-  }
+    },
+  },
 }
 </script>
 

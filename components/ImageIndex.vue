@@ -1,15 +1,16 @@
 <template>
   <section class="frame">
     <div class="frame__head">
-      <span class="frame__bar">
-        /Images
-      </span>
-      <span class="frame__close" @click="SET_IMAGE_INDEX(false)">
-        X
-      </span>
+      <span class="frame__bar"> /Images </span>
+      <span class="frame__close" @click="SET_IMAGE_INDEX(false)"> X </span>
     </div>
     <div class="frame__content row">
-      <div v-for="(image, index) in images" :key="image.uuid + index" class="col-lg-4 images" @click="handleImageClick(image.uuid)">
+      <div
+        v-for="(image, index) in images"
+        :key="image.uuid + index"
+        class="col-lg-4 images"
+        @click="handleImageClick(image.uuid)"
+      >
         <image-resized :image="image" />
         <p class="images__caption caption">
           {{ image.caption }}
@@ -34,10 +35,10 @@ import { mapState, mapMutations } from 'vuex'
 import ImageResized from './ImageResized.vue'
 export default {
   components: {
-    'image-resized': ImageResized
+    'image-resized': ImageResized,
   },
   computed: {
-    ...mapState(['images', 'image_sources'])
+    ...mapState(['images', 'image_sources']),
   },
   methods: {
     handleImageClick(uuid) {
@@ -47,21 +48,21 @@ export default {
     },
     getUnique(arr, comp) {
       const unique = arr
-        .map(e => e[comp])
+        .map((e) => e[comp])
         // store the keys of the unique objects
         .map((e, i, final) => final.indexOf(e) === i && i)
         // eliminate the dead keys & store unique objects
-        .filter(e => arr[e])
-        .map(e => arr[e])
+        .filter((e) => arr[e])
+        .map((e) => arr[e])
 
       return unique
     },
     ...mapMutations([
       'SET_ACTIVE_ARTICLES',
       'SET_IMAGE_INDEX',
-      'SET_READ_ARTICLES'
-    ])
-  }
+      'SET_READ_ARTICLES',
+    ]),
+  },
 }
 </script>
 

@@ -5,6 +5,6 @@ export default function markdownParser(moduleOptions) {
 
   this.addPlugin({
     src: path.resolve(__dirname, 'plugin.js'),
-    options
+    options,
   })
 }

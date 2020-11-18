@@ -1,21 +1,13 @@
 <template>
-  <li
-    v-editable="source"
-    class="source"
-  >
+  <li v-editable="source" class="source">
     <span class="author">
       {{ author }}
     </span>
-    <span class="year">
-      ({{ year }}).
-    </span>
+    <span class="year"> ({{ year }}). </span>
     <span v-if="source.author && source.title" class="name">
       {{ source.title }}.
     </span>
-    <component
-      :is="source.location[0].component"
-      :data="source.location[0]"
-    />
+    <component :is="source.location[0].component" :data="source.location[0]" />
   </li>
 </template>
 
@@ -25,13 +17,13 @@ import Publisher from './Publisher.vue'
 export default {
   components: {
     Website,
-    Publisher
+    Publisher,
   },
   props: {
     source: {
       type: Object,
-      default: () => {}
-    }
+      default: () => {},
+    },
   },
   computed: {
     year() {
@@ -44,8 +36,8 @@ export default {
     },
     author() {
       return this.source.author ? this.source.author : this.source.title
-    }
-  }
+    },
+  },
 }
 </script>
 

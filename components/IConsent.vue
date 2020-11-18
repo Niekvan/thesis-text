@@ -2,9 +2,7 @@
   <div class="consent consent__wrapper">
     <section class="frame">
       <div class="frame__head">
-        <span class="frame__bar">
-          /Abstract
-        </span>
+        <span class="frame__bar"> /Abstract </span>
       </div>
       <div class="frame__content">
         <div class="row">
@@ -15,7 +13,10 @@
             <div class="consent__body line-width" v-html="body" />
           </article>
           <aside class="consent__button-wrapper col-lg-4">
-            <button class="consent__button heading-1" @click="SET_CONSENT_OPEN(false)">
+            <button
+              class="consent__button heading-1"
+              @click="SET_CONSENT_OPEN(false)"
+            >
               I Consent
             </button>
           </aside>
@@ -34,11 +35,11 @@ export default {
     },
     body() {
       return this.$md.render(this.article.content.body)
-    }
+    },
   },
   methods: {
-    ...mapMutations(['SET_CONSENT_OPEN'])
-  }
+    ...mapMutations(['SET_CONSENT_OPEN']),
+  },
 }
 </script>
 

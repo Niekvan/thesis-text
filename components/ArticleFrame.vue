@@ -1,15 +1,11 @@
 <template>
   <section v-editable="article.content" class="article" :style="styles">
     <div class="header" @click="removeNext">
-      <span class="bar">
-        /{{ article.content.title }}
-      </span>
+      <span class="bar"> /{{ article.content.title }} </span>
       <span class="trigger" @click="toggleOpen">
         {{ graphOpen ? '&#8673;' : '&#8675;' }}
       </span>
-      <span class="close" @click="removeArticle">
-        X
-      </span>
+      <span class="close" @click="removeArticle"> X </span>
     </div>
     <div class="content scroll">
       <div class="row">
@@ -18,19 +14,26 @@
             <h1 class="heading-1">
               {{ article.content.title }}
             </h1>
-            <div :ref="`md-${article.uuid}-${index}`" class="body" v-html="body" />
+            <div
+              :ref="`md-${article.uuid}-${index}`"
+              class="body"
+              v-html="body"
+            />
             <transition name="fade">
               <div v-if="source" class="source-container">
-                <span class="close" @click="source=null">
-                  X
-                </span>
+                <span class="close" @click="source = null"> X </span>
                 <reference :source="source" />
               </div>
             </transition>
           </div>
         </article>
         <aside class="side-bar col-lg-4" :class="{ open: graphOpen }">
-          <graph v-if="graphOpen || width >= 960" :nodes="[...linkedArticles, article]" :links="links" :settings="settings" />
+          <graph
+            v-if="graphOpen || width >= 960"
+            :nodes="[...linkedArticles, article]"
+            :links="links"
+            :settings="settings"
+          />
         </aside>
       </div>
     </div>
@@ -43,16 +46,16 @@ export default {
   props: {
     articleUuid: {
       type: String,
-      default: ''
+      default: '',
     },
     index: {
       type: Number,
-      default: 0
+      default: 0,
     },
     total: {
       type: Number,
-      default: 0
-    }
+      default: 0,
+    },
   },
   data() {
     return {
@@ -61,31 +64,31 @@ export default {
         nodes: {
           width: 300,
           height: 300,
-          active: this.articleUuid
+          active: this.articleUuid,
         },
         strength: 0.3,
         charge: -0.1,
         collide: 100,
-        freedom: 1000
+        freedom: 1000,
       },
       localSources: [],
       source: null,
       sizes: [
         {
           width: '300w',
-          size: '300'
+          size: '300',
         },
         {
           width: '600w',
-          size: '600'
+          size: '600',
         },
         {
           width: '900w',
-          size: '900'
-        }
+          size: '900',
+        },
       ],
       graphOpen: false,
-      width: 0
+      width: 0,
     }
   },
   computed: {
@@ -95,7 +98,7 @@ export default {
         let body = this.$md.render(this.article.content.body)
         const links = body.match(regex)
         if (links) {
-          links.forEach(link => {
+          links.forEach((link) => {
             const groups = regex.exec(link)
             if (groups) {
               const { src, classes } = groups.groups
@@ -124,37 +127,37 @@ export default {
       return null
     },
     links() {
-      return this.linkedArticles.map(article => {
+      return this.linkedArticles.map((article) => {
         return {
           source: this.article,
-          target: article
+          target: article,
         }
       })
     },
     styles() {
       return {
         top: `calc(58% - 1rem * ${this.total - this.index})`,
-        left: `calc(50% + 5px * ${this.total - this.index})`
+        left: `calc(50% + 5px * ${this.total - this.index})`,
       }
     },
     article() {
-      return this.articles.find(article => article.uuid === this.articleUuid)
+      return this.articles.find((article) => article.uuid === this.articleUuid)
     },
-    ...mapState(['articles', 'sources'])
+    ...mapState(['articles', 'sources']),
   },
   mounted() {
     this.width = window.innerWidth
     this.localSources = this.$refs[`md-${this.article.uuid}-${this.index}`].querySelectorAll('.source') //eslint-disable-line
     this.sidenotes = this.$refs[`md-${this.article.uuid}-${this.index}`].querySelectorAll('.sidenote') //eslint-disable-line
-    this.localSources.forEach(source => {
+    this.localSources.forEach((source) => {
       source.addEventListener('click', this.handleQuote)
     })
-    this.sidenotes.forEach(sidenote => {
+    this.sidenotes.forEach((sidenote) => {
       sidenote.addEventListener('click', this.handleSidenote)
     })
     document.addEventListener(
       'lazyloaded',
-      function(e) {
+      function (e) {
         e.target.parentNode.classList.add('image-loaded')
         e.target.parentNode.classList.remove('loading')
       },
@@ -162,13 +165,13 @@ export default {
     )
   },
   beforeDestroy() {
-    this.localSources.forEach(source => {
+    this.localSources.forEach((source) => {
       source.removeEventListener('click', this.handleQuote)
     })
-    this.sidenotes.forEach(sidenote => {
+    this.sidenotes.forEach((sidenote) => {
       sidenote.removeEventListener('click', this.handleSidenote)
     })
-    document.removeEventListener('lazyloaded', function(e) {
+    document.removeEventListener('lazyloaded', function (e) {
       e.target.parentNode.classList.add('image-loaded')
       e.target.parentNode.classList.remove('loading')
     })
@@ -186,17 +189,18 @@ export default {
       event.preventDefault()
       const keys = [
         event.target.parentNode.querySelector('.author').innerHTML,
-        event.target.parentNode.querySelector('.year').innerHTML
+        event.target.parentNode.querySelector('.year').innerHTML,
       ]
-      const filteredSources = this.sources.filter(source => {
+      const filteredSources = this.sources.filter((source) => {
         const author = source.author ? source.author : source.title
         const year = source.year ? source.year : 'n.d.'
         return (
           keys[0]
             .replace(/ et al./, '')
             .split(', ')
-            .some(name => author.toLowerCase().includes(name.toLowerCase())) &&
-          year.includes(keys[1].replace(/[^\d]/g, ''))
+            .some((name) =>
+              author.toLowerCase().includes(name.toLowerCase())
+            ) && year.includes(keys[1].replace(/[^\d]/g, ''))
         )
       })
 
@@ -211,7 +215,7 @@ export default {
       event.target.parentNode.classList.toggle('active')
     },
     createSrcSet(link) {
-      const list = this.sizes.map(size => {
+      const list = this.sizes.map((size) => {
         return `${this.resizeUrl(link, size.size)} ${size.width}`
       })
       return list.join(', ')
@@ -225,8 +229,8 @@ export default {
     toggleOpen() {
       this.graphOpen = !this.graphOpen
     },
-    ...mapMutations(['REMOVE_ACTIVE_ARTICLE', 'REMOVE_NEXT_ARTILCES'])
-  }
+    ...mapMutations(['REMOVE_ACTIVE_ARTICLE', 'REMOVE_NEXT_ARTILCES']),
+  },
 }
 </script>
 

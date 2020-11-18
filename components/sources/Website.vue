@@ -1,9 +1,5 @@
 <template>
-  <span
-    v-if="date"
-    v-editable="data"
-    class="website"
-  >
+  <span v-if="date" v-editable="data" class="website">
     Retrieved {{ date }}, from
     <a
       v-editable="data.link"
@@ -15,11 +11,7 @@
       {{ link }}
     </a>
   </span>
-  <span
-    v-else
-    v-editable="data"
-    class="website"
-  >
+  <span v-else v-editable="data" class="website">
     Retrieved from
     <a
       v-editable="data.link"
@@ -38,8 +30,8 @@ export default {
   props: {
     data: {
       type: Object,
-      default: () => {}
-    }
+      default: () => {},
+    },
   },
   computed: {
     date() {
@@ -50,8 +42,8 @@ export default {
     },
     link() {
       return this.data.link.url
-    }
-  }
+    },
+  },
 }
 </script>
 

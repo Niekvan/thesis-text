@@ -10,7 +10,7 @@ export const state = () => ({
   referenceOpen: false,
   imagesOpen: false,
   creditsOpen: false,
-  consentOpen: true
+  consentOpen: true,
 })
 
 export const mutations = {
@@ -56,7 +56,7 @@ export const mutations = {
   },
   SET_CREDITS_OPEN(state, open) {
     state.creditsOpen = open
-  }
+  },
 }
 
 export const actions = {
@@ -64,10 +64,10 @@ export const actions = {
     const version = isDev ? 'draft' : 'published'
     const data = await this.$storyapi.get('cdn/stories', {
       starts_with: 'articles',
-      version
+      version,
     })
     const credits = await this.$storyapi.get('cdn/stories/credits', {
-      version
+      version,
     })
     commit('SET_CREDITS', credits.data.story)
     commit('SET_ARTICLES', data.data.stories)
@@ -75,17 +75,17 @@ export const actions = {
   async getSources({ commit }, isDev) {
     const version = isDev ? 'draft' : 'published'
     const data = await this.$storyapi.get('cdn/stories/sources', {
-      version
+      version,
     })
     const imageData = await this.$storyapi.get('cdn/stories/image-sources', {
-      version
+      version,
     })
     commit('SET_SOURCES', data.data.story.content.sources)
     commit('SET_IMAGE_SOURCES', imageData.data.story.content.sources)
   },
   getImages({ commit, state }) {
-    const reg = /!\[[^\]]*\]\((?<filename>.*?)(?="|\))(?<optionalpart>".*")?\)(?:{.image ?(?<extraClass>.+)?}\n?\n?)(?<caption>.+)?\{/g
-    const data = state.articles.flatMap(article => {
+    const reg = /!\[[^\]]*\]\((?<filename>.*?)(?="|\))(?<optionalpart>".*")?\)(?:\{.image ?(?<extraClass>.+)?\}\n?\n?)(?<caption>.+)?\{/g
+    const data = state.articles.flatMap((article) => {
       const images = []
       let m = null
       while ((m = reg.exec(article.content.body)) !== null) {
@@ -97,7 +97,7 @@ export const actions = {
           uuid: article.uuid,
           name: article.slug,
           caption: m.groups.caption.trim(),
-          class: m.groups.extraClass
+          class: m.groups.extraClass,
         })
       }
       return images
@@ -108,16 +108,16 @@ export const actions = {
     await dispatch('getArticles', isDev)
     await dispatch('getSources', isDev)
     dispatch('getImages')
-  }
+  },
 }
 
 export const getters = {
-  getLinkedArticles: state => list => {
-    return state.articles.filter(article => list.includes(article.uuid))
+  getLinkedArticles: (state) => (list) => {
+    return state.articles.filter((article) => list.includes(article.uuid))
   },
-  getAbstract: state => () => {
-    return state.articles.find(article => article.slug === 'abstract')
-  }
+  getAbstract: (state) => () => {
+    return state.articles.find((article) => article.slug === 'abstract')
+  },
 }
 
 function compareAuthor(a, b) {
@@ -140,10 +140,10 @@ function compareImages(a, b) {
 
 function getUnique(arr, comp) {
   const unique = arr
-    .map(item => item[comp])
+    .map((item) => item[comp])
     .map((item, i, final) => final.indexOf(item) === i && i)
-    .filter(item => arr[item])
-    .map(e => arr[e])
+    .filter((item) => arr[item])
+    .map((e) => arr[e])
 
   return unique
 }
